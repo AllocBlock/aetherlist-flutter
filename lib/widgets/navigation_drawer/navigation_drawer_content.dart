@@ -38,40 +38,34 @@ class NavigationDrawerContent extends StatelessWidget {
             ),
           ),
         ),
-        Expanded(
-          child: ListView(
-            children: <Widget>[
-              ListTile(
-                leading: Icon(Icons.category),
-                title: Text('Categories'),
-                onTap: () {},
-              ),
-              ListTile(
-                leading: Icon(Icons.equalizer),
-                title: Text('Statistics'),
-                onTap: () {},
-              ),
-              ListTile(
-                leading: Icon(Icons.archive),
-                title: Text('Archives'),
-                onTap: () {},
-            ),
-              ListTile(
-                leading: Icon(Icons.settings),
-                title: Text('Settings'),
-                onTap: () {
-                  Navigator.of(context).pushNamed('/settings');
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.info),
-                title: Text('About'),
-                onTap: () {
-                  Navigator.of(context).pushNamed('/about');
-                },
-              ),
-            ],
-          ),
+        ListTile(
+          leading: Icon(Icons.category),
+          title: Text('Categories'),
+          onTap: () {},
+        ),
+        ListTile(
+          leading: Icon(Icons.equalizer),
+          title: Text('Statistics'),
+          onTap: () {},
+        ),
+        ListTile(
+          leading: Icon(Icons.archive),
+          title: Text('Archives'),
+          onTap: () {},
+        ),
+        ListTile(
+          leading: Icon(Icons.settings),
+          title: Text('Settings'),
+          onTap: () {
+            Navigator.of(context).pushNamed('/settings');
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.info),
+          title: Text('About'),
+          onTap: () {
+            Navigator.of(context).pushNamed('/about');
+          },
         ),
         // TODO: add today progress indicator
 //        Align(

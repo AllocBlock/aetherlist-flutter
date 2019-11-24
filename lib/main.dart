@@ -1,7 +1,6 @@
 import 'package:aetherlist_flutter/page/about/about.dart';
 import 'package:aetherlist_flutter/page/settings/settings.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_builder/responsive_builder.dart';
 import 'package:aetherlist_flutter/page/home/home_page.dart';
 
 void main() => runApp(App());

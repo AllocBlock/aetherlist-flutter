@@ -28,7 +28,10 @@ class HomePageMobile extends StatelessWidget {
                 SizedBox(
                   height: 30,
                   width: 30,
-                  child: Icon(Icons.line_weight),
+                  child: Icon(
+                    Icons.line_weight,
+                    color: Colors.grey,
+                  ),
                 ),
                 IconButton(
                   icon: Icon(Icons.add, size: 30),
@@ -38,7 +41,7 @@ class HomePageMobile extends StatelessWidget {
             ),
           ),
           Expanded(
-              child: HomeContent(),
+            child: HomeContent(),
           )
         ],
       ),

@@ -17,7 +17,8 @@ class HomePageTabletDesktop extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -32,7 +33,10 @@ class HomePageTabletDesktop extends StatelessWidget {
                       SizedBox(
                         height: 40,
                         width: 40,
-                        child: Icon(Icons.line_weight),
+                        child: Icon(
+                          Icons.line_weight,
+                          color: Colors.grey,
+                        ),
                       ),
                       IconButton(
                         icon: Icon(Icons.add, size: 40),
@@ -44,7 +48,8 @@ class HomePageTabletDesktop extends StatelessWidget {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 32.0, right: 32.0, top: 16.0),
+                    padding: const EdgeInsets.only(
+                        left: 32.0, right: 32.0, top: 16.0),
                     child: HomeContent(),
                   ),
                 )
