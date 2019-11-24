@@ -41,7 +41,10 @@ class HomePageMobile extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: HomeContent(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: HomeContent(),
+            ),
           )
         ],
       ),

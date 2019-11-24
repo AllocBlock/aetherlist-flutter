@@ -48,8 +48,7 @@ class HomePageTabletDesktop extends StatelessWidget {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 32.0, right: 32.0, top: 16.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 48.0),
                     child: HomeContent(),
                   ),
                 )

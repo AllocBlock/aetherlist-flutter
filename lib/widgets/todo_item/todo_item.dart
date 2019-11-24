@@ -17,12 +17,18 @@ class TodoItem {
   bool finished;
 
   static int compareTwoItems(TodoItem a, TodoItem b) {
-    if (a.finished == true && b.finished != true) {
+    if (a.isDuration == true && b.isDuration != true) {
       return 1;
-    } else if (a.finished == false && b.finished == true) {
+    } else if (a.isDuration == false && b.isDuration == true) {
       return -1;
     } else {
-      return b.priority.compareTo(a.priority);
+      if (a.finished == true && b.finished != true) {
+        return 1;
+      } else if (a.finished == false && b.finished == true) {
+        return -1;
+      } else {
+        return b.priority.compareTo(a.priority);
+      }
     }
   }
 }
