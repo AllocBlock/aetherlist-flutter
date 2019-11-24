@@ -22,15 +22,20 @@ class NavigationDrawerContent extends StatelessWidget {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      CircleAvatar(
-                        backgroundColor: Colors.blueGrey,
-                        child: Icon(Icons.person),
-                        radius: 40,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushNamed('/login');
+                        },
+                        child: CircleAvatar(
+                          backgroundColor: Colors.blueGrey,
+                          child: Icon(Icons.person),
+                          radius: 40,
+                        ),
                       ),
                       SizedBox(
                         height: 15,
                       ),
-                      Text('username'),
+                      Text('Guest'),
                     ],
                   ),
                 )
