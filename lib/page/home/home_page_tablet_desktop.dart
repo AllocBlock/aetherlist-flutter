@@ -41,7 +41,7 @@ class HomePageTabletDesktop extends StatelessWidget {
                       IconButton(
                         icon: Icon(Icons.add, size: 40),
                         tooltip: 'Add Button',
-                        onPressed: () {},
+                        onPressed: () => Navigator.pushNamed(context, '/add'),
                       ),
                     ],
                   ),

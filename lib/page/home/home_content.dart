@@ -20,6 +20,7 @@ class _HomeContentState extends State<HomeContent> {
     return CustomScrollView(
       controller: _scrollController,
       slivers: <Widget>[
+        // TODO: add progress bar for today items
         SliverToBoxAdapter(
           child: Center(
             child: Text(

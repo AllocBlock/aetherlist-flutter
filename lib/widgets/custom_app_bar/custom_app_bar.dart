@@ -19,7 +19,11 @@ class _CustomAppBarState extends State<CustomAppBar> {
     return Stack(
       children: <Widget>[
         AppBar(
-          title: Text(widget.titleName),
+          title: Text(
+            widget.titleName,
+            textScaleFactor: 0.96,
+          ),
+          elevation: 0.0,
           actions: <Widget>[
             widget.showSearchIcon
                 ? IconButton(

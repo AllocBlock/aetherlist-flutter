@@ -35,7 +35,7 @@ class HomePageMobile extends StatelessWidget {
                 ),
                 IconButton(
                   icon: Icon(Icons.add, size: 30),
-                  onPressed: () {},
+                  onPressed: () => Navigator.pushNamed(context, '/add'),
                 ),
               ],
             ),

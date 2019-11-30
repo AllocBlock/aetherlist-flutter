@@ -10,8 +10,7 @@ class SettingPage extends StatelessWidget {
         showSearchIcon: false,
       ),
       body: ListView(
-        children: <Widget>[
-        ],
+        children: <Widget>[],
       ),
     );
   }
