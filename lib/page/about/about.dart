@@ -1,13 +1,13 @@
+import 'package:aetherlist_flutter/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.grey[50],
-        title: Text('About'),
+      appBar: CustomAppBar(
+        titleName: 'About',
+        showSearchIcon: false,
       ),
       body: Container(
         child: Column(
