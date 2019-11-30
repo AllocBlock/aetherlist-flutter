@@ -1,4 +1,4 @@
-import 'package:aetherlist_flutter/widgets/items_sliver_list/ItemsSliverList.dart';
+import 'package:aetherlist_flutter/widgets/items_sliver_list/items_sliver_list.dart';
 import 'package:aetherlist_flutter/widgets/todo_item/test_todo_items.dart';
 import 'package:flutter/material.dart';
 
