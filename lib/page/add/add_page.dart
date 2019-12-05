@@ -22,7 +22,7 @@ class _AddPageState extends State<AddPage> {
     return Scaffold(
       appBar: CustomAppBar(
         titleName: 'Add new item',
-        showSearchIcon: false,
+        actionChildren: <Widget>[],
       ),
       body: Form(
         key: _formKey,
@@ -36,13 +36,18 @@ class _AddPageState extends State<AddPage> {
               controller: _titleNameController,
               decoration: InputDecoration(
                 labelText: 'Item title',
-                icon: Icon(Icons.title, color: Colors.grey,),
+                icon: Icon(
+                  Icons.title,
+                  color: Colors.grey,
+                ),
               ),
               validator: (value) {
                 return value.trim().length > 0 ? null : 'Title cannot be empty';
               },
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -59,7 +64,9 @@ class _AddPageState extends State<AddPage> {
                 Text('Time-range mode'),
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             ListTile(
               leading: Icon(Icons.calendar_today),
               title: Text('Due date:'),
@@ -69,7 +76,9 @@ class _AddPageState extends State<AddPage> {
                 onPressed: () => _selectDate(),
               ),
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -86,35 +95,50 @@ class _AddPageState extends State<AddPage> {
                 Text('Notification'),
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             ListTile(
               leading: Icon(Icons.access_time),
               title: Text('Notify time:'),
-              subtitle: Text(DateFormat.jm().format(DateTime(2019).add(Duration(hours: _notifyTime.hour, minutes: _notifyTime.minute)))),
+              subtitle: Text(DateFormat.jm().format(DateTime(2019).add(Duration(
+                  hours: _notifyTime.hour, minutes: _notifyTime.minute)))),
               trailing: RaisedButton(
                 child: const Text('SET'),
                 onPressed: () => _selectTime(),
               ),
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             TextFormField(
               controller: _locationController,
               decoration: InputDecoration(
                 labelText: 'Location',
-                icon: Icon(Icons.location_on, color: Colors.grey,),
+                icon: Icon(
+                  Icons.location_on,
+                  color: Colors.grey,
+                ),
               ),
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             TextFormField(
               controller: _descriptionController,
               keyboardType: TextInputType.multiline,
               maxLines: null,
               decoration: InputDecoration(
                 labelText: 'Description',
-                icon: Icon(Icons.description, color: Colors.grey,),
+                icon: Icon(
+                  Icons.description,
+                  color: Colors.grey,
+                ),
               ),
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
           ],
         ),
       ),
@@ -137,14 +161,8 @@ class _AddPageState extends State<AddPage> {
 
   Future _selectTime() async {
     TimeOfDay picked = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.now(),
-        builder: (BuildContext context, Widget child) {
-          return MediaQuery(
-            data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
-            child: child,
-          );
-        },
+      context: context,
+      initialTime: TimeOfDay.now(),
     );
     if (picked != null) {
       setState(() {

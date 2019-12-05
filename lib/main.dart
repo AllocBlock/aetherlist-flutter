@@ -1,3 +1,4 @@
+import 'package:aetherlist_flutter/common/global.dart';
 import 'package:aetherlist_flutter/page/about/about.dart';
 import 'package:aetherlist_flutter/page/add/add_page.dart';
 import 'package:aetherlist_flutter/page/home/home_page.dart';
@@ -5,7 +6,7 @@ import 'package:aetherlist_flutter/page/profile/login.dart';
 import 'package:aetherlist_flutter/page/settings/settings.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(App());
+void main() => Global.init().then((e) => runApp(App()));
 
 class App extends StatelessWidget {
   @override
