@@ -1,9 +1,9 @@
 import 'package:aetherlist_flutter/page/about/about.dart';
 import 'package:aetherlist_flutter/page/add/add_page.dart';
+import 'package:aetherlist_flutter/page/home/home_page.dart';
 import 'package:aetherlist_flutter/page/profile/login.dart';
 import 'package:aetherlist_flutter/page/settings/settings.dart';
 import 'package:flutter/material.dart';
-import 'package:aetherlist_flutter/page/home/home_page.dart';
 
 void main() => runApp(App());
 
@@ -27,9 +27,8 @@ class App extends StatelessWidget {
         cardColor: Colors.lightBlue[200],
         toggleableActiveColor: Colors.lightBlue[100],
         inputDecorationTheme: InputDecorationTheme(
-            focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey)
-            ),
+          focusedBorder:
+              UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
           labelStyle: TextStyle(color: Colors.grey, fontSize: 14),
         ),
       ),

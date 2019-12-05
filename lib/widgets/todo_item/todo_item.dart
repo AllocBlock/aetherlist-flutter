@@ -4,17 +4,30 @@ class TodoItem {
   TodoItem(
       {this.id,
       this.itemName,
-      this.date,
+      this.dueDate,
       this.priority,
       this.isDuration,
-      this.finished});
+      this.finished,
+      this.location,
+      this.enableNotification,
+      this.notifyTime,
+      this.tagList,
+      this.description,
+      this.attachmentList});
 
   int id;
   String itemName;
-  DateTime date;
+  DateTime dueDate;
   double priority;
   bool isDuration;
   bool finished;
+  String location;
+  bool enableNotification;
+  DateTime notifyTime;
+  List<String> tagList;
+  String description;
+  List<String> attachmentList;
+
 
   static int compareTwoItems(TodoItem a, TodoItem b) {
     if (a.isDuration == true && b.isDuration != true) {
