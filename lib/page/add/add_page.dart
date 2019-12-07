@@ -2,6 +2,9 @@ import 'package:aetherlist_flutter/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+// FOR TEST ONLY
+const List<String> _testCategories = ["Academic", "Shopping", "Health"];
+
 class AddPage extends StatefulWidget {
   @override
   _AddPageState createState() => _AddPageState();
@@ -9,9 +12,12 @@ class AddPage extends StatefulWidget {
 
 class _AddPageState extends State<AddPage> {
   TextEditingController _titleNameController = TextEditingController();
+  TextEditingController _tagsController = TextEditingController();
   TextEditingController _locationController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   GlobalKey _formKey = GlobalKey<FormState>();
+  String _selectCategory = _testCategories[0];
+  double _priority = 0.5;
   bool _isTimeRangeMode = false;
   bool _enableNotification = false;
   DateTime _dueDate = DateTime.now();
@@ -45,9 +51,74 @@ class _AddPageState extends State<AddPage> {
                 return value.trim().length > 0 ? null : 'Title cannot be empty';
               },
             ),
-            SizedBox(
-              height: 10,
+            Divider(),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Text('Category'),
+                SizedBox(width: 15,),
+                DropdownButton(
+                  value: _selectCategory,
+                  items: _testCategories.map<DropdownMenuItem<String>>((String category) {
+                    return DropdownMenuItem<String>(
+                      value: category,
+                      child: Text(category, textScaleFactor: 0.85,),
+                    );
+                  }).toList(),
+                  onChanged: (String newCategory) {
+                    setState(() {
+                      _selectCategory = newCategory;
+                    });
+                  },
+                )
+              ],
             ),
+            Divider(),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Text('Priority'),
+                Expanded(
+                  child: SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      activeTrackColor: Colors.amber[300],
+                      inactiveTrackColor: Colors.blue[100],
+                      trackHeight: 4.0,
+                      thumbColor: Colors.red,
+                      thumbShape:
+                          RoundSliderThumbShape(enabledThumbRadius: 8.0),
+                      overlayColor: Colors.purple.withAlpha(32),
+                      overlayShape:
+                          RoundSliderOverlayShape(overlayRadius: 14.0),
+                    ),
+                    child: Slider(
+                      min: 0.01,
+                      max: 0.99,
+                      value: _priority,
+                      onChanged: (newValue) {
+                        setState(() {
+                          _priority = newValue;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Divider(),
+            TextFormField(
+              controller: _tagsController,
+              decoration: InputDecoration(
+                labelText: 'Tags',
+                icon: Icon(
+                  Icons.turned_in,
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+            Divider(),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -67,11 +138,9 @@ class _AddPageState extends State<AddPage> {
                 ),
               ],
             ),
-            SizedBox(
-              height: 10,
-            ),
+            Divider(),
             ListTile(
-              leading: Icon(Icons.calendar_today),
+              leading: Icon(Icons.event_note),
               title: Text('Due date:'),
               subtitle: Text(DateFormat.yMMMMEEEEd().format(_dueDate)),
               trailing: RaisedButton(
@@ -79,9 +148,7 @@ class _AddPageState extends State<AddPage> {
                 onPressed: () => _selectDate(),
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
+            Divider(),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -101,9 +168,7 @@ class _AddPageState extends State<AddPage> {
                 ),
               ],
             ),
-            SizedBox(
-              height: 10,
-            ),
+            Divider(),
             ListTile(
               leading: Icon(Icons.access_time),
               title: Text('Notify time:'),
@@ -114,9 +179,7 @@ class _AddPageState extends State<AddPage> {
                 onPressed: () => _selectTime(),
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
+            Divider(),
             TextFormField(
               controller: _locationController,
               decoration: InputDecoration(
@@ -127,9 +190,7 @@ class _AddPageState extends State<AddPage> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
+            Divider(),
             TextFormField(
               controller: _descriptionController,
               keyboardType: TextInputType.multiline,
@@ -142,9 +203,7 @@ class _AddPageState extends State<AddPage> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
+            Divider(),
           ],
         ),
       ),
