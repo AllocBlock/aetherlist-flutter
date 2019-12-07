@@ -61,7 +61,10 @@ class _AddPageState extends State<AddPage> {
                     });
                   },
                 ),
-                Text('Time-range mode', textScaleFactor: 1.2,),
+                Text(
+                  'Time-range mode',
+                  textScaleFactor: 1.2,
+                ),
               ],
             ),
             SizedBox(
@@ -92,7 +95,10 @@ class _AddPageState extends State<AddPage> {
                     });
                   },
                 ),
-                Text('Notification', textScaleFactor: 1.2,),
+                Text(
+                  'Notification',
+                  textScaleFactor: 1.2,
+                ),
               ],
             ),
             SizedBox(
