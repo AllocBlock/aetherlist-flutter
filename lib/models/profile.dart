@@ -7,9 +7,9 @@ class Profile {
     Profile();
 
     User user;
-    String token;
     num theme;
     String lastLogin;
+    String locale;
     
     factory Profile.fromJson(Map<String,dynamic> json) => _$ProfileFromJson(json);
     Map<String, dynamic> toJson() => _$ProfileToJson(this);
