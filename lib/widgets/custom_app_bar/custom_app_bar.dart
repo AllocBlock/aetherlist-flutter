@@ -25,6 +25,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
           ),
           elevation: 0.0,
           actions: widget.actionChildren,
+          backgroundColor: Colors.grey[50],
         )
       ],
     );

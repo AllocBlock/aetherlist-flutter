@@ -1,0 +1,100 @@
+{
+  "@@last_modified": "2019-12-07T20:59:23.611883",
+  "@@locale": "zh-CN"
+  "login": "登录",
+  "@login": {
+    "description": "login text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "logout": "登出",
+  "@logout": {
+    "description": "logout text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "logoutTip": "确定要登出账号吗？",
+  "@logoutTip": {
+    "description": "logout tip text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "register": "注册",
+  "@register": {
+    "description": "register text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "cancel": "取消",
+  "@cancel": {
+    "description": "cancel text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "yes": "是",
+    "@yes": {
+      "description": "yes text",
+      "type": "text",
+      "placeholders": {}
+    },
+    "no": "否",
+    "@no": {
+      "description": "no text",
+      "type": "text",
+      "placeholders": {}
+    },
+  "username": "用户名",
+  "@username": {
+    "description": "username text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "usernameRequired": "用户名不能为空",
+  "@usernameRequired": {
+    "description": "username required text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "password": "密码",
+  "@password": {
+    "description": "password text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "passwordRequired": "密码不能为空",
+  "@passwordRequired": {
+    "description": "password required text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "usernameOrPasswordWrong": "用户名或密码错误",
+  "@usernameOrPasswordWrong": {
+    "description": "username or password wrong text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "categories": "分类",
+  "@categories": {
+    "description": "Categories name in navigation drawer",
+    "type": "text",
+    "placeholders": {}
+  },
+  "statistics": "统计",
+  "@statistics": {
+    "description": "Statistics name in navigation drawer",
+    "type": "text",
+    "placeholders": {}
+  },
+  "archives": "归档",
+  "@archives": {
+    "description": "Archives name in navigation drawer",
+    "type": "text",
+    "placeholders": {}
+  },
+  "settings": "设置",
+  "@settings": {
+    "description": "Settings name in navigation drawer",
+    "type": "text",
+    "placeholders": {}
+  }
+}
