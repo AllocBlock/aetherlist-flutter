@@ -20,7 +20,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    _usernameController.text = Global.profile.lastLogin;
+//    _usernameController.text = Global.profile.lastLogin;
+    _usernameController.text = "testuser";
+    _passwordController.text = "123456";
     if (_usernameController.text != null) {
       _autoFocusName = false;
     }
@@ -176,6 +178,7 @@ class _LoginPageState extends State<LoginPage> {
             .login(_usernameController.text, _passwordController.text);
         // homepage will be rebuilt when pop login page, so need not to update
         Provider.of<UserModel>(context, listen: false).user = user;
+        print(user.toJson());
       } catch (e) {
         // login failed
         if (e.response?.statusCode == 401) {
@@ -186,8 +189,8 @@ class _LoginPageState extends State<LoginPage> {
         }
       } finally {
         // get all items from server
-        Provider.of<AllItemsModel>(context).allItems =
-            await Request(context).getAllItems();
+        //Provider.of<AllItemsModel>(context).allItems =
+        //    await Request(context).getAllItems();
         // pop loading dialog
         Navigator.of(context).pop();
       }
@@ -195,6 +198,7 @@ class _LoginPageState extends State<LoginPage> {
         // return to homepage
         Navigator.of(context).pop();
       }
+      else print(user);
     }
   }
 }
