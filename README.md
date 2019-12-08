@@ -16,7 +16,15 @@ flutter packages get
 flutter run
 ```
 
-To run project as a web app, make sure you [enable web support](https://flutter.dev/docs/get-started/web#enable-web-support).
+To run project as a web app, make sure you [enable web support](https://flutter.dev/docs/get-started/web#enable-web-support). Run the following commands in terminal:
+
+```
+flutter channel master
+flutter upgrade
+flutter config --enable-web
+```
+
+> **Notice:** App may crashes in `dev` channel. Make sure flutter is changed to `master` channel.
 
 ---
 

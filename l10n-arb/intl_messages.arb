@@ -1,0 +1,99 @@
+{
+  "@@last_modified": "2019-12-07T20:59:23.611883",
+  "login": "Login",
+  "@login": {
+    "description": "login text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "logout": "Logout",
+  "@logout": {
+    "description": "logout text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "logoutTip": "Are you sure you want to logout?",
+  "@logoutTip": {
+    "description": "logout tip text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "register": "Register",
+  "@register": {
+    "description": "register text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "cancel text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "yes": "Yes",
+  "@yes": {
+    "description": "yes text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "no": "No",
+  "@no": {
+    "description": "no text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "username": "Username",
+  "@username": {
+    "description": "username text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "usernameRequired": "Username required",
+  "@usernameRequired": {
+    "description": "username required text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "password": "Password",
+  "@password": {
+    "description": "password text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "passwordRequired": "Password required",
+  "@passwordRequired": {
+    "description": "password required text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "usernameOrPasswordWrong": "Username or password wrong",
+  "@usernameOrPasswordWrong": {
+    "description": "username or password wrong text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "categories": "Categories",
+  "@categories": {
+    "description": "Categories name in navigation drawer",
+    "type": "text",
+    "placeholders": {}
+  },
+  "statistics": "Statistics",
+  "@statistics": {
+    "description": "Statistics name in navigation drawer",
+    "type": "text",
+    "placeholders": {}
+  },
+  "archives": "Archives",
+  "@archives": {
+    "description": "Archives name in navigation drawer",
+    "type": "text",
+    "placeholders": {}
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings name in navigation drawer",
+    "type": "text",
+    "placeholders": {}
+  }
+}
