@@ -16,9 +16,9 @@ const _themes = <MaterialColor>[
 class Global {
   static Cache _cache;
   static Profile profile = Profile();
-  static List<Item> todayItems;
-  static List<Item> laterItems;
-  static List<Item> allItems;
+  static List<Item> todayItems = [];
+  static List<Item> laterItems = [];
+  static List<Item> allItems = [];
 
   static List<MaterialColor> get themes => _themes;
   static Future init() async {
@@ -154,6 +154,9 @@ class TodayItemsModel extends ItemsModel {
     }
   }
 
+  Future<void> fetchItems() async =>
+      Global.todayItems = await Request.getTodayItems();
+
   void toggleFinishItem(int index) => _toggleFinishItem(items, index);
 
   void insertItem(Item newItem) => _insertItem(items, newItem);
@@ -173,6 +176,9 @@ class LaterItemsModel extends ItemsModel {
     }
   }
 
+  Future<void> fetchItems() async =>
+      Global.laterItems = await Request.getLaterItems();
+
   void toggleFinishItem(int index) => _toggleFinishItem(items, index);
 
   void insertItem(Item newItem) => _insertItem(items, newItem);
@@ -191,4 +197,7 @@ class AllItemsModel extends ItemsModel {
       notifyListeners();
     }
   }
+
+  Future<void> fetchItems() async =>
+      Global.allItems = await Request.getAllItems();
 }

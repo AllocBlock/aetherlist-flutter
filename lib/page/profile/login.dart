@@ -174,8 +174,8 @@ class _LoginPageState extends State<LoginPage> {
       );
       User user;
       try {
-        user = await Request(context)
-            .login(_usernameController.text, _passwordController.text);
+        user = await Request.login(
+            _usernameController.text, _passwordController.text);
         // homepage will be rebuilt when pop login page, so need not to update
         Provider.of<UserModel>(context, listen: false).user = user;
         print(user.toJson());
@@ -197,8 +197,8 @@ class _LoginPageState extends State<LoginPage> {
       if (user != null) {
         // return to homepage
         Navigator.of(context).pop();
-      }
-      else print(user);
+      } else
+        print(user);
     }
   }
 }

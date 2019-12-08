@@ -163,7 +163,7 @@ packages:
     source: hosted
     version: "0.3.0"
   dio:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: dio
       url: "https://pub.flutter-io.cn"
@@ -297,7 +297,7 @@ packages:
     source: hosted
     version: "0.0.2"
   json_serializable:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: json_serializable
       url: "https://pub.flutter-io.cn"

@@ -5,9 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 
 class ItemsSliverList extends StatefulWidget {
-  final bool isTodayItem;
-  const ItemsSliverList({Key key, @required this.isTodayItem})
-      : super(key: key);
+  final dynamic itemModel;
+  const ItemsSliverList({Key key, @required this.itemModel}) : super(key: key);
 
   @override
   _ItemsSliverListState createState() => _ItemsSliverListState();
@@ -21,26 +20,22 @@ class _ItemsSliverListState extends State<ItemsSliverList> {
 
   @override
   Widget build(BuildContext context) {
-    dynamic itemModel = widget.isTodayItem
-        ? Provider.of<TodayItemsModel>(context)
-        : Provider.of<LaterItemsModel>(context);
-//    var itemModel = Provider.of<LaterItemsModel>(context);
     return ReorderableSliverList(
       delegate: ReorderableSliverChildListDelegate(
-          List.generate(itemModel.items.length, (index) {
+          List.generate(widget.itemModel.items?.length ?? 0, (index) {
         return Dismissible(
-          key: Key('${itemModel.items[index].id}'),
+          key: Key('${widget.itemModel.items[index].id}'),
           background: _finishCard,
           secondaryBackground: _archiveCard,
           onDismissed: (direction) {
-            final Item tempItem = itemModel.items[index];
+            final Item tempItem = widget.itemModel.items[index];
             String action;
             if (direction == DismissDirection.startToEnd) {
               action = 'finished';
-              itemModel.toggleFinishItem(index);
+              widget.itemModel.toggleFinishItem(index);
             } else {
               action = 'archived';
-              itemModel.removeItem(index);
+              widget.itemModel.removeItem(index);
             }
             Scaffold.of(context).showSnackBar(
               SnackBar(
@@ -51,9 +46,9 @@ class _ItemsSliverListState extends State<ItemsSliverList> {
                   onPressed: () {
                     setState(() {
                       if (action == 'finished') {
-                        itemModel.toggleFinishItem(index);
+                        widget.itemModel.toggleFinishItem(index);
                       } else {
-                        itemModel.insertItem(tempItem);
+                        widget.itemModel.insertItem(tempItem);
                       }
                     });
                   },
@@ -62,8 +57,8 @@ class _ItemsSliverListState extends State<ItemsSliverList> {
             );
           },
           child: Opacity(
-            opacity: (itemModel.items.length * 1.25 - index) /
-                (itemModel.items.length * 1.25),
+            opacity: (widget.itemModel.items.length * 1.25 - index) /
+                (widget.itemModel.items.length * 1.25),
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(4.0),
@@ -75,18 +70,18 @@ class _ItemsSliverListState extends State<ItemsSliverList> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Checkbox(
-                    value: itemModel.items[index].finished,
+                    value: widget.itemModel.items[index].finished,
                     onChanged: (value) {
                       setState(() {
                         // FIXME: index has been changed, undo is invalid
-                        itemModel.toggleFinishItem(index);
+                        widget.itemModel.toggleFinishItem(index);
                       });
                     },
                   ),
                   Text(
-                    itemModel.items[index].item_name,
+                    widget.itemModel.items[index].item_name,
                     style: TextStyle(
-                      decoration: itemModel.items[index].finished
+                      decoration: widget.itemModel.items[index].finished
                           ? TextDecoration.lineThrough
                           : TextDecoration.none,
                     ),
@@ -97,7 +92,7 @@ class _ItemsSliverListState extends State<ItemsSliverList> {
           ),
         );
       })),
-      onReorder: itemModel.updateItemsIndex,
+      onReorder: widget.itemModel.updateItemsIndex,
     );
   }
 

@@ -43,9 +43,29 @@ class _HomeContentState extends State<HomeContent> {
               ),
             ),
           ),
-          ItemsSliverList(
-            isTodayItem: true,
-          ),
+          Consumer<TodayItemsModel>(
+              builder: (BuildContext context, itemModel, Widget child) {
+            return FutureBuilder<void>(
+              future: itemModel.fetchItems(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ItemsSliverList(itemModel: itemModel);
+                } else if (snapshot.hasError) {
+                  return SliverToBoxAdapter(
+                    child: Center(
+                      child: Text("${snapshot.error}"),
+                    ),
+                  );
+                } else {
+                  return SliverToBoxAdapter(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                }
+              },
+            );
+          }),
           SliverToBoxAdapter(
             child: SizedBox(
               height: 15.0,
@@ -69,9 +89,29 @@ class _HomeContentState extends State<HomeContent> {
             ),
           ),
           // FIXME: drag items from laterItems to todayItems will crash the widget
-          ItemsSliverList(
-            isTodayItem: false,
-          ),
+          Consumer<LaterItemsModel>(
+              builder: (BuildContext context, itemModel, Widget child) {
+            return FutureBuilder<void>(
+              future: itemModel.fetchItems(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ItemsSliverList(itemModel: itemModel);
+                } else if (snapshot.hasError) {
+                  return SliverToBoxAdapter(
+                    child: Center(
+                      child: Text("${snapshot.error}"),
+                    ),
+                  );
+                } else {
+                  return SliverToBoxAdapter(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                }
+              },
+            );
+          }),
         ],
       );
     }
