@@ -148,8 +148,8 @@ class _RegisterPageState extends State<RegisterPage> {
       );
       bool succeed;
       try {
-        succeed = await Request(context)
-            .register(_usernameController.text, _passwordController.text);
+        succeed = await Request.register(
+            _usernameController.text, _passwordController.text);
       } catch (e) {
         // register failed
         Fluttertoast.showToast(msg: e.toString());

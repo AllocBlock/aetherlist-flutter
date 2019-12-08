@@ -14,24 +14,28 @@ class Request {
   // TODO: add initialization
   static void init() {}
 
-  Future<User> login(String userName, String passwd) async {
+  static Future<User> login(String userName, String passwd) async {
     String device_number = "null";
     var requestData;
 
     try {
-      Response response = await Dio().get("https://www.foodiesnotalone.cn/aetherlist/server.php"
-          , queryParameters: {"opcode": "login", "user_name": userName, "passwd": passwd, "device_number": device_number});
+      Response response = await Dio().get(
+          "https://www.foodiesnotalone.cn/aetherlist/server.php",
+          queryParameters: {
+            "opcode": "login",
+            "user_name": userName,
+            "passwd": passwd,
+            "device_number": device_number
+          });
 
       print(response.toString());
       requestData = json.decode(response.toString());
-
     } catch (e) {
       print(e);
     }
     if (requestData['result'] == 'failed') {
       return null;
-    }
-    else {
+    } else {
       Global.profile.session = requestData['session'];
       Map<String, dynamic> json = {
         'id': 0,
@@ -42,13 +46,19 @@ class Request {
     }
   }
 
-  Future<bool> register(String userName, String passwd) async {
+  static Future<bool> register(String userName, String passwd) async {
     // TODO: add web request to register
     String device_number = "null";
     String encoded_passwd = passwd;
     try {
-      Response response = await Dio().get("https://www.foodiesnotalone.cn/aetherlist/server.php"
-          , queryParameters: {"opcode": "register", "user_name": userName, "passwd": encoded_passwd, "device_number": device_number});
+      Response response = await Dio().get(
+          "https://www.foodiesnotalone.cn/aetherlist/server.php",
+          queryParameters: {
+            "opcode": "register",
+            "user_name": userName,
+            "passwd": encoded_passwd,
+            "device_number": device_number
+          });
 
       print(response.toString());
       var requestData = json.decode(response.toString());
@@ -57,57 +67,63 @@ class Request {
       print(e);
       return false;
     }
-
   }
 
-  Future<List<Item>> getAllItems() async {
+  static Future<List<Item>> getAllItems() async {
     String session = Global.profile.session;
     var requestData;
 
     try {
-      Response response = await Dio().get("https://www.foodiesnotalone.cn/aetherlist/server.php"
-          , queryParameters: {"opcode": "getAllItems", "session": session});
+      Response response = await Dio().get(
+          "https://www.foodiesnotalone.cn/aetherlist/server.php",
+          queryParameters: {"opcode": "getAllItems", "session": session});
       print(response.toString());
       requestData = json.encode(response.toString());
     } catch (e) {
       print(e);
     }
 
-    if (requestData['result'] == "fail") return null;
-    else return requestData['data'].map((e) => Item.fromJson(e)).toList();
+    if (requestData['result'] == "fail")
+      return null;
+    else
+      return requestData['data'].map((e) => Item.fromJson(e)).toList();
   }
 
-  Future<List<Item>> getTodayItems() async {
+  static Future<List<Item>> getTodayItems() async {
     String session = Global.profile.session;
     var requestData;
 
     try {
-      Response response = await Dio().get("https://www.foodiesnotalone.cn/aetherlist/server.php"
-          , queryParameters: {"opcode": "getTodayItems", "session": session});
+      Response response = await Dio().get(
+          "https://www.foodiesnotalone.cn/aetherlist/server.php",
+          queryParameters: {"opcode": "getTodayItems", "session": session});
       print(response.toString());
       requestData = json.encode(response.toString());
     } catch (e) {
       print(e);
     }
-
-    if (requestData['result'] == "fail") return null;
-    else return requestData['data'].map((e) => Item.fromJson(e)).toList();
+    if (requestData['result'] == "fail")
+      return null;
+    else
+      return requestData['data'].map((e) => Item.fromJson(e)).toList();
   }
 
-  Future<List<Item>> getLaterItems() async {
+  static Future<List<Item>> getLaterItems() async {
     String session = Global.profile.session;
     var requestData;
 
     try {
-      Response response = await Dio().get("https://www.foodiesnotalone.cn/aetherlist/server.php"
-          , queryParameters: {"opcode": "getLaterItems", "session": session});
+      Response response = await Dio().get(
+          "https://www.foodiesnotalone.cn/aetherlist/server.php",
+          queryParameters: {"opcode": "getLaterItems", "session": session});
       print(response.toString());
       requestData = json.encode(response.toString());
     } catch (e) {
       print(e);
     }
-
-    if (requestData['result'] == "fail") return null;
-    else return requestData['data'].map((e) => Item.fromJson(e)).toList();
+    if (requestData['result'] == "fail")
+      return null;
+    else
+      return requestData['data'].map((e) => Item.fromJson(e)).toList();
   }
 }
