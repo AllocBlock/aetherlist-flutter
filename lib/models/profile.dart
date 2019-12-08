@@ -7,6 +7,7 @@ class Profile {
     Profile();
 
     User user;
+    String session;
     num theme;
     String lastLogin;
     String locale;

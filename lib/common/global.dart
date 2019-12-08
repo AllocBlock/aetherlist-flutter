@@ -26,7 +26,7 @@ class Global {
     var _profile = _cache.get("profile");
     if (_profile != null) {
       try {
-        profile = Profile.fromJson(jsonDecode(_profile));
+        //profile = Profile.fromJson(jsonDecode(_profile));
       } catch (e) {
         print(e);
       }
@@ -42,7 +42,7 @@ class ProfileChangeNotifier extends ChangeNotifier {
 
   @override
   void notifyListeners() {
-    Global.saveProfile();
+    //Global.saveProfile();
     super.notifyListeners();
   }
 }

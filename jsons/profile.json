@@ -1,5 +1,6 @@
 {
   "user": "$user",
+  "session": "abc",
   "theme": 1234,
   "lastLogin": "username",
   "locale": ""
