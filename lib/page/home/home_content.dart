@@ -45,18 +45,27 @@ class _HomeContentState extends State<HomeContent> {
           ),
           Consumer<TodayItemsModel>(
               builder: (BuildContext context, itemModel, Widget child) {
-            return FutureBuilder<void>(
-              future: itemModel.fetchItems(),
+            return FutureBuilder<bool>(
+              future:  itemModel.fetchItems(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return ItemsSliverList(itemModel: itemModel);
+                  print("yes!");
+                  if (snapshot.data == true) return ItemsSliverList(itemModel: itemModel);
+                  else return SliverToBoxAdapter(
+                    child: Center(
+                      child: Text("Fetch data failed"),
+                    ),
+                  );
                 } else if (snapshot.hasError) {
+                  print("error");
                   return SliverToBoxAdapter(
                     child: Center(
                       child: Text("${snapshot.error}"),
                     ),
                   );
                 } else {
+                  print("processing");
+
                   return SliverToBoxAdapter(
                     child: Center(
                       child: CircularProgressIndicator(),

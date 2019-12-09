@@ -28,7 +28,7 @@ class Request {
             "device_number": device_number
           });
 
-      print(response.toString());
+      //print(response.toString());
       requestData = json.decode(response.toString());
     } catch (e) {
       print(e);
@@ -60,7 +60,7 @@ class Request {
             "device_number": device_number
           });
 
-      print(response.toString());
+      //print(response.toString());
       var requestData = json.decode(response.toString());
       return requestData['result'] == 'success';
     } catch (e) {
@@ -77,8 +77,8 @@ class Request {
       Response response = await Dio().get(
           "https://www.foodiesnotalone.cn/aetherlist/server.php",
           queryParameters: {"opcode": "getAllItems", "session": session});
-      print(response.toString());
-      requestData = json.encode(response.toString());
+      //print(response.toString());
+      requestData = jsonDecode(response.toString());
     } catch (e) {
       print(e);
     }
@@ -92,20 +92,21 @@ class Request {
   static Future<List<Item>> getTodayItems() async {
     String session = Global.profile.session;
     var requestData;
-
     try {
       Response response = await Dio().get(
           "https://www.foodiesnotalone.cn/aetherlist/server.php",
-          queryParameters: {"opcode": "getTodayItems", "session": session});
-      print(response.toString());
-      requestData = json.encode(response.toString());
+          queryParameters: {"opcode": "getAllItems", "session": session});
+      //print(response.toString());
+      requestData = jsonDecode(response.toString());
     } catch (e) {
       print(e);
     }
-    if (requestData['result'] == "fail")
+    if (requestData['result'] == "fail") {
       return null;
-    else
-      return requestData['data'].map((e) => Item.fromJson(e)).toList();
+    }
+    else {
+      return List<Item>.from(await requestData['data'].map((e) => Item.fromJson(e)));
+    }
   }
 
   static Future<List<Item>> getLaterItems() async {
@@ -116,7 +117,7 @@ class Request {
       Response response = await Dio().get(
           "https://www.foodiesnotalone.cn/aetherlist/server.php",
           queryParameters: {"opcode": "getLaterItems", "session": session});
-      print(response.toString());
+      //print(response.toString());
       requestData = json.encode(response.toString());
     } catch (e) {
       print(e);
