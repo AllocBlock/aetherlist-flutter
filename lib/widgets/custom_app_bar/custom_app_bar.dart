@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String titleName;
-  final bool showSearchIcon;
-  const CustomAppBar({Key key, this.titleName, this.showSearchIcon})
+  final List<Widget> actionChildren;
+  const CustomAppBar({Key key, this.titleName, this.actionChildren})
       : super(key: key);
 
   @override
@@ -24,14 +24,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
             textScaleFactor: 0.96,
           ),
           elevation: 0.0,
-          actions: <Widget>[
-            widget.showSearchIcon
-                ? IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: !widget.showSearchIcon ? null : () {},
-                  )
-                : Container(),
-          ],
+          actions: widget.actionChildren,
+          backgroundColor: Colors.grey[50],
         )
       ],
     );

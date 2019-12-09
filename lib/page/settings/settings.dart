@@ -7,7 +7,7 @@ class SettingPage extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(
         titleName: 'Settings',
-        showSearchIcon: false,
+        actionChildren: <Widget>[],
       ),
       body: ListView(
         children: <Widget>[],

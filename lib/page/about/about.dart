@@ -7,7 +7,7 @@ class AboutPage extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(
         titleName: 'About',
-        showSearchIcon: false,
+        actionChildren: <Widget>[],
       ),
       body: Container(
         child: Column(
