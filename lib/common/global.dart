@@ -154,8 +154,10 @@ class TodayItemsModel extends ItemsModel {
     }
   }
 
-  Future<void> fetchItems() async =>
-      Global.todayItems = await Request.getTodayItems();
+  Future<bool> fetchItems() async {
+    Global.todayItems = await Request.getTodayItems();
+    return true;
+  }
 
   void toggleFinishItem(int index) => _toggleFinishItem(items, index);
 
