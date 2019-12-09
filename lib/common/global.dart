@@ -6,10 +6,12 @@ import 'package:dcache/dcache.dart';
 import 'package:flutter/material.dart';
 
 const _themes = <MaterialColor>[
+  Colors.pink,
   Colors.purple,
+  Colors.teal,
+  Colors.lime,
   Colors.amber,
   Colors.cyan,
-  Colors.teal,
   Colors.grey,
 ];
 
@@ -156,10 +158,14 @@ class TodayItemsModel extends ItemsModel {
 
   Future<bool> fetchItems() async {
     Global.todayItems = await Request.getTodayItems();
+    _sortItems(items);
     return true;
   }
 
-  void toggleFinishItem(int index) => _toggleFinishItem(items, index);
+  void toggleFinishItem(int index) {
+    _toggleFinishItem(items, index);
+    _sortItems(items);
+  }
 
   void insertItem(Item newItem) => _insertItem(items, newItem);
 
@@ -178,10 +184,16 @@ class LaterItemsModel extends ItemsModel {
     }
   }
 
-  Future<void> fetchItems() async =>
-      Global.laterItems = await Request.getLaterItems();
+  Future<bool> fetchItems() async {
+    Global.laterItems = await Request.getLaterItems();
+    _sortItems(items);
+    return true;
+  }
 
-  void toggleFinishItem(int index) => _toggleFinishItem(items, index);
+  void toggleFinishItem(int index) {
+    _toggleFinishItem(items, index);
+    _sortItems(items);
+  }
 
   void insertItem(Item newItem) => _insertItem(items, newItem);
 

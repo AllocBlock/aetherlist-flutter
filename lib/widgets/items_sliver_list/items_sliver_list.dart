@@ -1,7 +1,5 @@
-import 'package:aetherlist_flutter/common/global.dart';
 import 'package:aetherlist_flutter/models/item.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 
 class ItemsSliverList extends StatefulWidget {
@@ -24,14 +22,19 @@ class _ItemsSliverListState extends State<ItemsSliverList> {
       delegate: ReorderableSliverChildListDelegate(
           List.generate(widget.itemModel.items?.length ?? 0, (index) {
         return Dismissible(
-          key: Key('${widget.itemModel.items[index].id}'),
-          background: _finishCard,
+          key: UniqueKey(),
+//          key: Key('${widget.itemModel.items[index].id}'),
+          background: widget.itemModel.items[index].finished
+              ? _recoverCard
+              : _finishCard,
           secondaryBackground: _archiveCard,
           onDismissed: (direction) {
             final Item tempItem = widget.itemModel.items[index];
             String action;
             if (direction == DismissDirection.startToEnd) {
-              action = 'finished';
+              action = widget.itemModel.items[index].finished
+                  ? 'recovered'
+                  : 'finished';
               widget.itemModel.toggleFinishItem(index);
             } else {
               action = 'archived';
@@ -40,19 +43,17 @@ class _ItemsSliverListState extends State<ItemsSliverList> {
             Scaffold.of(context).showSnackBar(
               SnackBar(
                 content: Text('${tempItem.item_name} $action!'),
-                action: SnackBarAction(
-                  label: 'Undo',
-                  textColor: Colors.white,
-                  onPressed: () {
-                    setState(() {
-                      if (action == 'finished') {
-                        widget.itemModel.toggleFinishItem(index);
-                      } else {
-                        widget.itemModel.insertItem(tempItem);
-                      }
-                    });
-                  },
-                ),
+                action: (action == 'archived')
+                    ? SnackBarAction(
+                        label: 'Undo',
+                        textColor: Colors.white,
+                        onPressed: () {
+                          setState(() {
+                            widget.itemModel.insertItem(tempItem);
+                          });
+                        },
+                      )
+                    : null,
               ),
             );
           },
@@ -64,29 +65,32 @@ class _ItemsSliverListState extends State<ItemsSliverList> {
                 borderRadius: BorderRadius.circular(4.0),
               ),
               margin: EdgeInsets.symmetric(vertical: 4.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Checkbox(
-                    value: widget.itemModel.items[index].finished,
-                    onChanged: (value) {
-                      setState(() {
-                        // FIXME: index has been changed, undo is invalid
-                        widget.itemModel.toggleFinishItem(index);
-                      });
-                    },
-                  ),
-                  Text(
-                    widget.itemModel.items[index].item_name,
-                    style: TextStyle(
-                      decoration: widget.itemModel.items[index].finished
-                          ? TextDecoration.lineThrough
-                          : TextDecoration.none,
+              child: GestureDetector(
+                onTap: () => print("tapped!"),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Checkbox(
+                      value: widget.itemModel.items[index].finished,
+                      onChanged: (value) {
+                        setState(() {
+                          // FIXME: index has been changed, undo is invalid
+                          widget.itemModel.toggleFinishItem(index);
+                        });
+                      },
                     ),
-                  ),
-                ],
+                    Text(
+                      widget.itemModel.items[index].item_name,
+                      style: TextStyle(
+                        decoration: widget.itemModel.items[index].finished
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -113,6 +117,30 @@ class _ItemsSliverListState extends State<ItemsSliverList> {
           ),
           Text(
             'Finish',
+            style: TextStyle(color: Colors.white),
+          ),
+        ],
+      ),
+    ),
+  );
+
+  static final Card _recoverCard = Card(
+    child: Container(
+      height: 10.0,
+      color: Colors.lime,
+      padding: EdgeInsets.all(10.0),
+      alignment: AlignmentDirectional.centerStart,
+      child: Row(
+        children: <Widget>[
+          Icon(
+            Icons.swap_horiz,
+            color: Colors.white,
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Text(
+            'Recover',
             style: TextStyle(color: Colors.white),
           ),
         ],

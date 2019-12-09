@@ -1,8 +1,7 @@
 import 'package:aetherlist_flutter/common/global.dart';
-import 'package:aetherlist_flutter/common/request.dart';
 import 'package:aetherlist_flutter/l10n/localization_intl.dart';
-import 'package:aetherlist_flutter/models/index.dart';
 import 'package:aetherlist_flutter/widgets/items_sliver_list/items_sliver_list.dart';
+import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,8 +11,13 @@ class HomeContent extends StatefulWidget {
 }
 
 class _HomeContentState extends State<HomeContent> {
+  AsyncMemoizer<bool> todayMemoizer;
+  AsyncMemoizer<bool> laterMemoizer;
+
   @override
   void initState() {
+    todayMemoizer = AsyncMemoizer();
+    laterMemoizer = AsyncMemoizer();
     super.initState();
   }
 
@@ -46,16 +50,18 @@ class _HomeContentState extends State<HomeContent> {
           Consumer<TodayItemsModel>(
               builder: (BuildContext context, itemModel, Widget child) {
             return FutureBuilder<bool>(
-              future:  itemModel.fetchItems(),
+              future: todayMemoizer.runOnce(itemModel.fetchItems),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   print("yes!");
-                  if (snapshot.data == true) return ItemsSliverList(itemModel: itemModel);
-                  else return SliverToBoxAdapter(
-                    child: Center(
-                      child: Text("Fetch data failed"),
-                    ),
-                  );
+                  if (snapshot.data == true)
+                    return ItemsSliverList(itemModel: itemModel);
+                  else
+                    return SliverToBoxAdapter(
+                      child: Center(
+                        child: Text("Fetch data failed"),
+                      ),
+                    );
                 } else if (snapshot.hasError) {
                   print("error");
                   return SliverToBoxAdapter(
@@ -77,7 +83,7 @@ class _HomeContentState extends State<HomeContent> {
           }),
           SliverToBoxAdapter(
             child: SizedBox(
-              height: 15.0,
+              height: 20.0,
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
@@ -97,11 +103,10 @@ class _HomeContentState extends State<HomeContent> {
               ),
             ),
           ),
-          // FIXME: drag items from laterItems to todayItems will crash the widget
           Consumer<LaterItemsModel>(
               builder: (BuildContext context, itemModel, Widget child) {
-            return FutureBuilder<void>(
-              future: itemModel.fetchItems(),
+            return FutureBuilder<bool>(
+              future: laterMemoizer.runOnce(itemModel.fetchItems),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ItemsSliverList(itemModel: itemModel);

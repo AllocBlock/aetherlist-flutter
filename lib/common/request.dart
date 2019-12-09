@@ -1,10 +1,10 @@
 import 'dart:convert';
 
+import 'package:aetherlist_flutter/common/global.dart';
 import 'package:aetherlist_flutter/models/index.dart';
 import 'package:aetherlist_flutter/models/user.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:aetherlist_flutter/common/global.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 
 class Request {
   Request([this.context]);
@@ -47,7 +47,6 @@ class Request {
   }
 
   static Future<bool> register(String userName, String passwd) async {
-    // TODO: add web request to register
     String device_number = "null";
     String encoded_passwd = passwd;
     try {
@@ -95,7 +94,7 @@ class Request {
     try {
       Response response = await Dio().get(
           "https://www.foodiesnotalone.cn/aetherlist/server.php",
-          queryParameters: {"opcode": "getAllItems", "session": session});
+          queryParameters: {"opcode": "getTodayItems", "session": session});
       //print(response.toString());
       requestData = jsonDecode(response.toString());
     } catch (e) {
@@ -103,28 +102,28 @@ class Request {
     }
     if (requestData['result'] == "fail") {
       return null;
-    }
-    else {
-      return List<Item>.from(await requestData['data'].map((e) => Item.fromJson(e)));
+    } else {
+      return List<Item>.from(
+          await requestData['data'].map((e) => Item.fromJson(e)));
     }
   }
 
   static Future<List<Item>> getLaterItems() async {
     String session = Global.profile.session;
     var requestData;
-
     try {
       Response response = await Dio().get(
           "https://www.foodiesnotalone.cn/aetherlist/server.php",
           queryParameters: {"opcode": "getLaterItems", "session": session});
       //print(response.toString());
-      requestData = json.encode(response.toString());
+      requestData = jsonDecode(response.toString());
     } catch (e) {
       print(e);
     }
     if (requestData['result'] == "fail")
       return null;
     else
-      return requestData['data'].map((e) => Item.fromJson(e)).toList();
+      return List<Item>.from(
+          await requestData['data'].map((e) => Item.fromJson(e)));
   }
 }
