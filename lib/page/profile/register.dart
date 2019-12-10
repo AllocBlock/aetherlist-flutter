@@ -1,7 +1,7 @@
 import 'package:aetherlist_flutter/common/request.dart';
 import 'package:aetherlist_flutter/l10n/localization_intl.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -152,7 +152,7 @@ class _RegisterPageState extends State<RegisterPage> {
             _usernameController.text, _passwordController.text);
       } catch (e) {
         // register failed
-        Fluttertoast.showToast(msg: e.toString());
+        BotToast.showText(text: e.toString());
       } finally {
         // pop loading dialog
         Navigator.of(context).pop();

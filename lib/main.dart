@@ -8,6 +8,7 @@ import 'package:aetherlist_flutter/page/profile/register.dart';
 import 'package:aetherlist_flutter/page/settings/language_page.dart';
 import 'package:aetherlist_flutter/page/settings/settings.dart';
 import 'package:aetherlist_flutter/page/settings/theme_page.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -28,46 +29,49 @@ class App extends StatelessWidget {
       ],
       child: Consumer2<ThemeModel, LocaleModel>(builder:
           (BuildContext context, themeModel, localeModel, Widget child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: themeModel.theme,
-            cardColor: themeModel.theme[200],
-          ),
-          home: HomePage(),
-          locale: localeModel.getLocale(),
-          supportedLocales: [
-            const Locale('en', 'US'),
-            const Locale('zh', 'CN'),
-          ],
-          localizationsDelegates: [
-            GlobalWidgetsLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            CustomLocalizationsDelegate()
-          ],
-          localeResolutionCallback:
-              (Locale _locale, Iterable<Locale> supportedLocales) {
-            if (localeModel.getLocale() != null) {
-              return localeModel.getLocale();
-            } else {
-              Locale locale;
-              if (supportedLocales.contains(_locale)) {
-                locale = _locale;
+        return BotToastInit(
+          child: MaterialApp(
+            navigatorObservers: [BotToastNavigatorObserver()],
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              primarySwatch: themeModel.theme,
+              cardColor: themeModel.theme[200],
+            ),
+            home: HomePage(),
+            locale: localeModel.getLocale(),
+            supportedLocales: [
+              const Locale('en', 'US'),
+              const Locale('zh', 'CN'),
+            ],
+            localizationsDelegates: [
+              GlobalWidgetsLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              CustomLocalizationsDelegate()
+            ],
+            localeResolutionCallback:
+                (Locale _locale, Iterable<Locale> supportedLocales) {
+              if (localeModel.getLocale() != null) {
+                return localeModel.getLocale();
               } else {
-                locale = Locale('en', 'US');
+                Locale locale;
+                if (supportedLocales.contains(_locale)) {
+                  locale = _locale;
+                } else {
+                  locale = Locale('en', 'US');
+                }
+                return locale;
               }
-              return locale;
-            }
-          },
-          routes: <String, WidgetBuilder>{
-            '/login': (context) => LoginPage(),
-            '/register': (context) => RegisterPage(),
-            '/settings': (context) => SettingPage(),
-            '/about': (context) => AboutPage(),
-            '/add': (context) => AddPage(),
-            '/settings/theme': (context) => ThemePage(),
-            '/settings/language': (context) => LanguagePage(),
-          },
+            },
+            routes: <String, WidgetBuilder>{
+              '/login': (context) => LoginPage(),
+              '/register': (context) => RegisterPage(),
+              '/settings': (context) => SettingPage(),
+              '/about': (context) => AboutPage(),
+              '/add': (context) => AddPage(),
+              '/settings/theme': (context) => ThemePage(),
+              '/settings/language': (context) => LanguagePage(),
+            },
+          ),
         );
       }),
     );

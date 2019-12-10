@@ -2,7 +2,7 @@ import 'package:aetherlist_flutter/common/global.dart';
 import 'package:aetherlist_flutter/models/category.dart';
 import 'package:aetherlist_flutter/models/item.dart';
 import 'package:aetherlist_flutter/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:aetherlist_flutter/widgets/custom_loading_dialog/custom_loading_dialog.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -35,14 +35,10 @@ class _AddPageState extends State<AddPage> {
             icon: const Icon(Icons.save),
             tooltip: "Save button",
             onPressed: () {
-              showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (BuildContext context) {
-                  return CustomLoadingDialog(
-                    loading: Text("Add new item..."),
-                  );
-                },
+              BotToast.showLoading(
+                clickClose: false,
+                allowClick: false,
+                crossPage: false,
               );
               Item newItem = Item();
               newItem.id = 0;
@@ -59,7 +55,7 @@ class _AddPageState extends State<AddPage> {
               Provider.of<AllItemsModel>(context)
                   .addItem(newItem)
                   .then((succeed) {
-                Navigator.pop(context);
+                BotToast.closeAllLoading();
                 if (succeed) {
                 } else {}
               });

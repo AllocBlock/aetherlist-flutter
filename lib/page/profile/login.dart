@@ -2,9 +2,8 @@ import 'package:aetherlist_flutter/common/global.dart';
 import 'package:aetherlist_flutter/common/request.dart';
 import 'package:aetherlist_flutter/l10n/localization_intl.dart';
 import 'package:aetherlist_flutter/models/user.dart';
-import 'package:aetherlist_flutter/widgets/custom_loading_dialog/custom_loading_dialog.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -153,14 +152,10 @@ class _LoginPageState extends State<LoginPage> {
   void _onLogin() async {
     if ((_formKey.currentState as FormState).validate()) {
       // show loading dialog
-      showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return CustomLoadingDialog(
-            loading: Text("Now loading..."),
-          );
-        },
+      BotToast.showLoading(
+        clickClose: false,
+        allowClick: false,
+        crossPage: false,
       );
       User user;
       try {
@@ -168,26 +163,25 @@ class _LoginPageState extends State<LoginPage> {
             _usernameController.text, _passwordController.text);
         // homepage will be rebuilt when pop login page, so need not to update
         Provider.of<UserModel>(context, listen: false).user = user;
-        print(user.toJson());
       } catch (e) {
         // login failed
         if (e.response?.statusCode == 401) {
-          Fluttertoast.showToast(
-              msg: CustomLocalizations.of(context).usernameOrPasswordWrong);
+          BotToast.showText(
+              text: CustomLocalizations.of(context).usernameOrPasswordWrong);
         } else {
-          Fluttertoast.showToast(msg: e.toString());
+          BotToast.showText(text: e.toString());
         }
       } finally {
         // pop loading dialog
-        Navigator.of(context).pop();
+        BotToast.closeAllLoading();
       }
       if (user != null) {
+        print(user.toJson());
         // return to homepage
         Navigator.of(context).pop();
       } else {
-        print('~~~~');
-        Fluttertoast.showToast(
-            msg: CustomLocalizations.of(context).usernameOrPasswordWrong);
+        BotToast.showText(
+            text: CustomLocalizations.of(context).usernameOrPasswordWrong);
       }
     }
   }
