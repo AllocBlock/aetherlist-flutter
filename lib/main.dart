@@ -32,6 +32,7 @@ class App extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: themeModel.theme,
+            cardColor: themeModel.theme[200],
           ),
           home: HomePage(),
           locale: localeModel.getLocale(),

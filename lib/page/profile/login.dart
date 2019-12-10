@@ -2,6 +2,7 @@ import 'package:aetherlist_flutter/common/global.dart';
 import 'package:aetherlist_flutter/common/request.dart';
 import 'package:aetherlist_flutter/l10n/localization_intl.dart';
 import 'package:aetherlist_flutter/models/user.dart';
+import 'package:aetherlist_flutter/widgets/custom_loading_dialog/custom_loading_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -156,19 +157,8 @@ class _LoginPageState extends State<LoginPage> {
         barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(4.0),
-              ),
-            ),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Container(
-                    width: 50, height: 50, child: CircularProgressIndicator()),
-              ],
-            ),
+          return CustomLoadingDialog(
+            loading: Text("Now loading..."),
           );
         },
       );
@@ -188,17 +178,17 @@ class _LoginPageState extends State<LoginPage> {
           Fluttertoast.showToast(msg: e.toString());
         }
       } finally {
-        // get all items from server
-        //Provider.of<AllItemsModel>(context).allItems =
-        //    await Request(context).getAllItems();
         // pop loading dialog
         Navigator.of(context).pop();
       }
       if (user != null) {
         // return to homepage
         Navigator.of(context).pop();
-      } else
-        print(user);
+      } else {
+        print('~~~~');
+        Fluttertoast.showToast(
+            msg: CustomLocalizations.of(context).usernameOrPasswordWrong);
+      }
     }
   }
 }

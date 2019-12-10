@@ -5,7 +5,8 @@ import 'package:provider/provider.dart';
 
 class NavigationDrawerContent extends StatelessWidget {
   final bool isMobile;
-  const NavigationDrawerContent({Key key, @required this.isMobile}) : super(key: key);
+  const NavigationDrawerContent({Key key, @required this.isMobile})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,8 @@ class NavigationDrawerContent extends StatelessWidget {
                         children: <Widget>[
                           GestureDetector(
                             onTap: () {
-                              Navigator.of(context).pushNamed('/login');
+                              if (!userModel.isLogin)
+                                Navigator.of(context).pushNamed('/login');
                             },
                             child: Column(
                               children: <Widget>[
@@ -65,9 +67,7 @@ class NavigationDrawerContent extends StatelessWidget {
               onTap: () {
                 if (isMobile) {
                   Navigator.pop(context);
-                } else {
-
-                }
+                } else {}
               },
             ),
             ListTile(
@@ -76,9 +76,7 @@ class NavigationDrawerContent extends StatelessWidget {
               onTap: () {
                 if (isMobile) {
                   Navigator.pop(context);
-                } else {
-
-                }
+                } else {}
               },
             ),
             ListTile(
@@ -87,9 +85,7 @@ class NavigationDrawerContent extends StatelessWidget {
               onTap: () {
                 if (isMobile) {
                   Navigator.pop(context);
-                } else {
-
-                }
+                } else {}
               },
             ),
             ListTile(
@@ -104,7 +100,7 @@ class NavigationDrawerContent extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.info),
-              title: Text('About'),
+              title: Text(localText.about),
               onTap: () {
                 if (isMobile) {
                   Navigator.pop(context);
@@ -134,6 +130,7 @@ class NavigationDrawerContent extends StatelessWidget {
                               child: Text(localText.yes),
                               onPressed: () {
                                 userModel.user = null;
+                                Global.profile.session = "";
                                 Navigator.pop(context);
                               },
                             ),
@@ -141,7 +138,17 @@ class NavigationDrawerContent extends StatelessWidget {
                         );
                       });
                 },
-              ),
+              )
+            else
+              ListTile(
+                  leading: const Icon(Icons.person),
+                  title: Text(localText.login),
+                  onTap: () {
+                    if (isMobile) {
+                      Navigator.pop(context);
+                    }
+                    Navigator.pushNamed(context, '/login');
+                  }),
             // TODO: add today progress indicator
 //        Align(
 //          alignment: FractionalOffset.bottomCenter,

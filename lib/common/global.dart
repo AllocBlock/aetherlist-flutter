@@ -4,6 +4,7 @@ import 'package:aetherlist_flutter/common/request.dart';
 import 'package:aetherlist_flutter/models/index.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 
 const _themes = <MaterialColor>[
   Colors.cyan,
@@ -18,6 +19,7 @@ class Global {
   static List<Item> todayItems = [];
   static List<Item> laterItems = [];
   static List<Item> allItems = [];
+  static List<Category> categories = [];
 
   static List<MaterialColor> get themes => _themes;
   static Future init() async {
@@ -205,6 +207,8 @@ class LaterItemsModel extends ItemsModel {
 
 class AllItemsModel extends ItemsModel {
   List<Item> get items => Global.allItems;
+  List<Category> get categories => Global.categories;
+
   set allItems(List<Item> newItems) {
     if (newItems != Global.allItems) {
       Global.allItems = newItems;
@@ -212,6 +216,27 @@ class AllItemsModel extends ItemsModel {
     }
   }
 
-  Future<void> fetchItems() async =>
-      Global.allItems = await Request.getAllItems();
+  Future<bool> addItem(Item item) async {
+    if (await Request.addItem(item)) {
+      if (item.due_time == DateFormat("yyyy-MM-dd").format(DateTime.now())) {
+        Global.todayItems.add(item);
+      } else if (item.enable_time_range) {
+        Global.laterItems.add(item);
+      }
+      Global.allItems.add(item);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> fetchItems() async {
+    Global.allItems = await Request.getAllItems();
+    return true;
+  }
+
+  Future<bool> fetchCategories() async {
+    Global.categories = await Request.getCategories();
+    return true;
+  }
 }

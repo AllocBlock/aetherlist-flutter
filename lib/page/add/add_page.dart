@@ -1,9 +1,11 @@
+import 'package:aetherlist_flutter/common/global.dart';
+import 'package:aetherlist_flutter/models/category.dart';
+import 'package:aetherlist_flutter/models/item.dart';
 import 'package:aetherlist_flutter/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:aetherlist_flutter/widgets/custom_loading_dialog/custom_loading_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-// FOR TEST ONLY
-const List<String> _testCategories = ["Academic", "Shopping", "Health"];
+import 'package:provider/provider.dart';
 
 class AddPage extends StatefulWidget {
   @override
@@ -16,7 +18,7 @@ class _AddPageState extends State<AddPage> {
   TextEditingController _locationController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   GlobalKey _formKey = GlobalKey<FormState>();
-  String _selectCategory = _testCategories[0];
+  Category _selectCategory;
   double _priority = 0.5;
   bool _isTimeRangeMode = false;
   bool _enableNotification = false;
@@ -28,7 +30,43 @@ class _AddPageState extends State<AddPage> {
     return Scaffold(
       appBar: CustomAppBar(
         titleName: 'Add new item',
-        actionChildren: <Widget>[],
+        actionChildren: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.save),
+            tooltip: "Save button",
+            onPressed: () {
+              showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (BuildContext context) {
+                  return CustomLoadingDialog(
+                    loading: Text("Add new item..."),
+                  );
+                },
+              );
+              Item newItem = Item();
+              newItem.id = 0;
+              newItem.item_name = _titleNameController.text;
+              newItem.category_id = _selectCategory.id;
+              newItem.priority = _priority;
+              newItem.tags = _tagsController.text.split(',');
+              newItem.enable_time_range = _isTimeRangeMode;
+              newItem.due_time = DateFormat("yyyy-MM-dd").format(_dueDate);
+              newItem.enable_notification = _enableNotification;
+              newItem.notify_time = "${_notifyTime.hour}:${_notifyTime.minute}";
+              newItem.location = _locationController.text;
+              newItem.description = _descriptionController.text;
+              Provider.of<AllItemsModel>(context)
+                  .addItem(newItem)
+                  .then((succeed) {
+                Navigator.pop(context);
+                if (succeed) {
+                } else {}
+              });
+              Navigator.pop(context);
+            },
+          ),
+        ],
       ),
       body: Form(
         key: _formKey,
@@ -51,22 +89,31 @@ class _AddPageState extends State<AddPage> {
                 return value.trim().length > 0 ? null : 'Title cannot be empty';
               },
             ),
-            Divider(),
+            SizedBox(
+              height: 12,
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Text('Category'),
-                SizedBox(width: 15,),
+                SizedBox(
+                  width: 15,
+                ),
                 DropdownButton(
                   value: _selectCategory,
-                  items: _testCategories.map<DropdownMenuItem<String>>((String category) {
-                    return DropdownMenuItem<String>(
+                  items: Provider.of<AllItemsModel>(context)
+                      .categories
+                      .map<DropdownMenuItem<Category>>((Category category) {
+                    return DropdownMenuItem<Category>(
                       value: category,
-                      child: Text(category, textScaleFactor: 0.85,),
+                      child: Text(
+                        category.category_name,
+                        textScaleFactor: 0.85,
+                      ),
                     );
                   }).toList(),
-                  onChanged: (String newCategory) {
+                  onChanged: (Category newCategory) {
                     setState(() {
                       _selectCategory = newCategory;
                     });
@@ -74,7 +121,9 @@ class _AddPageState extends State<AddPage> {
                 )
               ],
             ),
-            Divider(),
+            SizedBox(
+              height: 12,
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -107,7 +156,9 @@ class _AddPageState extends State<AddPage> {
                 ),
               ],
             ),
-            Divider(),
+            SizedBox(
+              height: 12,
+            ),
             TextFormField(
               controller: _tagsController,
               decoration: InputDecoration(
@@ -118,7 +169,9 @@ class _AddPageState extends State<AddPage> {
                 ),
               ),
             ),
-            Divider(),
+            SizedBox(
+              height: 12,
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -138,7 +191,9 @@ class _AddPageState extends State<AddPage> {
                 ),
               ],
             ),
-            Divider(),
+            SizedBox(
+              height: 12,
+            ),
             ListTile(
               leading: Icon(Icons.event_note),
               title: Text('Due date:'),
@@ -148,7 +203,9 @@ class _AddPageState extends State<AddPage> {
                 onPressed: () => _selectDate(),
               ),
             ),
-            Divider(),
+            SizedBox(
+              height: 12,
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -168,7 +225,9 @@ class _AddPageState extends State<AddPage> {
                 ),
               ],
             ),
-            Divider(),
+            SizedBox(
+              height: 12,
+            ),
             ListTile(
               leading: Icon(Icons.access_time),
               title: Text('Notify time:'),
@@ -179,7 +238,9 @@ class _AddPageState extends State<AddPage> {
                 onPressed: () => _selectTime(),
               ),
             ),
-            Divider(),
+            SizedBox(
+              height: 12,
+            ),
             TextFormField(
               controller: _locationController,
               decoration: InputDecoration(
@@ -190,7 +251,9 @@ class _AddPageState extends State<AddPage> {
                 ),
               ),
             ),
-            Divider(),
+            SizedBox(
+              height: 12,
+            ),
             TextFormField(
               controller: _descriptionController,
               keyboardType: TextInputType.multiline,
@@ -203,7 +266,9 @@ class _AddPageState extends State<AddPage> {
                 ),
               ),
             ),
-            Divider(),
+            SizedBox(
+              height: 12,
+            ),
           ],
         ),
       ),

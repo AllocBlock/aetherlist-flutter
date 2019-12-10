@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import 'messages_all.dart';
 
 class CustomLocalizations {
@@ -101,7 +102,7 @@ class CustomLocalizations {
     return Intl.message(
       'Categories',
       name: 'categories',
-      desc: 'Categories name in navigation drawer',
+      desc: 'Categories text in navigation drawer',
     );
   }
 
@@ -109,7 +110,7 @@ class CustomLocalizations {
     return Intl.message(
       'Statistics',
       name: 'statistics',
-      desc: 'Statistics name in navigation drawer',
+      desc: 'Statistics text in navigation drawer',
     );
   }
 
@@ -117,7 +118,7 @@ class CustomLocalizations {
     return Intl.message(
       'Archives',
       name: 'archives',
-      desc: 'Archives name in navigation drawer',
+      desc: 'Archives text in navigation drawer',
     );
   }
 
@@ -125,7 +126,15 @@ class CustomLocalizations {
     return Intl.message(
       'Settings',
       name: 'settings',
-      desc: 'Settings name in navigation drawer',
+      desc: 'Settings text in navigation drawer',
+    );
+  }
+
+  String get about {
+    return Intl.message(
+      'About',
+      name: 'about',
+      desc: 'About text in navigation drawer',
     );
   }
 }
