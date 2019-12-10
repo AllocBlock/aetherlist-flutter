@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class NavigationDrawerContent extends StatelessWidget {
-  const NavigationDrawerContent({Key key}) : super(key: key);
+  final bool isMobile;
+  const NavigationDrawerContent({Key key, @required this.isMobile})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,8 @@ class NavigationDrawerContent extends StatelessWidget {
                         children: <Widget>[
                           GestureDetector(
                             onTap: () {
-                              Navigator.of(context).pushNamed('/login');
+                              if (!userModel.isLogin)
+                                Navigator.of(context).pushNamed('/login');
                             },
                             child: Column(
                               children: <Widget>[
@@ -61,29 +64,47 @@ class NavigationDrawerContent extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.category),
               title: Text(localText.categories),
-              onTap: () {},
+              onTap: () {
+                if (isMobile) {
+                  Navigator.pop(context);
+                } else {}
+              },
             ),
             ListTile(
               leading: Icon(Icons.equalizer),
               title: Text(localText.statistics),
-              onTap: () {},
+              onTap: () {
+                if (isMobile) {
+                  Navigator.pop(context);
+                } else {}
+              },
             ),
             ListTile(
               leading: Icon(Icons.archive),
               title: Text(localText.archives),
-              onTap: () {},
+              onTap: () {
+                if (isMobile) {
+                  Navigator.pop(context);
+                } else {}
+              },
             ),
             ListTile(
               leading: Icon(Icons.settings),
               title: Text(localText.settings),
               onTap: () {
+                if (isMobile) {
+                  Navigator.pop(context);
+                }
                 Navigator.of(context).pushNamed('/settings');
               },
             ),
             ListTile(
               leading: Icon(Icons.info),
-              title: Text('About'),
+              title: Text(localText.about),
               onTap: () {
+                if (isMobile) {
+                  Navigator.pop(context);
+                }
                 Navigator.of(context).pushNamed('/about');
               },
             ),
@@ -92,6 +113,9 @@ class NavigationDrawerContent extends StatelessWidget {
                 leading: const Icon(Icons.power_settings_new),
                 title: Text(localText.logout),
                 onTap: () {
+                  if (isMobile) {
+                    Navigator.pop(context);
+                  }
                   showDialog(
                       context: context,
                       builder: (context) {
@@ -106,6 +130,7 @@ class NavigationDrawerContent extends StatelessWidget {
                               child: Text(localText.yes),
                               onPressed: () {
                                 userModel.user = null;
+                                Global.profile.session = "";
                                 Navigator.pop(context);
                               },
                             ),
@@ -113,7 +138,17 @@ class NavigationDrawerContent extends StatelessWidget {
                         );
                       });
                 },
-              ),
+              )
+            else
+              ListTile(
+                  leading: const Icon(Icons.person),
+                  title: Text(localText.login),
+                  onTap: () {
+                    if (isMobile) {
+                      Navigator.pop(context);
+                    }
+                    Navigator.pushNamed(context, '/login');
+                  }),
             // TODO: add today progress indicator
 //        Align(
 //          alignment: FractionalOffset.bottomCenter,

@@ -37,7 +37,7 @@ class NavigationDrawerTabletDesktopState
               color: Colors.black12,
             )
           ]),
-          child: NavigationDrawerContent(),
+          child: NavigationDrawerContent(isMobile: false,),
         ),
       ),
     );

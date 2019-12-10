@@ -2,31 +2,32 @@ import 'dart:convert';
 
 import 'package:aetherlist_flutter/common/request.dart';
 import 'package:aetherlist_flutter/models/index.dart';
-import 'package:dcache/dcache.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 
 const _themes = <MaterialColor>[
-  Colors.purple,
-  Colors.amber,
   Colors.cyan,
-  Colors.teal,
+  Colors.lime,
+  Colors.amber,
   Colors.grey,
 ];
 
 class Global {
-  static Cache _cache;
+  static Box _profileBox;
   static Profile profile = Profile();
   static List<Item> todayItems = [];
   static List<Item> laterItems = [];
   static List<Item> allItems = [];
+  static List<Category> categories = [];
 
   static List<MaterialColor> get themes => _themes;
   static Future init() async {
-    Cache _cache = SimpleCache(storage: SimpleStorage(size: 20));
-    var _profile = _cache.get("profile");
+    _profileBox = await Hive.openBox("myBox");
+    var _profile = _profileBox.get("profile");
     if (_profile != null) {
       try {
-        //profile = Profile.fromJson(jsonDecode(_profile));
+        profile = Profile.fromJson(jsonDecode(_profile));
       } catch (e) {
         print(e);
       }
@@ -34,7 +35,10 @@ class Global {
     Request.init();
   }
 
-  static saveProfile() => _cache.set("profile", jsonEncode(profile.toJson()));
+  static saveProfile() {
+    _profileBox.put("profile", profile.toJson());
+    print("BoxInfo: ${_profileBox.get("profile")}");
+  }
 }
 
 class ProfileChangeNotifier extends ChangeNotifier {
@@ -42,7 +46,7 @@ class ProfileChangeNotifier extends ChangeNotifier {
 
   @override
   void notifyListeners() {
-    //Global.saveProfile();
+    Global.saveProfile();
     super.notifyListeners();
   }
 }
@@ -63,11 +67,11 @@ class UserModel extends ProfileChangeNotifier {
 
 class ThemeModel extends ProfileChangeNotifier {
   ColorSwatch get theme => Global.themes
-      .firstWhere((e) => e.value == _profile.theme, orElse: () => Colors.grey);
+      .firstWhere((e) => e.value == _profile.theme, orElse: () => Colors.cyan);
 
   set theme(ColorSwatch color) {
     if (color != theme) {
-      _profile.theme = color[500].value;
+      _profile.theme = color.value;
       notifyListeners();
     }
   }
@@ -156,10 +160,14 @@ class TodayItemsModel extends ItemsModel {
 
   Future<bool> fetchItems() async {
     Global.todayItems = await Request.getTodayItems();
+    _sortItems(items);
     return true;
   }
 
-  void toggleFinishItem(int index) => _toggleFinishItem(items, index);
+  void toggleFinishItem(int index) {
+    _toggleFinishItem(items, index);
+    _sortItems(items);
+  }
 
   void insertItem(Item newItem) => _insertItem(items, newItem);
 
@@ -178,10 +186,16 @@ class LaterItemsModel extends ItemsModel {
     }
   }
 
-  Future<void> fetchItems() async =>
-      Global.laterItems = await Request.getLaterItems();
+  Future<bool> fetchItems() async {
+    Global.laterItems = await Request.getLaterItems();
+    _sortItems(items);
+    return true;
+  }
 
-  void toggleFinishItem(int index) => _toggleFinishItem(items, index);
+  void toggleFinishItem(int index) {
+    _toggleFinishItem(items, index);
+    _sortItems(items);
+  }
 
   void insertItem(Item newItem) => _insertItem(items, newItem);
 
@@ -193,6 +207,8 @@ class LaterItemsModel extends ItemsModel {
 
 class AllItemsModel extends ItemsModel {
   List<Item> get items => Global.allItems;
+  List<Category> get categories => Global.categories;
+
   set allItems(List<Item> newItems) {
     if (newItems != Global.allItems) {
       Global.allItems = newItems;
@@ -200,6 +216,27 @@ class AllItemsModel extends ItemsModel {
     }
   }
 
-  Future<void> fetchItems() async =>
-      Global.allItems = await Request.getAllItems();
+  Future<bool> addItem(Item item) async {
+    if (await Request.addItem(item)) {
+      if (item.due_time == DateFormat("yyyy-MM-dd").format(DateTime.now())) {
+        Global.todayItems.add(item);
+      } else if (item.enable_time_range) {
+        Global.laterItems.add(item);
+      }
+      Global.allItems.add(item);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> fetchItems() async {
+    Global.allItems = await Request.getAllItems();
+    return true;
+  }
+
+  Future<bool> fetchCategories() async {
+    Global.categories = await Request.getCategories();
+    return true;
+  }
 }

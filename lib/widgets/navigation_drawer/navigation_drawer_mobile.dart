@@ -14,7 +14,7 @@ class NavigationDrawerMobile extends StatelessWidget {
           color: Colors.black12,
         )
       ]),
-      child: NavigationDrawerContent(),
+      child: NavigationDrawerContent(isMobile: true,),
     );
   }
 }

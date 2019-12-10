@@ -21,6 +21,21 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-    "categoriesName" : MessageLookupByLibrary.simpleMessage("Categories")
+    "archives" : MessageLookupByLibrary.simpleMessage("Archives"),
+    "cancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
+    "categories" : MessageLookupByLibrary.simpleMessage("Categories"),
+    "login" : MessageLookupByLibrary.simpleMessage("Login"),
+    "logout" : MessageLookupByLibrary.simpleMessage("Logout"),
+    "logoutTip" : MessageLookupByLibrary.simpleMessage("Are you sure you want to logout?"),
+    "no" : MessageLookupByLibrary.simpleMessage("No"),
+    "password" : MessageLookupByLibrary.simpleMessage("Password"),
+    "passwordRequired" : MessageLookupByLibrary.simpleMessage("Password required"),
+    "register" : MessageLookupByLibrary.simpleMessage("Register"),
+    "settings" : MessageLookupByLibrary.simpleMessage("Settings"),
+    "statistics" : MessageLookupByLibrary.simpleMessage("Statistics"),
+    "username" : MessageLookupByLibrary.simpleMessage("Username"),
+    "usernameOrPasswordWrong" : MessageLookupByLibrary.simpleMessage("Username or password wrong"),
+    "usernameRequired" : MessageLookupByLibrary.simpleMessage("Username required"),
+    "yes" : MessageLookupByLibrary.simpleMessage("Yes")
   };
 }
