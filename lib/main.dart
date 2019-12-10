@@ -5,7 +5,9 @@ import 'package:aetherlist_flutter/page/add/add_page.dart';
 import 'package:aetherlist_flutter/page/home/home_page.dart';
 import 'package:aetherlist_flutter/page/profile/login.dart';
 import 'package:aetherlist_flutter/page/profile/register.dart';
+import 'package:aetherlist_flutter/page/settings/language_page.dart';
 import 'package:aetherlist_flutter/page/settings/settings.dart';
+import 'package:aetherlist_flutter/page/settings/theme_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -62,6 +64,8 @@ class App extends StatelessWidget {
             '/settings': (context) => SettingPage(),
             '/about': (context) => AboutPage(),
             '/add': (context) => AddPage(),
+            '/settings/theme': (context) => ThemePage(),
+            '/settings/language': (context) => LanguagePage(),
           },
         );
       }),

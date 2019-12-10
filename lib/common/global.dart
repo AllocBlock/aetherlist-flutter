@@ -2,21 +2,18 @@ import 'dart:convert';
 
 import 'package:aetherlist_flutter/common/request.dart';
 import 'package:aetherlist_flutter/models/index.dart';
-import 'package:dcache/dcache.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 const _themes = <MaterialColor>[
-  Colors.pink,
-  Colors.purple,
-  Colors.teal,
+  Colors.cyan,
   Colors.lime,
   Colors.amber,
-  Colors.cyan,
   Colors.grey,
 ];
 
 class Global {
-  static Cache _cache;
+  static Box _profileBox;
   static Profile profile = Profile();
   static List<Item> todayItems = [];
   static List<Item> laterItems = [];
@@ -24,11 +21,11 @@ class Global {
 
   static List<MaterialColor> get themes => _themes;
   static Future init() async {
-    Cache _cache = SimpleCache(storage: SimpleStorage(size: 20));
-    var _profile = _cache.get("profile");
+    _profileBox = await Hive.openBox("myBox");
+    var _profile = _profileBox.get("profile");
     if (_profile != null) {
       try {
-        //profile = Profile.fromJson(jsonDecode(_profile));
+        profile = Profile.fromJson(jsonDecode(_profile));
       } catch (e) {
         print(e);
       }
@@ -36,7 +33,10 @@ class Global {
     Request.init();
   }
 
-  static saveProfile() => _cache.set("profile", jsonEncode(profile.toJson()));
+  static saveProfile() {
+    _profileBox.put("profile", profile.toJson());
+    print("BoxInfo: ${_profileBox.get("profile")}");
+  }
 }
 
 class ProfileChangeNotifier extends ChangeNotifier {
@@ -44,7 +44,7 @@ class ProfileChangeNotifier extends ChangeNotifier {
 
   @override
   void notifyListeners() {
-    //Global.saveProfile();
+    Global.saveProfile();
     super.notifyListeners();
   }
 }
@@ -65,11 +65,11 @@ class UserModel extends ProfileChangeNotifier {
 
 class ThemeModel extends ProfileChangeNotifier {
   ColorSwatch get theme => Global.themes
-      .firstWhere((e) => e.value == _profile.theme, orElse: () => Colors.grey);
+      .firstWhere((e) => e.value == _profile.theme, orElse: () => Colors.cyan);
 
   set theme(ColorSwatch color) {
     if (color != theme) {
-      _profile.theme = color[500].value;
+      _profile.theme = color.value;
       notifyListeners();
     }
   }

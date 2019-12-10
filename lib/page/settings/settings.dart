@@ -10,7 +10,18 @@ class SettingPage extends StatelessWidget {
         actionChildren: <Widget>[],
       ),
       body: ListView(
-        children: <Widget>[],
+        children: <Widget>[
+          ListTile(
+            leading: const Icon(Icons.color_lens),
+            title: Text('Theme'),
+            onTap: () => Navigator.pushNamed(context, '/settings/theme'),
+          ),
+          ListTile(
+            leading: const Icon(Icons.language),
+            title: Text('Language'),
+            onTap: () => Navigator.pushNamed(context, '/settings/language'),
+          ),
+        ],
       ),
     );
   }
