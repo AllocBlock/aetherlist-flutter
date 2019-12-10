@@ -7,10 +7,9 @@ class CustomLocalizations {
     final String name =
         locale.countryCode.isEmpty ? locale.languageCode : locale.toString();
     final String localeName = Intl.canonicalizedLocale(name);
-    //2
     return initializeMessages(localeName).then((b) {
       Intl.defaultLocale = localeName;
-      return new CustomLocalizations();
+      return CustomLocalizations();
     });
   }
 

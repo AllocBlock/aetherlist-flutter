@@ -1,6 +1,5 @@
 {
   "@@last_modified": "2019-12-07T20:59:23.611883",
-  "@@locale": "zh-CN"
   "login": "登录",
   "@login": {
     "description": "login text",
