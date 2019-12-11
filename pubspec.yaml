@@ -24,6 +24,7 @@ dependencies:
   intl: ^0.16.0
   json_serializable: ^2.0.0
   provider: ^3.2.0
+  pull_to_refresh: ^1.5.7
   reorderables: ^0.2.12
   responsive_builder: ^0.1.4
   flutter:

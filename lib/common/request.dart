@@ -26,7 +26,6 @@ class Request {
             "passwd": passwd,
             "device_number": device_number
           });
-
       //print(response.toString());
       requestData = json.decode(response.toString());
     } catch (e) {

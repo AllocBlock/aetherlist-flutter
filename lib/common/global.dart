@@ -4,7 +4,6 @@ import 'package:aetherlist_flutter/common/request.dart';
 import 'package:aetherlist_flutter/models/index.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:intl/intl.dart';
 
 const _themes = <MaterialColor>[
   Colors.cyan,
@@ -218,7 +217,7 @@ class AllItemsModel extends ItemsModel {
 
   Future<bool> addItem(Item item) async {
     if (await Request.addItem(item)) {
-      if (item.due_time == DateFormat("yyyy-MM-dd").format(DateTime.now())) {
+      if (item.isDueToday()) {
         Global.todayItems.add(item);
       } else if (item.enable_time_range) {
         Global.laterItems.add(item);
@@ -230,8 +229,20 @@ class AllItemsModel extends ItemsModel {
     }
   }
 
+  void _filterTodayItems() {
+    Global.todayItems = Global.allItems.where((e) => e.isDueToday()).toList();
+  }
+
+  void _filterLaterItems() {
+    Global.laterItems = Global.allItems
+        .where((e) => !e.isDueToday() && e.enable_time_range)
+        .toList();
+  }
+
   Future<bool> fetchItems() async {
     Global.allItems = await Request.getAllItems();
+    _filterTodayItems();
+    _filterLaterItems();
     return true;
   }
 
