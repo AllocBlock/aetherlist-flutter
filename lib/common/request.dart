@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:aetherlist_flutter/common/global.dart';
 import 'package:aetherlist_flutter/models/index.dart';
 import 'package:aetherlist_flutter/models/user.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -76,6 +77,7 @@ class Request {
 //          print(response.toString());
       requestData = jsonDecode(response.toString());
     } catch (e) {
+      BotToast.showText(text: e.toString());
       print(e);
     }
     if (requestData['result'] == "fail")

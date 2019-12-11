@@ -15,7 +15,7 @@ class Item {
   bool enable_notification;
   String notify_time;
   bool enable_time_range;
-  String due_time;
+  String due_date;
   String location;
   List tags;
   String description;
@@ -25,6 +25,6 @@ class Item {
   Map<String, dynamic> toJson() => _$ItemToJson(this);
 
   bool isDueToday() {
-    return due_time == DateFormat("yyyy-MM-dd").format(DateTime.now());
+    return due_date == DateFormat("yyyy-MM-dd").format(DateTime.now());
   }
 }

@@ -76,7 +76,6 @@ class _ItemsSliverListState extends State<ItemsSliverList> {
                       value: widget.itemModel.items[index].finished,
                       onChanged: (value) {
                         setState(() {
-                          // FIXME: index has been changed, undo is invalid
                           widget.itemModel.toggleFinishItem(index);
                         });
                       },

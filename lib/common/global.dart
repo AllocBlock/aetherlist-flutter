@@ -243,6 +243,7 @@ class AllItemsModel extends ItemsModel {
     Global.allItems = await Request.getAllItems();
     _filterTodayItems();
     _filterLaterItems();
+    notifyListeners();
     return true;
   }
 

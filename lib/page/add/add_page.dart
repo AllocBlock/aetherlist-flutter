@@ -47,7 +47,7 @@ class _AddPageState extends State<AddPage> {
               newItem.priority = _priority;
               newItem.tags = _tagsController.text.split(',');
               newItem.enable_time_range = _isTimeRangeMode;
-              newItem.due_time = DateFormat("yyyy-MM-dd").format(_dueDate);
+              newItem.due_date = DateFormat("yyyy-MM-dd").format(_dueDate);
               newItem.enable_notification = _enableNotification;
               newItem.notify_time = "${_notifyTime.hour}:${_notifyTime.minute}";
               newItem.location = _locationController.text;
