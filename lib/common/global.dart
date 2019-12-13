@@ -231,6 +231,23 @@ class AllItemsModel extends ItemsModel {
     }
   }
 
+  Future<bool> editItem(Item item) async {
+    if (await Request.editItem(item)) {
+      Global.todayItems.removeWhere((e) => e.id == item.id);
+      Global.laterItems.removeWhere((e) => e.id == item.id);
+      Global.allItems.removeWhere((e) => e.id == item.id);
+      if (item.isDueToday()) {
+        Global.todayItems.add(item);
+      } else if (item.enable_time_range) {
+        Global.laterItems.add(item);
+      }
+      Global.allItems.add(item);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   void _filterTodayItems() {
     Global.todayItems = Global.allItems.where((e) => e.isDueToday()).toList();
   }
@@ -242,8 +259,12 @@ class AllItemsModel extends ItemsModel {
   }
 
   void _filterHistoryItems() {
-    Global.historyItems =
-        Global.allItems.where((e) => !e.isDueToday()).toList();
+    final DateTime nowDate = DateTime.now();
+    Global.historyItems = Global.allItems
+        .where((e) => e
+            .parseDate()
+            .isBefore(DateTime(nowDate.year, nowDate.month, nowDate.day)))
+        .toList();
   }
 
   Future<bool> fetchItems() async {

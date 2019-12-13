@@ -62,12 +62,13 @@ class NavigationDrawerContent extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.category),
-              title: Text(localeText.categories),
+              leading: Icon(Icons.clear_all),
+              title: Text(localeText.futureView),
               onTap: () {
                 if (isMobile) {
                   Navigator.pop(context);
-                } else {}
+                }
+                Navigator.of(context).pushNamed('/future');
               },
             ),
             ListTile(

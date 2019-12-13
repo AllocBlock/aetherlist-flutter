@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2019-12-07T20:59:23.611883",
+  "@@last_modified": "2019-12-13T15:55:20.559710",
   "login": "Login",
   "@login": {
     "description": "login text",
@@ -74,25 +74,43 @@
   },
   "categories": "Categories",
   "@categories": {
-    "description": "Categories name in navigation drawer",
+    "description": "Categories text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "futureView": "Future",
+  "@futureView": {
+    "description": "futureView text",
     "type": "text",
     "placeholders": {}
   },
   "statistics": "Statistics",
   "@statistics": {
-    "description": "Statistics name in navigation drawer",
+    "description": "Statistics text",
     "type": "text",
     "placeholders": {}
   },
   "archives": "Archives",
   "@archives": {
-    "description": "Archives name in navigation drawer",
+    "description": "Archives text",
     "type": "text",
     "placeholders": {}
   },
   "settings": "Settings",
   "@settings": {
-    "description": "Settings name in navigation drawer",
+    "description": "Settings text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "about": "About",
+  "@about": {
+    "description": "About text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "languages": "Languages",
+  "@languages": {
+    "description": "languages text",
     "type": "text",
     "placeholders": {}
   }

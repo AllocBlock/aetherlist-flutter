@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:aetherlist_flutter/common/global.dart';
-import 'package:aetherlist_flutter/l10n/localization_intl.dart';
 import 'package:aetherlist_flutter/models/category.dart';
 import 'package:aetherlist_flutter/models/item.dart';
 import 'package:aetherlist_flutter/widgets/custom_app_bar/custom_app_bar.dart';
@@ -10,12 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class AddPage extends StatefulWidget {
+class EditPage extends StatefulWidget {
+  final Item editItem;
+  const EditPage({Key key, @required this.editItem}) : super(key: key);
+
   @override
-  _AddPageState createState() => _AddPageState();
+  _EditPageState createState() => _EditPageState();
 }
 
-class _AddPageState extends State<AddPage> {
+class _EditPageState extends State<EditPage> {
   TextEditingController _titleNameController = TextEditingController();
   TextEditingController _tagsController = TextEditingController();
   TextEditingController _locationController = TextEditingController();
@@ -29,12 +31,28 @@ class _AddPageState extends State<AddPage> {
   TimeOfDay _notifyTime = TimeOfDay.now();
 
   @override
-  Widget build(BuildContext context) {
-    var localeText = CustomLocalizations.of(context);
+  void initState() {
+    _titleNameController.text = widget.editItem.item_name;
+    _selectCategory = Provider.of<AllItemsModel>(context)
+        .categories
+        .where((e) => e.id == widget.editItem.category_id)
+        ?.toList()[0];
+    _priority = widget.editItem.priority;
+    _tagsController.text = widget.editItem.tags.join(', ');
+    _isTimeRangeMode = widget.editItem.enable_time_range;
+    _dueDate = widget.editItem.parseDate();
+    _enableNotification = widget.editItem.enable_notification;
+    _notifyTime = widget.editItem.parseTime();
+    _locationController.text = widget.editItem.location;
+    _descriptionController.text = widget.editItem.description;
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        titleName: 'Add new item',
+        titleName: 'Edit item',
         actionChildren: <Widget>[
           IconButton(
             icon: const Icon(Icons.save),
@@ -46,7 +64,7 @@ class _AddPageState extends State<AddPage> {
                 crossPage: false,
               );
               Item newItem = Item();
-              newItem.id = 0;
+              newItem.id = widget.editItem.id;
               newItem.item_name = _titleNameController.text;
               newItem.category_id = _selectCategory.id;
               newItem.priority = _priority;
@@ -60,15 +78,15 @@ class _AddPageState extends State<AddPage> {
               newItem.description = _descriptionController.text;
               newItem.attachment_list = [];
               Provider.of<AllItemsModel>(context)
-                  .addItem(newItem)
+                  .editItem(newItem)
                   .then((succeed) {
                 BotToast.closeAllLoading();
                 print('Json Information: ${jsonEncode(newItem)}');
                 if (succeed) {
-                  print('Add item succeed');
-                  Navigator.pop(context);
+                  print('Edit item succeed');
+//                  Navigator.pop(context);
                 } else {
-                  print('Error: cannot add item');
+                  print('Error: cannot edit item');
                 }
               });
             },
@@ -118,7 +136,7 @@ class _AddPageState extends State<AddPage> {
                 });
               },
               decoration: InputDecoration(
-                labelText: localeText.categories,
+                labelText: "Category",
                 icon: Icon(Icons.category),
               ),
             ),

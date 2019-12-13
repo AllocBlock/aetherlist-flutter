@@ -20,19 +20,8 @@ class StatisticsPage extends StatelessWidget {
           child: ListView.separated(
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
-                  leading: IconButton(
-                    icon: itemModel.historyItems[index].finished
-                        ? Icon(Icons.check_box)
-                        : Icon(Icons.check_box_outline_blank),
-                    onPressed: () {},
-                  ),
                   title: Text(
                     itemModel.historyItems[index].item_name,
-                    style: TextStyle(
-                      decoration: itemModel.historyItems[index].finished
-                          ? TextDecoration.lineThrough
-                          : TextDecoration.none,
-                    ),
                   ),
                   trailing: Text(itemModel.historyItems[index].due_date),
                   onTap: () {},

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -30,5 +31,11 @@ class Item {
 
   DateTime parseDate() {
     return DateTime.parse(due_date);
+  }
+
+  TimeOfDay parseTime() {
+    return TimeOfDay(
+        hour: int.parse(notify_time.split(':')[0]),
+        minute: int.parse(notify_time.split(':')[1]));
   }
 }

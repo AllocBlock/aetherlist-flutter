@@ -2,6 +2,7 @@ import 'package:aetherlist_flutter/common/global.dart';
 import 'package:aetherlist_flutter/l10n/localization_intl.dart';
 import 'package:aetherlist_flutter/page/about/about.dart';
 import 'package:aetherlist_flutter/page/add/add_page.dart';
+import 'package:aetherlist_flutter/page/future_view/future_view_page.dart';
 import 'package:aetherlist_flutter/page/home/home_page.dart';
 import 'package:aetherlist_flutter/page/profile/login.dart';
 import 'package:aetherlist_flutter/page/profile/register.dart';
@@ -66,6 +67,7 @@ class App extends StatelessWidget {
             routes: <String, WidgetBuilder>{
               '/login': (context) => LoginPage(),
               '/register': (context) => RegisterPage(),
+              '/future': (context) => FutureViewPage(),
               '/statistics': (context) => StatisticsPage(),
               '/settings': (context) => SettingPage(),
               '/about': (context) => AboutPage(),
