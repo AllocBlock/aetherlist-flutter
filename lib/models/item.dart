@@ -27,4 +27,8 @@ class Item {
   bool isDueToday() {
     return due_date == DateFormat("yyyy-MM-dd").format(DateTime.now());
   }
+
+  DateTime parseDate() {
+    return DateTime.parse(due_date);
+  }
 }

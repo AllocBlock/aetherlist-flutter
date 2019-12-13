@@ -8,6 +8,7 @@ import 'package:aetherlist_flutter/page/profile/register.dart';
 import 'package:aetherlist_flutter/page/settings/language_page.dart';
 import 'package:aetherlist_flutter/page/settings/settings.dart';
 import 'package:aetherlist_flutter/page/settings/theme_page.dart';
+import 'package:aetherlist_flutter/page/statistics/statistics.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -65,6 +66,7 @@ class App extends StatelessWidget {
             routes: <String, WidgetBuilder>{
               '/login': (context) => LoginPage(),
               '/register': (context) => RegisterPage(),
+              '/statistics': (context) => StatisticsPage(),
               '/settings': (context) => SettingPage(),
               '/about': (context) => AboutPage(),
               '/add': (context) => AddPage(),

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:aetherlist_flutter/common/global.dart';
 import 'package:aetherlist_flutter/models/category.dart';
 import 'package:aetherlist_flutter/models/item.dart';
@@ -45,21 +47,27 @@ class _AddPageState extends State<AddPage> {
               newItem.item_name = _titleNameController.text;
               newItem.category_id = _selectCategory.id;
               newItem.priority = _priority;
-              newItem.tags = _tagsController.text.split(',');
+              newItem.tags = _tagsController.text.trim().split(',');
+              newItem.finished = false;
               newItem.enable_time_range = _isTimeRangeMode;
               newItem.due_date = DateFormat("yyyy-MM-dd").format(_dueDate);
               newItem.enable_notification = _enableNotification;
               newItem.notify_time = "${_notifyTime.hour}:${_notifyTime.minute}";
               newItem.location = _locationController.text;
               newItem.description = _descriptionController.text;
+              newItem.attachment_list = [];
               Provider.of<AllItemsModel>(context)
                   .addItem(newItem)
                   .then((succeed) {
                 BotToast.closeAllLoading();
+                print('Json Information: ${jsonEncode(newItem)}');
                 if (succeed) {
-                } else {}
+                  print('Add item succeed');
+//                  Navigator.pop(context);
+                } else {
+                  print('Error: cannot add item');
+                }
               });
-              Navigator.pop(context);
             },
           ),
         ],
@@ -78,7 +86,6 @@ class _AddPageState extends State<AddPage> {
                 labelText: 'Item title',
                 icon: Icon(
                   Icons.title,
-                  color: Colors.grey,
                 ),
               ),
               validator: (value) {
@@ -88,34 +95,29 @@ class _AddPageState extends State<AddPage> {
             SizedBox(
               height: 12,
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Text('Category'),
-                SizedBox(
-                  width: 15,
-                ),
-                DropdownButton(
-                  value: _selectCategory,
-                  items: Provider.of<AllItemsModel>(context)
-                      .categories
-                      .map<DropdownMenuItem<Category>>((Category category) {
-                    return DropdownMenuItem<Category>(
-                      value: category,
-                      child: Text(
-                        category.category_name,
-                        textScaleFactor: 0.85,
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (Category newCategory) {
-                    setState(() {
-                      _selectCategory = newCategory;
-                    });
-                  },
-                )
-              ],
+            DropdownButtonFormField(
+              validator: (value) {
+                return value == null ? "Please select category" : null;
+              },
+              value: _selectCategory,
+              isDense: true,
+              items: Provider.of<AllItemsModel>(context)
+                  .categories
+                  .map<DropdownMenuItem<Category>>((Category category) {
+                return DropdownMenuItem<Category>(
+                  value: category,
+                  child: Text(category.category_name),
+                );
+              }).toList(),
+              onChanged: (Category newCategory) {
+                setState(() {
+                  _selectCategory = newCategory;
+                });
+              },
+              decoration: InputDecoration(
+                labelText: "Category",
+                icon: Icon(Icons.category),
+              ),
             ),
             SizedBox(
               height: 12,
@@ -161,31 +163,22 @@ class _AddPageState extends State<AddPage> {
                 labelText: 'Tags',
                 icon: Icon(
                   Icons.turned_in,
-                  color: Colors.grey,
                 ),
               ),
             ),
             SizedBox(
               height: 12,
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Switch(
-                  activeColor: Colors.cyan,
-                  value: _isTimeRangeMode,
-                  onChanged: (value) {
-                    setState(() {
-                      _isTimeRangeMode = value;
-                    });
-                  },
-                ),
-                Text(
-                  'Time-range mode',
-                  textScaleFactor: 1.2,
-                ),
-              ],
+            ListTile(
+              title: Text("Time-range mode"),
+              trailing: Switch(
+                value: _isTimeRangeMode,
+                onChanged: (value) {
+                  setState(() {
+                    _isTimeRangeMode = value;
+                  });
+                },
+              ),
             ),
             SizedBox(
               height: 12,
@@ -202,24 +195,17 @@ class _AddPageState extends State<AddPage> {
             SizedBox(
               height: 12,
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Switch(
-                  activeColor: Colors.cyan,
-                  value: _enableNotification,
-                  onChanged: (value) {
-                    setState(() {
-                      _enableNotification = value;
-                    });
-                  },
-                ),
-                Text(
-                  'Notification',
-                  textScaleFactor: 1.2,
-                ),
-              ],
+            ListTile(
+              title: Text('Notification'),
+              trailing: Switch(
+                activeColor: Colors.cyan,
+                value: _enableNotification,
+                onChanged: (value) {
+                  setState(() {
+                    _enableNotification = value;
+                  });
+                },
+              ),
             ),
             SizedBox(
               height: 12,
@@ -243,7 +229,6 @@ class _AddPageState extends State<AddPage> {
                 labelText: 'Location',
                 icon: Icon(
                   Icons.location_on,
-                  color: Colors.grey,
                 ),
               ),
             ),
@@ -258,7 +243,6 @@ class _AddPageState extends State<AddPage> {
                 labelText: 'Description',
                 icon: Icon(
                   Icons.description,
-                  color: Colors.grey,
                 ),
               ),
             ),

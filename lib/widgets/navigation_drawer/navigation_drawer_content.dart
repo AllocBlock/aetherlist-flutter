@@ -10,7 +10,7 @@ class NavigationDrawerContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var localText = CustomLocalizations.of(context);
+    var localeText = CustomLocalizations.of(context);
 
     return Consumer<UserModel>(
       builder: (BuildContext context, UserModel userModel, Widget child) {
@@ -49,7 +49,7 @@ class NavigationDrawerContent extends StatelessWidget {
                                 Text(
                                   userModel.isLogin
                                       ? userModel.user.user_name
-                                      : localText.login,
+                                      : localeText.login,
                                 ),
                               ],
                             ),
@@ -63,7 +63,7 @@ class NavigationDrawerContent extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.category),
-              title: Text(localText.categories),
+              title: Text(localeText.categories),
               onTap: () {
                 if (isMobile) {
                   Navigator.pop(context);
@@ -71,17 +71,18 @@ class NavigationDrawerContent extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: Icon(Icons.equalizer),
-              title: Text(localText.statistics),
+              leading: Icon(Icons.insert_chart),
+              title: Text(localeText.statistics),
               onTap: () {
                 if (isMobile) {
                   Navigator.pop(context);
-                } else {}
+                }
+                Navigator.of(context).pushNamed('/statistics');
               },
             ),
             ListTile(
               leading: Icon(Icons.archive),
-              title: Text(localText.archives),
+              title: Text(localeText.archives),
               onTap: () {
                 if (isMobile) {
                   Navigator.pop(context);
@@ -90,7 +91,7 @@ class NavigationDrawerContent extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.settings),
-              title: Text(localText.settings),
+              title: Text(localeText.settings),
               onTap: () {
                 if (isMobile) {
                   Navigator.pop(context);
@@ -100,7 +101,7 @@ class NavigationDrawerContent extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.info),
-              title: Text(localText.about),
+              title: Text(localeText.about),
               onTap: () {
                 if (isMobile) {
                   Navigator.pop(context);
@@ -111,7 +112,7 @@ class NavigationDrawerContent extends StatelessWidget {
             if (userModel.isLogin)
               ListTile(
                 leading: const Icon(Icons.power_settings_new),
-                title: Text(localText.logout),
+                title: Text(localeText.logout),
                 onTap: () {
                   if (isMobile) {
                     Navigator.pop(context);
@@ -120,14 +121,14 @@ class NavigationDrawerContent extends StatelessWidget {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          content: Text(localText.logoutTip),
+                          content: Text(localeText.logoutTip),
                           actions: <Widget>[
                             FlatButton(
-                              child: Text(localText.cancel),
+                              child: Text(localeText.cancel),
                               onPressed: () => Navigator.pop(context),
                             ),
                             FlatButton(
-                              child: Text(localText.yes),
+                              child: Text(localeText.yes),
                               onPressed: () {
                                 userModel.user = null;
                                 Global.profile.session = "";
@@ -142,7 +143,7 @@ class NavigationDrawerContent extends StatelessWidget {
             else
               ListTile(
                   leading: const Icon(Icons.person),
-                  title: Text(localText.login),
+                  title: Text(localeText.login),
                   onTap: () {
                     if (isMobile) {
                       Navigator.pop(context);

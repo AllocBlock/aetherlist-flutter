@@ -18,6 +18,7 @@ class Global {
   static List<Item> todayItems = [];
   static List<Item> laterItems = [];
   static List<Item> allItems = [];
+  static List<Item> historyItems = [];
   static List<Category> categories = [];
 
   static List<MaterialColor> get themes => _themes;
@@ -206,6 +207,7 @@ class LaterItemsModel extends ItemsModel {
 
 class AllItemsModel extends ItemsModel {
   List<Item> get items => Global.allItems;
+  List<Item> get historyItems => Global.historyItems;
   List<Category> get categories => Global.categories;
 
   set allItems(List<Item> newItems) {
@@ -239,10 +241,19 @@ class AllItemsModel extends ItemsModel {
         .toList();
   }
 
+  void _filterHistoryItems() {
+    Global.historyItems =
+        Global.allItems.where((e) => !e.isDueToday()).toList();
+  }
+
   Future<bool> fetchItems() async {
     Global.allItems = await Request.getAllItems();
     _filterTodayItems();
     _filterLaterItems();
+    _filterHistoryItems();
+    Global.historyItems.sort((Item a, Item b) {
+      return b.due_date.compareTo(a.due_date);
+    });
     notifyListeners();
     return true;
   }

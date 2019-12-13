@@ -177,6 +177,8 @@ class _LoginPageState extends State<LoginPage> {
       }
       if (user != null) {
         print(user.toJson());
+        Provider.of<AllItemsModel>(context).fetchCategories();
+        Provider.of<AllItemsModel>(context).fetchItems();
         // return to homepage
         Navigator.of(context).pop();
       } else {

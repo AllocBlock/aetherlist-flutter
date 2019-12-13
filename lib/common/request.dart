@@ -151,16 +151,20 @@ class Request {
     String session = Global.profile.session;
     var requestData;
     try {
-      Response response = await dio
-          .post("https://www.foodiesnotalone.cn/aetherlist/server.php", data: {
-        "opcode": "upload",
-        "session": session,
-        "data": jsonEncode(item),
-      });
+      Response response = await dio.get(
+          "https://www.foodiesnotalone.cn/aetherlist/server.php",
+          queryParameters: {
+            "opcode": "editItem",
+            "session": session,
+            "data": jsonEncode(item),
+          });
       requestData = jsonDecode(response.toString());
     } catch (e) {
       print(e);
     }
+    print('@requestData: $requestData');
     return requestData['result'] != 'fail';
   }
+
+  static Future<bool> editItem(Item item) async => addItem(item);
 }
