@@ -21,11 +21,26 @@ class _FutureViewPageState extends State<FutureViewPage> {
       appBar: CustomAppBar(
         titleName: localeText.futureView,
         actionChildren: <Widget>[
-          IconButton(
-            icon: Icon(Icons.library_add),
-            tooltip: "Add category",
-            onPressed: () {
-              // TODO: show add category dialog
+          PopupMenuButton(
+            tooltip: "Menu",
+            icon: Icon(Icons.more_vert),
+            offset: Offset(0, 50),
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            color: Colors.grey[100],
+            itemBuilder: (context) {
+              return <PopupMenuItem>[
+                PopupMenuItem(
+                  child: Text("Manage categories"),
+                  value: 1,
+                ),
+              ];
+            },
+            onSelected: (result) {
+              switch (result) {
+                case 1:
+                  Navigator.pushNamed(context, '/future/manage-categories');
+                  break;
+              }
             },
           ),
         ],

@@ -279,8 +279,51 @@ class AllItemsModel extends ItemsModel {
     return true;
   }
 
+  // TODO: use CategoriesModel to control categories
   Future<bool> fetchCategories() async {
     Global.categories = await Request.getCategories();
     return true;
+  }
+
+  // TODO: use CategoriesModel to control categories
+  Future<bool> addCategory(String categoryName) async {
+    Category category = Category();
+    category.category_name = categoryName;
+    category.id = await Request.addCategory(categoryName);
+    if (category.id != null && category.id != -1) {
+      Global.categories.add(category);
+      notifyListeners();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // TODO: use CategoriesModel to control categories
+  Future<bool> updateCategory(Category category, String newName) async {
+    category.category_name = newName;
+    if (await Request.updateCategory(category)) {
+      for (var e in Global.categories) {
+        if (e.id == category.id) {
+          e.category_name = newName;
+        }
+        notifyListeners();
+        return true;
+      }
+      return false;
+    } else {
+      return false;
+    }
+  }
+
+  // TODO: use CategoriesModel to control categories
+  Future<bool> removeCategory(Category category) async {
+    if (await Request.removeCategory(category.id)) {
+      Global.categories.removeWhere((e) => e.id == category.id);
+      notifyListeners();
+      return true;
+    } else {
+      return false;
+    }
   }
 }

@@ -167,4 +167,69 @@ class Request {
   }
 
   static Future<bool> editItem(Item item) async => addItem(item);
+
+  static Future<int> addCategory(String categoryName) async {
+    Dio dio = Dio();
+    String session = Global.profile.session;
+    var requestData;
+    try {
+      Response response = await dio.get(
+          "https://www.foodiesnotalone.cn/aetherlist/server.php",
+          queryParameters: {
+            "opcode": "addCategory",
+            "session": session,
+            "category_name": categoryName,
+          });
+      requestData = jsonDecode(response.toString());
+    } catch (e) {
+      print(e);
+    }
+    print('@requestData: $requestData');
+    if (requestData['result'] == 'fail') {
+      return -1;
+    } else {
+      return int.parse(requestData['category_id']);
+    }
+  }
+
+  static Future<bool> updateCategory(Category category) async {
+    Dio dio = Dio();
+    String session = Global.profile.session;
+    var requestData;
+    try {
+      Response response = await dio.get(
+          "https://www.foodiesnotalone.cn/aetherlist/server.php",
+          queryParameters: {
+            "opcode": "updateCategory",
+            "session": session,
+            "category_id": category.id,
+            "new_name": category.category_name,
+          });
+      requestData = jsonDecode(response.toString());
+    } catch (e) {
+      print(e);
+    }
+    print('@requestData: $requestData');
+    return requestData['result'] != 'fail';
+  }
+
+  static Future<bool> removeCategory(int categoryId) async {
+    Dio dio = Dio();
+    String session = Global.profile.session;
+    var requestData;
+    try {
+      Response response = await dio.get(
+          "https://www.foodiesnotalone.cn/aetherlist/server.php",
+          queryParameters: {
+            "opcode": "deleteCategory",
+            "session": session,
+            "category_id": categoryId,
+          });
+      requestData = jsonDecode(response.toString());
+    } catch (e) {
+      print(e);
+    }
+    print('@requestData: $requestData');
+    return requestData['result'] != 'fail';
+  }
 }
