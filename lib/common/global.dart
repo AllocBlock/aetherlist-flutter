@@ -95,8 +95,15 @@ class LocaleModel extends ProfileChangeNotifier {
 }
 
 class ItemsModel extends ChangeNotifier {
-  void _toggleFinishItem(List<Item> items, int index) {
+  void _toggleFinishItem(List<Item> items, int index) async {
     items[index].finished = !items[index].finished;
+    Global.allItems.firstWhere((e) => e.id == items[index].id).finished =
+        items[index].finished;
+    if (!await Request.editItem(items[index])) {
+      items[index].finished = !items[index].finished;
+      Global.allItems.firstWhere((e) => e.id == items[index].id).finished =
+          items[index].finished;
+    }
   }
 
   void _insertItem(List<Item> items, Item newItem) {
@@ -106,7 +113,7 @@ class ItemsModel extends ChangeNotifier {
 
   Item _removeItem(List<Item> items, int index) => items.removeAt(index);
 
-  void _updateItemsIndex(List<Item> items, int oldIndex, int newIndex) {
+  void _updateItemsIndex(List<Item> items, int oldIndex, int newIndex) async {
     double adjacentPriority;
     if (oldIndex < newIndex) {
       adjacentPriority =
@@ -120,7 +127,10 @@ class ItemsModel extends ChangeNotifier {
     }
     Item item = items.removeAt(oldIndex);
     items.insert(newIndex, item);
-    _sortItems(items);
+    Global.allItems.firstWhere((e) => e.id == items[newIndex].id).priority =
+        items[newIndex].priority;
+    await Request.editItem(items[newIndex]);
+    notifyListeners();
   }
 
   void _sortItems(List<Item> items) {
@@ -248,14 +258,32 @@ class AllItemsModel extends ItemsModel {
     }
   }
 
+  Future<bool> removeItem(Item item) async {
+    Global.allItems.removeWhere((e) => e.id == item.id);
+    if (await Request.removeItem()) {
+      if (item.isDueToday()) {
+        Global.todayItems.removeWhere((e) => e.id == item.id);
+      } else if (item.enable_time_range) {
+        Global.laterItems.removeWhere((e) => e.id == item.id);
+      }
+      notifyListeners();
+      return true;
+    } else {
+      Global.allItems.add(item);
+      return false;
+    }
+  }
+
   void _filterTodayItems() {
     Global.todayItems = Global.allItems.where((e) => e.isDueToday()).toList();
+    _sortItems(Global.todayItems);
   }
 
   void _filterLaterItems() {
     Global.laterItems = Global.allItems
         .where((e) => !e.isDueToday() && e.enable_time_range)
         .toList();
+    _sortItems(Global.laterItems);
   }
 
   void _filterHistoryItems() {

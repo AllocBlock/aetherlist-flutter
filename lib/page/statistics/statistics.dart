@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:aetherlist_flutter/common/global.dart';
 import 'package:aetherlist_flutter/l10n/localization_intl.dart';
 import 'package:aetherlist_flutter/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:aetherlist_flutter/widgets/item_detail_dialog/item_detail_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +27,15 @@ class StatisticsPage extends StatelessWidget {
                     itemModel.historyItems[index].item_name,
                   ),
                   trailing: Text(itemModel.historyItems[index].due_date),
-                  onTap: () {},
+                  onTap: () {
+                    print(
+                        "Tapped item: ${jsonEncode(itemModel.historyItems[index])}");
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          ItemDetailDialog(item: itemModel.historyItems[index]),
+                    );
+                  },
                 );
               },
               separatorBuilder: (BuildContext context, int index) {

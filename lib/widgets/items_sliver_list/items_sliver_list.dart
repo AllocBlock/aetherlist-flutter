@@ -1,4 +1,5 @@
 import 'package:aetherlist_flutter/models/item.dart';
+import 'package:aetherlist_flutter/widgets/item_detail_dialog/item_detail_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:reorderables/reorderables.dart';
 
@@ -23,7 +24,6 @@ class _ItemsSliverListState extends State<ItemsSliverList> {
           List.generate(widget.itemModel.items?.length ?? 0, (index) {
         return Dismissible(
           key: UniqueKey(),
-//          key: Key('${widget.itemModel.items[index].id}'),
           background: widget.itemModel.items[index].finished
               ? _recoverCard
               : _finishCard,
@@ -66,7 +66,11 @@ class _ItemsSliverListState extends State<ItemsSliverList> {
               ),
               margin: EdgeInsets.symmetric(vertical: 4.0),
               child: GestureDetector(
-                onTap: () => print("tapped!"),
+                onTap: () => showDialog(
+                  context: context,
+                  builder: (BuildContext context) =>
+                      ItemDetailDialog(item: widget.itemModel.items[index]),
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,

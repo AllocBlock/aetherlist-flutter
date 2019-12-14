@@ -52,7 +52,7 @@ class _ManageCategoriesPageState extends State<ManageCategoriesPage> {
                                 .addCategory(_addNameController.text)
                                 .then((succeed) {
                               if (succeed) {
-                                _addNameController.text = "";
+                                _addNameController.clear();
                                 Navigator.pop(context);
                               } else {
                                 print(
@@ -109,7 +109,7 @@ class _ManageCategoriesPageState extends State<ManageCategoriesPage> {
                                             _updateNameController.text)
                                         .then((succeed) {
                                       if (succeed) {
-                                        _updateNameController.text = "";
+                                        _updateNameController.clear();
                                         Navigator.pop(context);
                                       } else {
                                         print(
@@ -133,7 +133,9 @@ class _ManageCategoriesPageState extends State<ManageCategoriesPage> {
                           child: AlertDialog(
                             contentPadding: EdgeInsets.all(24),
                             content: Text(
-                                "You really want to remove this category?"),
+                              "You really want to remove this category?",
+                              textAlign: TextAlign.center,
+                            ),
                             actions: <Widget>[
                               FlatButton(
                                   child: Text(localeText.no),

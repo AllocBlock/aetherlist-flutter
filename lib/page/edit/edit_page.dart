@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:aetherlist_flutter/common/global.dart';
+import 'package:aetherlist_flutter/l10n/localization_intl.dart';
 import 'package:aetherlist_flutter/models/category.dart';
 import 'package:aetherlist_flutter/models/item.dart';
 import 'package:aetherlist_flutter/widgets/custom_app_bar/custom_app_bar.dart';
@@ -23,7 +24,7 @@ class _EditPageState extends State<EditPage> {
   TextEditingController _locationController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   GlobalKey _formKey = GlobalKey<FormState>();
-  Category _selectCategory;
+  int _selectCategoryId;
   double _priority = 0.5;
   bool _isTimeRangeMode = false;
   bool _enableNotification = false;
@@ -32,11 +33,9 @@ class _EditPageState extends State<EditPage> {
 
   @override
   void initState() {
+    super.initState();
     _titleNameController.text = widget.editItem.item_name;
-    _selectCategory = Provider.of<AllItemsModel>(context)
-        .categories
-        .where((e) => e.id == widget.editItem.category_id)
-        ?.toList()[0];
+    _selectCategoryId = widget.editItem.category_id;
     _priority = widget.editItem.priority;
     _tagsController.text = widget.editItem.tags.join(', ');
     _isTimeRangeMode = widget.editItem.enable_time_range;
@@ -45,15 +44,54 @@ class _EditPageState extends State<EditPage> {
     _notifyTime = widget.editItem.parseTime();
     _locationController.text = widget.editItem.location;
     _descriptionController.text = widget.editItem.description;
-    super.initState();
+    print(jsonEncode(widget.editItem));
   }
 
   @override
   Widget build(BuildContext context) {
+    var localeText = CustomLocalizations.of(context);
     return Scaffold(
       appBar: CustomAppBar(
         titleName: 'Edit item',
         actionChildren: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.delete_forever),
+            tooltip: "Delete button",
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      content: Text(
+                        "You really want to remove this item?",
+                        textAlign: TextAlign.center,
+                      ),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text(localeText.cancel),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                        FlatButton(
+                          child: Text(localeText.yes),
+                          onPressed: () {
+                            Provider.of<AllItemsModel>(context)
+                                .removeItem(widget.editItem)
+                                .then((result) {
+                              if (result) {
+                                print("Remove item!");
+                                Navigator.pop(context);
+                              } else {
+                                print("Fail to remove item!");
+                              }
+                              Navigator.pop(context);
+                            });
+                          },
+                        ),
+                      ],
+                    );
+                  });
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.save),
             tooltip: "Save button",
@@ -66,9 +104,11 @@ class _EditPageState extends State<EditPage> {
               Item newItem = Item();
               newItem.id = widget.editItem.id;
               newItem.item_name = _titleNameController.text;
-              newItem.category_id = _selectCategory.id;
+              newItem.category_id = _selectCategoryId;
               newItem.priority = _priority;
-              newItem.tags = _tagsController.text.trim().split(',');
+              newItem.tags = _tagsController.text
+                  .replaceAll(RegExp(r"\s+\b|\b\s"), "")
+                  .split(',');
               newItem.finished = false;
               newItem.enable_time_range = _isTimeRangeMode;
               newItem.due_date = DateFormat("yyyy-MM-dd").format(_dueDate);
@@ -84,7 +124,7 @@ class _EditPageState extends State<EditPage> {
                 print('Json Information: ${jsonEncode(newItem)}');
                 if (succeed) {
                   print('Edit item succeed');
-//                  Navigator.pop(context);
+                  Navigator.pop(context);
                 } else {
                   print('Error: cannot edit item');
                 }
@@ -120,19 +160,19 @@ class _EditPageState extends State<EditPage> {
               validator: (value) {
                 return value == null ? "Please select category" : null;
               },
-              value: _selectCategory,
+              value: _selectCategoryId,
               isDense: true,
               items: Provider.of<AllItemsModel>(context)
                   .categories
-                  .map<DropdownMenuItem<Category>>((Category category) {
-                return DropdownMenuItem<Category>(
-                  value: category,
+                  .map<DropdownMenuItem<int>>((Category category) {
+                return DropdownMenuItem<int>(
+                  value: category.id,
                   child: Text(category.category_name),
                 );
               }).toList(),
-              onChanged: (Category newCategory) {
+              onChanged: (int newCategoryId) {
                 setState(() {
-                  _selectCategory = newCategory;
+                  _selectCategoryId = newCategoryId;
                 });
               },
               decoration: InputDecoration(

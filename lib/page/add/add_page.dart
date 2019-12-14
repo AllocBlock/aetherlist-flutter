@@ -50,7 +50,9 @@ class _AddPageState extends State<AddPage> {
               newItem.item_name = _titleNameController.text;
               newItem.category_id = _selectCategory.id;
               newItem.priority = _priority;
-              newItem.tags = _tagsController.text.trim().split(',');
+              newItem.tags = _tagsController.text
+                  .replaceAll(RegExp(r"\s+\b|\b\s"), "")
+                  .split(',');
               newItem.finished = false;
               newItem.enable_time_range = _isTimeRangeMode;
               newItem.due_date = DateFormat("yyyy-MM-dd").format(_dueDate);
@@ -213,19 +215,22 @@ class _AddPageState extends State<AddPage> {
             SizedBox(
               height: 12,
             ),
-            ListTile(
-              leading: Icon(Icons.access_time),
-              title: Text('Notify time:'),
-              subtitle: Text(DateFormat.jm().format(DateTime(2019).add(Duration(
-                  hours: _notifyTime.hour, minutes: _notifyTime.minute)))),
-              trailing: RaisedButton(
-                child: const Text('SET'),
-                onPressed: () => _selectTime(),
-              ),
-            ),
-            SizedBox(
-              height: 12,
-            ),
+            if (_enableNotification)
+              ListTile(
+                leading: Icon(Icons.access_time),
+                title: Text('Notify time:'),
+                subtitle: Text(DateFormat.jm().format(DateTime(2019).add(
+                    Duration(
+                        hours: _notifyTime.hour,
+                        minutes: _notifyTime.minute)))),
+                trailing: RaisedButton(
+                  child: const Text('SET'),
+                  onPressed: () => _selectTime(),
+                ),
+              )
+            else
+              Container(),
+            _enableNotification ? SizedBox(height: 12) : Container(),
             TextFormField(
               controller: _locationController,
               decoration: InputDecoration(
@@ -248,9 +253,6 @@ class _AddPageState extends State<AddPage> {
                   Icons.description,
                 ),
               ),
-            ),
-            SizedBox(
-              height: 12,
             ),
           ],
         ),
