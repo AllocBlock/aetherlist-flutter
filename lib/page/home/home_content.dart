@@ -130,9 +130,12 @@ class _HomeContentState extends State<HomeContent> {
                   if (snapshot.hasData) {
                     return ItemsSliverList(itemModel: itemModel);
                   } else if (snapshot.hasError) {
-                    return SliverToBoxAdapter(
-                      child: Center(
-                        child: Text("${snapshot.error}"),
+                    return Opacity(
+                      opacity: 0.8,
+                      child: SliverToBoxAdapter(
+                        child: Center(
+                          child: Text("${snapshot.error}"),
+                        ),
                       ),
                     );
                   } else {

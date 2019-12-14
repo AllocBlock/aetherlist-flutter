@@ -81,7 +81,7 @@ class _EditPageState extends State<EditPage> {
                                 print("Remove item!");
                                 Navigator.pop(context);
                               } else {
-                                print("Fail to remove item!");
+                                BotToast.showText(text: "remove item failed");
                               }
                               Navigator.pop(context);
                             });
@@ -126,7 +126,7 @@ class _EditPageState extends State<EditPage> {
                   print('Edit item succeed');
                   Navigator.pop(context);
                 } else {
-                  print('Error: cannot edit item');
+                  BotToast.showText(text: "edit item failed");
                 }
               });
             },

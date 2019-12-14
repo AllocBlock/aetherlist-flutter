@@ -70,7 +70,7 @@ class _AddPageState extends State<AddPage> {
                   print('Add item succeed');
                   Navigator.pop(context);
                 } else {
-                  print('Error: cannot add item');
+                  BotToast.showText(text: "add item failed");
                 }
               });
             },

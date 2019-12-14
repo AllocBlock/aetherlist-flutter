@@ -1,6 +1,7 @@
 import 'package:aetherlist_flutter/common/global.dart';
 import 'package:aetherlist_flutter/l10n/localization_intl.dart';
 import 'package:aetherlist_flutter/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -55,8 +56,7 @@ class _ManageCategoriesPageState extends State<ManageCategoriesPage> {
                                 _addNameController.clear();
                                 Navigator.pop(context);
                               } else {
-                                print(
-                                    "Failed to add category: ${_addNameController.text}");
+                                BotToast.showText(text: "add category failed");
                               }
                             });
                           })
@@ -112,8 +112,8 @@ class _ManageCategoriesPageState extends State<ManageCategoriesPage> {
                                         _updateNameController.clear();
                                         Navigator.pop(context);
                                       } else {
-                                        print(
-                                            "Failed to update category: ${_updateNameController.text}");
+                                        BotToast.showText(
+                                            text: "update category failed");
                                       }
                                     });
                                   }),
@@ -152,8 +152,8 @@ class _ManageCategoriesPageState extends State<ManageCategoriesPage> {
                                       if (succeed) {
                                         Navigator.pop(context);
                                       } else {
-                                        print(
-                                            "Failed to remove category: ${itemModel.categories[index].category_name}");
+                                        BotToast.showText(
+                                            text: "remove category failed");
                                       }
                                     });
                                   }),
