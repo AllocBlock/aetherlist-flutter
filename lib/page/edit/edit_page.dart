@@ -10,18 +10,21 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class AddPage extends StatefulWidget {
+class EditPage extends StatefulWidget {
+  final Item editItem;
+  const EditPage({Key key, @required this.editItem}) : super(key: key);
+
   @override
-  _AddPageState createState() => _AddPageState();
+  _EditPageState createState() => _EditPageState();
 }
 
-class _AddPageState extends State<AddPage> {
+class _EditPageState extends State<EditPage> {
   TextEditingController _titleNameController = TextEditingController();
   TextEditingController _tagsController = TextEditingController();
   TextEditingController _locationController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   GlobalKey _formKey = GlobalKey<FormState>();
-  Category _selectCategory;
+  int _selectCategoryId;
   double _priority = 0.5;
   bool _isTimeRangeMode = false;
   bool _enableNotification = false;
@@ -29,13 +32,66 @@ class _AddPageState extends State<AddPage> {
   TimeOfDay _notifyTime = TimeOfDay.now();
 
   @override
+  void initState() {
+    super.initState();
+    _titleNameController.text = widget.editItem.item_name;
+    _selectCategoryId = widget.editItem.category_id;
+    _priority = widget.editItem.priority;
+    _tagsController.text = widget.editItem.tags.join(', ');
+    _isTimeRangeMode = widget.editItem.enable_time_range;
+    _dueDate = widget.editItem.parseDate();
+    _enableNotification = widget.editItem.enable_notification;
+    _notifyTime = widget.editItem.parseTime();
+    _locationController.text = widget.editItem.location;
+    _descriptionController.text = widget.editItem.description;
+    print(jsonEncode(widget.editItem));
+  }
+
+  @override
   Widget build(BuildContext context) {
     var localeText = CustomLocalizations.of(context);
-
     return Scaffold(
       appBar: CustomAppBar(
-        titleName: 'Add new item',
+        titleName: 'Edit item',
         actionChildren: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.delete_forever),
+            tooltip: "Delete button",
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      content: Text(
+                        "You really want to remove this item?",
+                        textAlign: TextAlign.center,
+                      ),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text(localeText.cancel),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                        FlatButton(
+                          child: Text(localeText.yes),
+                          onPressed: () {
+                            Provider.of<AllItemsModel>(context)
+                                .removeItem(widget.editItem)
+                                .then((result) {
+                              if (result) {
+                                print("Remove item!");
+                                Navigator.pop(context);
+                              } else {
+                                BotToast.showText(text: "remove item failed");
+                              }
+                              Navigator.pop(context);
+                            });
+                          },
+                        ),
+                      ],
+                    );
+                  });
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.save),
             tooltip: "Save button",
@@ -46,9 +102,9 @@ class _AddPageState extends State<AddPage> {
                 crossPage: false,
               );
               Item newItem = Item();
-              newItem.id = 0;
+              newItem.id = widget.editItem.id;
               newItem.item_name = _titleNameController.text;
-              newItem.category_id = _selectCategory.id;
+              newItem.category_id = _selectCategoryId;
               newItem.priority = _priority;
               newItem.tags = _tagsController.text
                   .replaceAll(RegExp(r"\s+\b|\b\s"), "")
@@ -62,15 +118,15 @@ class _AddPageState extends State<AddPage> {
               newItem.description = _descriptionController.text;
               newItem.attachment_list = [];
               Provider.of<AllItemsModel>(context)
-                  .addItem(newItem)
+                  .editItem(newItem)
                   .then((succeed) {
                 BotToast.closeAllLoading();
                 print('Json Information: ${jsonEncode(newItem)}');
                 if (succeed) {
-                  print('Add item succeed');
+                  print('Edit item succeed');
                   Navigator.pop(context);
                 } else {
-                  BotToast.showText(text: "add item failed");
+                  BotToast.showText(text: "edit item failed");
                 }
               });
             },
@@ -104,23 +160,23 @@ class _AddPageState extends State<AddPage> {
               validator: (value) {
                 return value == null ? "Please select category" : null;
               },
-              value: _selectCategory,
+              value: _selectCategoryId,
               isDense: true,
               items: Provider.of<AllItemsModel>(context)
                   .categories
-                  .map<DropdownMenuItem<Category>>((Category category) {
-                return DropdownMenuItem<Category>(
-                  value: category,
+                  .map<DropdownMenuItem<int>>((Category category) {
+                return DropdownMenuItem<int>(
+                  value: category.id,
                   child: Text(category.category_name),
                 );
               }).toList(),
-              onChanged: (Category newCategory) {
+              onChanged: (int newCategoryId) {
                 setState(() {
-                  _selectCategory = newCategory;
+                  _selectCategoryId = newCategoryId;
                 });
               },
               decoration: InputDecoration(
-                labelText: localeText.categories,
+                labelText: "Category",
                 icon: Icon(Icons.category),
               ),
             ),
@@ -215,22 +271,19 @@ class _AddPageState extends State<AddPage> {
             SizedBox(
               height: 12,
             ),
-            if (_enableNotification)
-              ListTile(
-                leading: Icon(Icons.access_time),
-                title: Text('Notify time:'),
-                subtitle: Text(DateFormat.jm().format(DateTime(2019).add(
-                    Duration(
-                        hours: _notifyTime.hour,
-                        minutes: _notifyTime.minute)))),
-                trailing: RaisedButton(
-                  child: const Text('SET'),
-                  onPressed: () => _selectTime(),
-                ),
-              )
-            else
-              Container(),
-            _enableNotification ? SizedBox(height: 12) : Container(),
+            ListTile(
+              leading: Icon(Icons.access_time),
+              title: Text('Notify time:'),
+              subtitle: Text(DateFormat.jm().format(DateTime(2019).add(Duration(
+                  hours: _notifyTime.hour, minutes: _notifyTime.minute)))),
+              trailing: RaisedButton(
+                child: const Text('SET'),
+                onPressed: () => _selectTime(),
+              ),
+            ),
+            SizedBox(
+              height: 12,
+            ),
             TextFormField(
               controller: _locationController,
               decoration: InputDecoration(
@@ -253,6 +306,9 @@ class _AddPageState extends State<AddPage> {
                   Icons.description,
                 ),
               ),
+            ),
+            SizedBox(
+              height: 12,
             ),
           ],
         ),

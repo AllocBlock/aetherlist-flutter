@@ -102,7 +102,15 @@ class CustomLocalizations {
     return Intl.message(
       'Categories',
       name: 'categories',
-      desc: 'Categories text in navigation drawer',
+      desc: 'Categories text',
+    );
+  }
+
+  String get futureView {
+    return Intl.message(
+      'Future',
+      name: 'futureView',
+      desc: 'futureView text',
     );
   }
 
@@ -110,7 +118,7 @@ class CustomLocalizations {
     return Intl.message(
       'Statistics',
       name: 'statistics',
-      desc: 'Statistics text in navigation drawer',
+      desc: 'Statistics text',
     );
   }
 
@@ -118,7 +126,7 @@ class CustomLocalizations {
     return Intl.message(
       'Archives',
       name: 'archives',
-      desc: 'Archives text in navigation drawer',
+      desc: 'Archives text',
     );
   }
 
@@ -126,7 +134,7 @@ class CustomLocalizations {
     return Intl.message(
       'Settings',
       name: 'settings',
-      desc: 'Settings text in navigation drawer',
+      desc: 'Settings text',
     );
   }
 
@@ -134,7 +142,15 @@ class CustomLocalizations {
     return Intl.message(
       'About',
       name: 'about',
-      desc: 'About text in navigation drawer',
+      desc: 'About text',
+    );
+  }
+
+  String get languages {
+    return Intl.message(
+      'Languages',
+      name: 'languages',
+      desc: 'languages text',
     );
   }
 }

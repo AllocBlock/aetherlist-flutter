@@ -16,7 +16,7 @@ Item _$ItemFromJson(Map<String, dynamic> json) {
 //    ..enable_notification = json['enable_notification'] as bool
 //    ..notify_time = json['notify_time'] as String
 //    ..enable_time_range = json['enable_time_range'] as bool
-//    ..due_time = json['due_time'] as String
+//    ..due_date = json['due_date'] as String
 //    ..location = json['location'] as String
 //    ..tags = json['tags'] as List
 //    ..description = json['description'] as String
@@ -29,8 +29,8 @@ Item _$ItemFromJson(Map<String, dynamic> json) {
     ..priority = double.parse(json['priority'])
     ..enable_notification = json['enable_notification'] == "1"
     ..notify_time = json['notify_time'] as String
-    ..enable_time_range = json['enable_time_range']  == "1"
-    ..due_time = json['due_time'] as String
+    ..enable_time_range = json['enable_time_range'] == "1"
+    ..due_date = json['due_date'] as String
     ..location = json['location'] as String
     ..tags = json['tags'] as List
     ..description = json['description'] as String
@@ -46,7 +46,7 @@ Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
       'enable_notification': instance.enable_notification,
       'notify_time': instance.notify_time,
       'enable_time_range': instance.enable_time_range,
-      'due_time': instance.due_time,
+      'due_date': instance.due_date,
       'location': instance.location,
       'tags': instance.tags,
       'description': instance.description,

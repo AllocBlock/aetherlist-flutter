@@ -4,7 +4,6 @@ import 'package:aetherlist_flutter/common/request.dart';
 import 'package:aetherlist_flutter/models/index.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:intl/intl.dart';
 
 const _themes = <MaterialColor>[
   Colors.cyan,
@@ -19,6 +18,7 @@ class Global {
   static List<Item> todayItems = [];
   static List<Item> laterItems = [];
   static List<Item> allItems = [];
+  static List<Item> historyItems = [];
   static List<Category> categories = [];
 
   static List<MaterialColor> get themes => _themes;
@@ -95,8 +95,15 @@ class LocaleModel extends ProfileChangeNotifier {
 }
 
 class ItemsModel extends ChangeNotifier {
-  void _toggleFinishItem(List<Item> items, int index) {
+  void _toggleFinishItem(List<Item> items, int index) async {
     items[index].finished = !items[index].finished;
+    Global.allItems.firstWhere((e) => e.id == items[index].id).finished =
+        items[index].finished;
+    if (!await Request.editItem(items[index])) {
+      items[index].finished = !items[index].finished;
+      Global.allItems.firstWhere((e) => e.id == items[index].id).finished =
+          items[index].finished;
+    }
   }
 
   void _insertItem(List<Item> items, Item newItem) {
@@ -106,7 +113,7 @@ class ItemsModel extends ChangeNotifier {
 
   Item _removeItem(List<Item> items, int index) => items.removeAt(index);
 
-  void _updateItemsIndex(List<Item> items, int oldIndex, int newIndex) {
+  void _updateItemsIndex(List<Item> items, int oldIndex, int newIndex) async {
     double adjacentPriority;
     if (oldIndex < newIndex) {
       adjacentPriority =
@@ -120,7 +127,10 @@ class ItemsModel extends ChangeNotifier {
     }
     Item item = items.removeAt(oldIndex);
     items.insert(newIndex, item);
-    _sortItems(items);
+    Global.allItems.firstWhere((e) => e.id == items[newIndex].id).priority =
+        items[newIndex].priority;
+    await Request.editItem(items[newIndex]);
+    notifyListeners();
   }
 
   void _sortItems(List<Item> items) {
@@ -207,6 +217,7 @@ class LaterItemsModel extends ItemsModel {
 
 class AllItemsModel extends ItemsModel {
   List<Item> get items => Global.allItems;
+  List<Item> get historyItems => Global.historyItems;
   List<Category> get categories => Global.categories;
 
   set allItems(List<Item> newItems) {
@@ -218,7 +229,7 @@ class AllItemsModel extends ItemsModel {
 
   Future<bool> addItem(Item item) async {
     if (await Request.addItem(item)) {
-      if (item.due_time == DateFormat("yyyy-MM-dd").format(DateTime.now())) {
+      if (item.isDueToday()) {
         Global.todayItems.add(item);
       } else if (item.enable_time_range) {
         Global.laterItems.add(item);
@@ -230,13 +241,117 @@ class AllItemsModel extends ItemsModel {
     }
   }
 
+  Future<bool> editItem(Item item) async {
+    if (await Request.editItem(item)) {
+      Global.todayItems.removeWhere((e) => e.id == item.id);
+      Global.laterItems.removeWhere((e) => e.id == item.id);
+      Global.allItems.removeWhere((e) => e.id == item.id);
+      if (item.isDueToday()) {
+        Global.todayItems.add(item);
+      } else if (item.enable_time_range) {
+        Global.laterItems.add(item);
+      }
+      Global.allItems.add(item);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> removeItem(Item item) async {
+    Global.allItems.removeWhere((e) => e.id == item.id);
+    if (await Request.removeItem()) {
+      if (item.isDueToday()) {
+        Global.todayItems.removeWhere((e) => e.id == item.id);
+      } else if (item.enable_time_range) {
+        Global.laterItems.removeWhere((e) => e.id == item.id);
+      }
+      notifyListeners();
+      return true;
+    } else {
+      Global.allItems.add(item);
+      return false;
+    }
+  }
+
+  void _filterTodayItems() {
+    Global.todayItems = Global.allItems.where((e) => e.isDueToday()).toList();
+    _sortItems(Global.todayItems);
+  }
+
+  void _filterLaterItems() {
+    Global.laterItems = Global.allItems
+        .where((e) => !e.isDueToday() && e.enable_time_range)
+        .toList();
+    _sortItems(Global.laterItems);
+  }
+
+  void _filterHistoryItems() {
+    final DateTime nowDate = DateTime.now();
+    Global.historyItems = Global.allItems
+        .where((e) => e
+            .parseDate()
+            .isBefore(DateTime(nowDate.year, nowDate.month, nowDate.day)))
+        .toList();
+  }
+
   Future<bool> fetchItems() async {
     Global.allItems = await Request.getAllItems();
+    _filterTodayItems();
+    _filterLaterItems();
+    _filterHistoryItems();
+    Global.historyItems.sort((Item a, Item b) {
+      return b.due_date.compareTo(a.due_date);
+    });
+    notifyListeners();
     return true;
   }
 
+  // TODO: use CategoriesModel to control categories
   Future<bool> fetchCategories() async {
     Global.categories = await Request.getCategories();
     return true;
+  }
+
+  // TODO: use CategoriesModel to control categories
+  Future<bool> addCategory(String categoryName) async {
+    Category category = Category();
+    category.category_name = categoryName;
+    category.id = await Request.addCategory(categoryName);
+    if (category.id != null && category.id != -1) {
+      Global.categories.add(category);
+      notifyListeners();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // TODO: use CategoriesModel to control categories
+  Future<bool> updateCategory(Category category, String newName) async {
+    category.category_name = newName;
+    if (await Request.updateCategory(category)) {
+      for (var e in Global.categories) {
+        if (e.id == category.id) {
+          e.category_name = newName;
+        }
+        notifyListeners();
+        return true;
+      }
+      return false;
+    } else {
+      return false;
+    }
+  }
+
+  // TODO: use CategoriesModel to control categories
+  Future<bool> removeCategory(Category category) async {
+    if (await Request.removeCategory(category.id)) {
+      Global.categories.removeWhere((e) => e.id == category.id);
+      notifyListeners();
+      return true;
+    } else {
+      return false;
+    }
   }
 }

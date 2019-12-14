@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2019-12-07T20:59:23.611883",
+  "@@last_modified": "2019-12-13T15:55:20.559710",
   "login": "登录",
   "@login": {
     "description": "login text",
@@ -78,6 +78,12 @@
     "type": "text",
     "placeholders": {}
   },
+  "futureView": "未来",
+  "@futureView": {
+    "description": "futureView text in navigation drawer",
+    "type": "text",
+    "placeholders": {}
+  },
   "statistics": "统计",
   "@statistics": {
     "description": "Statistics name in navigation drawer",
@@ -93,6 +99,12 @@
   "settings": "设置",
   "@settings": {
     "description": "Settings name in navigation drawer",
+    "type": "text",
+    "placeholders": {}
+  }
+  "languages": "语言",
+  "@languages": {
+    "description": "languages text",
     "type": "text",
     "placeholders": {}
   }

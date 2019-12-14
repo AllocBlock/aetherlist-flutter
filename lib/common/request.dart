@@ -3,12 +3,15 @@ import 'dart:convert';
 import 'package:aetherlist_flutter/common/global.dart';
 import 'package:aetherlist_flutter/models/index.dart';
 import 'package:aetherlist_flutter/models/user.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class Request {
   Request([this.context]);
 
+  static const String _requestUrl =
+      "https://www.foodiesnotalone.cn/aetherlist/server.php";
   BuildContext context;
 
   // TODO: add initialization
@@ -18,15 +21,12 @@ class Request {
     String device_number = "null";
     var requestData;
     try {
-      Response response = await Dio().get(
-          "https://www.foodiesnotalone.cn/aetherlist/server.php",
-          queryParameters: {
-            "opcode": "login",
-            "user_name": userName,
-            "passwd": passwd,
-            "device_number": device_number
-          });
-
+      Response response = await Dio().get(_requestUrl, queryParameters: {
+        "opcode": "login",
+        "user_name": userName,
+        "passwd": passwd,
+        "device_number": device_number
+      });
       //print(response.toString());
       requestData = json.decode(response.toString());
     } catch (e) {
@@ -49,14 +49,12 @@ class Request {
     String device_number = "null";
     String encoded_passwd = passwd;
     try {
-      Response response = await Dio().get(
-          "https://www.foodiesnotalone.cn/aetherlist/server.php",
-          queryParameters: {
-            "opcode": "register",
-            "user_name": userName,
-            "passwd": encoded_passwd,
-            "device_number": device_number
-          });
+      Response response = await Dio().get(_requestUrl, queryParameters: {
+        "opcode": "register",
+        "user_name": userName,
+        "passwd": encoded_passwd,
+        "device_number": device_number
+      });
 
       //print(response.toString());
       var requestData = json.decode(response.toString());
@@ -71,12 +69,12 @@ class Request {
     String session = Global.profile.session;
     var requestData;
     try {
-      Response response = await Dio().get(
-          "https://www.foodiesnotalone.cn/aetherlist/server.php",
+      Response response = await Dio().get(_requestUrl,
           queryParameters: {"opcode": "getCategory", "session": session});
 //          print(response.toString());
       requestData = jsonDecode(response.toString());
     } catch (e) {
+      BotToast.showText(text: e.toString());
       print(e);
     }
     if (requestData['result'] == "fail")
@@ -90,8 +88,7 @@ class Request {
     String session = Global.profile.session;
     var requestData;
     try {
-      Response response = await Dio().get(
-          "https://www.foodiesnotalone.cn/aetherlist/server.php",
+      Response response = await Dio().get(_requestUrl,
           queryParameters: {"opcode": "getAllItems", "session": session});
 //      print(response.toString());
       requestData = jsonDecode(response.toString());
@@ -110,8 +107,7 @@ class Request {
     String session = Global.profile.session;
     var requestData;
     try {
-      Response response = await Dio().get(
-          "https://www.foodiesnotalone.cn/aetherlist/server.php",
+      Response response = await Dio().get(_requestUrl,
           queryParameters: {"opcode": "getTodayItems", "session": session});
       //print(response.toString());
       requestData = jsonDecode(response.toString());
@@ -130,8 +126,7 @@ class Request {
     String session = Global.profile.session;
     var requestData;
     try {
-      Response response = await Dio().get(
-          "https://www.foodiesnotalone.cn/aetherlist/server.php",
+      Response response = await Dio().get(_requestUrl,
           queryParameters: {"opcode": "getLaterItems", "session": session});
       //print(response.toString());
       requestData = jsonDecode(response.toString());
@@ -150,9 +145,8 @@ class Request {
     String session = Global.profile.session;
     var requestData;
     try {
-      Response response = await dio
-          .post("https://www.foodiesnotalone.cn/aetherlist/server.php", data: {
-        "opcode": "upload",
+      Response response = await dio.get(_requestUrl, queryParameters: {
+        "opcode": "editItem",
         "session": session,
         "data": jsonEncode(item),
       });
@@ -160,6 +154,86 @@ class Request {
     } catch (e) {
       print(e);
     }
+    print('@requestData: $requestData');
+    return requestData['result'] != 'fail';
+  }
+
+  static Future<bool> editItem(Item item) async => addItem(item);
+
+  static Future<bool> removeItem() async {
+    Dio dio = Dio();
+    String session = Global.profile.session;
+    var requestData;
+    try {
+      Response response = await dio.post(_requestUrl, data: {
+        "opcode": "setAllItems",
+        "session": session,
+        "data": jsonEncode(Global.allItems),
+      });
+      requestData = jsonDecode(response.toString());
+    } catch (e) {
+      print(e);
+    }
+    print('@requestData: $requestData');
+    return requestData['result'] != 'fail';
+  }
+
+  static Future<int> addCategory(String categoryName) async {
+    Dio dio = Dio();
+    String session = Global.profile.session;
+    var requestData;
+    try {
+      Response response = await dio.get(_requestUrl, queryParameters: {
+        "opcode": "addCategory",
+        "session": session,
+        "category_name": categoryName,
+      });
+      requestData = jsonDecode(response.toString());
+    } catch (e) {
+      print(e);
+    }
+    print('@requestData: $requestData');
+    if (requestData['result'] == 'fail') {
+      return -1;
+    } else {
+      return int.parse(requestData['category_id']);
+    }
+  }
+
+  static Future<bool> updateCategory(Category category) async {
+    Dio dio = Dio();
+    String session = Global.profile.session;
+    var requestData;
+    try {
+      Response response = await dio.get(_requestUrl, queryParameters: {
+        "opcode": "updateCategory",
+        "session": session,
+        "category_id": category.id,
+        "new_name": category.category_name,
+      });
+      requestData = jsonDecode(response.toString());
+    } catch (e) {
+      print(e);
+    }
+    print('@requestData: $requestData');
+    return requestData['result'] != 'fail';
+  }
+
+  static Future<bool> removeCategory(int categoryId) async {
+    Dio dio = Dio();
+    String session = Global.profile.session;
+    var requestData;
+    try {
+      Response response = await dio.get(_requestUrl, queryParameters: {
+        "opcode": "deleteCategory",
+        "session": session,
+        "category_id": categoryId,
+      });
+      requestData = jsonDecode(response.toString());
+    } catch (e) {
+      print(e);
+    }
+    print('@requestData: $requestData');
     return requestData['result'] != 'fail';
   }
 }
