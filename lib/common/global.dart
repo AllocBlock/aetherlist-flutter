@@ -111,7 +111,19 @@ class ItemsModel extends ChangeNotifier {
     _sortItems(items);
   }
 
-  Item _removeItem(List<Item> items, int index) => items.removeAt(index);
+  Item _removeItem(List<Item> items, int index) {
+    Global.allItems.removeWhere((e) => e.id == items[index].id);
+    Request.removeItem(items[index]).then((succeed) {
+      if (succeed) {
+        notifyListeners();
+        return items.removeAt(index);
+      } else {
+        Global.allItems.add(items[index]);
+        return Item();
+      }
+    });
+    return Item();
+  }
 
   void _updateItemsIndex(List<Item> items, int oldIndex, int newIndex) async {
     double adjacentPriority;
@@ -139,14 +151,14 @@ class ItemsModel extends ChangeNotifier {
   }
 
   static int _compareTwoItems(Item a, Item b) {
-    if (a.enable_time_range == true && b.enable_time_range != true) {
+    if (a.finished == true && b.finished != true) {
       return 1;
-    } else if (a.enable_time_range == false && b.enable_time_range == true) {
+    } else if (a.finished == false && b.finished == true) {
       return -1;
     } else {
-      if (a.finished == true && b.finished != true) {
+      if (a.enable_time_range == true && b.enable_time_range != true) {
         return 1;
-      } else if (a.finished == false && b.finished == true) {
+      } else if (a.enable_time_range == false && b.enable_time_range == true) {
         return -1;
       } else {
         if (a.priority != b.priority) {

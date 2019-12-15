@@ -81,15 +81,15 @@ class NavigationDrawerContent extends StatelessWidget {
                 Navigator.of(context).pushNamed('/statistics');
               },
             ),
-            ListTile(
-              leading: Icon(Icons.archive),
-              title: Text(localeText.archives),
-              onTap: () {
-                if (isMobile) {
-                  Navigator.pop(context);
-                } else {}
-              },
-            ),
+//            ListTile(
+//              leading: Icon(Icons.archive),
+//              title: Text(localeText.archives),
+//              onTap: () {
+//                if (isMobile) {
+//                  Navigator.pop(context);
+//                } else {}
+//              },
+//            ),
             ListTile(
               leading: Icon(Icons.settings),
               title: Text(localeText.settings),
