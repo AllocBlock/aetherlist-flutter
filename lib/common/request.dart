@@ -56,7 +56,7 @@ class Request {
         "device_number": device_number
       });
 
-      //print(response.toString());
+      print('register' + response.toString());
       var requestData = json.decode(response.toString());
       return requestData['result'] == 'success';
     } catch (e) {
@@ -71,7 +71,7 @@ class Request {
     try {
       Response response = await Dio().get(_requestUrl,
           queryParameters: {"opcode": "getCategory", "session": session});
-//          print(response.toString());
+      print('category' + response.toString());
       requestData = jsonDecode(response.toString());
     } catch (e) {
       BotToast.showText(text: e.toString());

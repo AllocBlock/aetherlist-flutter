@@ -146,6 +146,14 @@ class CustomLocalizations {
     );
   }
 
+  String get theme {
+    return Intl.message(
+      'Theme',
+      name: 'theme',
+      desc: 'Theme text',
+    );
+  }
+
   String get about {
     return Intl.message(
       'About',
@@ -415,6 +423,46 @@ class CustomLocalizations {
       'remove category failed',
       name: 'removeCategoryErrorText',
       desc: 'remove category error text',
+    );
+  }
+
+  String get addButton {
+    return Intl.message(
+      'Add',
+      name: 'addButton',
+      desc: 'add button text',
+    );
+  }
+
+  String get menuButton {
+    return Intl.message(
+      'Menu',
+      name: 'menuButton',
+      desc: 'menu button text',
+    );
+  }
+
+  String get saveButton {
+    return Intl.message(
+      'Save',
+      name: 'saveButton',
+      desc: 'save button text',
+    );
+  }
+
+  String get deleteButton {
+    return Intl.message(
+      'Delete',
+      name: 'deleteButton',
+      desc: 'delete button text',
+    );
+  }
+
+  String get itemDetails {
+    return Intl.message(
+      'item details',
+      name: 'itemDetails',
+      desc: 'item details text',
     );
   }
 }

@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2019-12-15T19:45:45.403509",
+  "@@last_modified": "2019-12-16T00:34:50.679062",
   "login": "Login",
   "@login": {
     "description": "login text",
@@ -105,6 +105,12 @@
   "settings": "Settings",
   "@settings": {
     "description": "Settings text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "theme": "Theme",
+  "@theme": {
+    "description": "Theme text",
     "type": "text",
     "placeholders": {}
   },
@@ -309,6 +315,36 @@
   "removeCategoryErrorText": "remove category failed",
   "@removeCategoryErrorText": {
     "description": "remove category error text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "addButton": "Add",
+  "@addButton": {
+    "description": "add button text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "menuButton": "Menu",
+  "@menuButton": {
+    "description": "menu button text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "saveButton": "Save",
+  "@saveButton": {
+    "description": "save button text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "deleteButton": "Delete",
+  "@deleteButton": {
+    "description": "delete button text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "itemDetails": "item details",
+  "@itemDetails": {
+    "description": "item details text",
     "type": "text",
     "placeholders": {}
   }

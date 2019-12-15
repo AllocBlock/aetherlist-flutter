@@ -38,7 +38,7 @@ class _AddPageState extends State<AddPage> {
         actionChildren: <Widget>[
           IconButton(
             icon: const Icon(Icons.save),
-            tooltip: "Save button",
+            tooltip: localeText.saveButton,
             onPressed: () {
               BotToast.showLoading(
                 clickClose: false,

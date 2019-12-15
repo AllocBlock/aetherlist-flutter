@@ -1,12 +1,15 @@
 import 'package:aetherlist_flutter/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:aetherlist_flutter/l10n/localization_intl.dart';
 
 class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var localeText = CustomLocalizations.of(context);
+
     return Scaffold(
       appBar: CustomAppBar(
-        titleName: 'About',
+        titleName: localeText.about,
         actionChildren: <Widget>[],
       ),
       body: Container(

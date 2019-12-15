@@ -23,7 +23,7 @@ class _FutureViewPageState extends State<FutureViewPage> {
         titleName: localeText.futureView,
         actionChildren: <Widget>[
           PopupMenuButton(
-            tooltip: "Menu",
+            tooltip: localeText.menuButton,
             icon: Icon(Icons.more_vert),
             offset: Offset(0, 50),
             padding: EdgeInsets.symmetric(horizontal: 8),

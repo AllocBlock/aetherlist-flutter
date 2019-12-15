@@ -56,7 +56,7 @@ class _EditPageState extends State<EditPage> {
         actionChildren: <Widget>[
           IconButton(
             icon: const Icon(Icons.delete_forever),
-            tooltip: "Delete button",
+            tooltip: localeText.deleteButton,
             onPressed: () {
               showDialog(
                   context: context,
@@ -95,7 +95,7 @@ class _EditPageState extends State<EditPage> {
           ),
           IconButton(
             icon: const Icon(Icons.save),
-            tooltip: "Save button",
+            tooltip: localeText.saveButton,
             onPressed: () {
               BotToast.showLoading(
                 clickClose: false,

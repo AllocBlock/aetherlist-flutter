@@ -108,6 +108,12 @@
     "type": "text",
     "placeholders": {}
   },
+  "theme": "主题",
+  "@theme": {
+    "description": "Theme text",
+    "type": "text",
+    "placeholders": {}
+  },
   "about": "关于",
   "@about": {
     "description": "About text",
@@ -309,6 +315,36 @@
   "removeCategoryErrorText": "移除分类失败",
   "@removeCategoryErrorText": {
     "description": "remove category error text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "addButton": "添加",
+  "@addButton": {
+    "description": "add button text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "menuButton": "菜单",
+  "@menuButton": {
+    "description": "menu button text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "saveButton": "保存",
+  "@saveButton": {
+    "description": "save button text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "deleteButton": "删除",
+  "@deleteButton": {
+    "description": "delete button text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "itemDetails": "事项细节",
+  "@itemDetails": {
+    "description": "item details text",
     "type": "text",
     "placeholders": {}
   }

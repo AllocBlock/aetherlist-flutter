@@ -128,7 +128,7 @@ class _ManageCategoriesPageState extends State<ManageCategoriesPage> {
                   ),
                   trailing: IconButton(
                     icon: Icon(Icons.delete),
-                    tooltip: 'delete',
+                    tooltip: localeText.deleteButton,
                     onPressed: () {
                       showDialog(
                           context: context,

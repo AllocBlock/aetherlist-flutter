@@ -1,4 +1,5 @@
 import 'package:aetherlist_flutter/page/home/home_content.dart';
+import 'package:aetherlist_flutter/l10n/localization_intl.dart';
 import 'package:aetherlist_flutter/widgets/navigation_drawer/navigation_drawer_tablet_desktop.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,8 @@ class HomePageTabletDesktop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var localeText = CustomLocalizations.of(context);
+
     return Scaffold(
       body: Row(
         children: <Widget>[
@@ -25,7 +28,7 @@ class HomePageTabletDesktop extends StatelessWidget {
                     children: <Widget>[
                       IconButton(
                         icon: Icon(Icons.menu, size: 40),
-                        tooltip: 'Menu button',
+                        tooltip: localeText.menuButton,
                         onPressed: () {
                           key.currentState.toggleDrawer();
                         },
@@ -40,7 +43,7 @@ class HomePageTabletDesktop extends StatelessWidget {
                       ),
                       IconButton(
                         icon: Icon(Icons.add, size: 40),
-                        tooltip: 'Add Button',
+                        tooltip: localeText.addButton,
                         onPressed: () => Navigator.pushNamed(context, '/add'),
                       ),
                     ],

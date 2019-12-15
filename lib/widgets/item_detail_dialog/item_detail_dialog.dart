@@ -38,7 +38,7 @@ class ItemDetailDialog extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Text(
-                    "Item details",
+                    localeText.itemDetails,
                     textAlign: TextAlign.center,
                     style:
                         TextStyle(fontWeight: FontWeight.w500, fontSize: 18.0),
@@ -56,18 +56,18 @@ class ItemDetailDialog extends StatelessWidget {
                       )),
                       child: ListView(shrinkWrap: true, children: <Widget>[
                         ListTile(
-                          title: Text("Item title"),
+                          title: Text(localeText.itemTitle),
                           subtitle: Text(item.item_name),
                         ),
                         ListTile(
-                          title: Text('Category'),
+                          title: Text(localeText.category),
                           subtitle: Text(Provider.of<AllItemsModel>(context)
                               .categories
                               .firstWhere((e) => e.id == item.category_id)
                               .category_name),
                         ),
                         ListTile(
-                          title: Text('Priority'),
+                          title: Text(localeText.priority),
                           subtitle: Slider(
                             min: 0.01,
                             max: 0.99,
@@ -76,11 +76,11 @@ class ItemDetailDialog extends StatelessWidget {
                           ),
                         ),
                         ListTile(
-                          title: Text('Tags'),
+                          title: Text(localeText.tags),
                           subtitle: Text(item.tags.join(", ")),
                         ),
                         ListTile(
-                          title: Text("Time-range mode",
+                          title: Text(localeText.timeRangeMode,
                               style: TextStyle(
                                 decoration: item.enable_time_range
                                     ? TextDecoration.none
@@ -88,11 +88,11 @@ class ItemDetailDialog extends StatelessWidget {
                               )),
                         ),
                         ListTile(
-                          title: Text("Due date"),
+                          title: Text(localeText.dueDate),
                           subtitle: Text(item.due_date),
                         ),
                         ListTile(
-                          title: Text('Notification',
+                          title: Text(localeText.notification,
                               style: TextStyle(
                                 decoration: item.enable_notification
                                     ? TextDecoration.none
@@ -101,17 +101,17 @@ class ItemDetailDialog extends StatelessWidget {
                         ),
                         if (item.enable_notification)
                           ListTile(
-                            title: Text("Notify time"),
+                            title: Text(localeText.notifyTime),
                             subtitle: Text(item.notify_time),
                           )
                         else
                           Container(),
                         ListTile(
-                          title: Text('Location'),
+                          title: Text(localeText.location),
                           subtitle: Text(item.location),
                         ),
                         ListTile(
-                          title: Text('Description'),
+                          title: Text(localeText.description),
                           subtitle: Text(item.description),
                         ),
                       ]),

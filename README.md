@@ -2,6 +2,8 @@
 
 Flutter implementation of AetherList.
 
+running on https://www.foodiesnotalone.cn/aetherlist/web/index.html
+
 This project is still under development, totally useless for users.
 
 ## Getting started

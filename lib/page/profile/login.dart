@@ -20,9 +20,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-//    _usernameController.text = Global.profile.lastLogin;
-    _usernameController.text = "testuser";
-    _passwordController.text = "123456";
+    _usernameController.text = Global.profile.lastLogin;
     if (_usernameController.text != null) {
       _autoFocusName = false;
     }
