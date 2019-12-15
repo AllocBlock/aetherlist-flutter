@@ -160,6 +160,8 @@ class _RegisterPageState extends State<RegisterPage> {
       if (succeed) {
         // return to login page
         Navigator.of(context).pop();
+      } else {
+        BotToast.showText(text: "register failed");
       }
     }
   }

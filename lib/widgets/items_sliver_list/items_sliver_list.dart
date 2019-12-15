@@ -32,7 +32,7 @@ class _ItemsSliverListState extends State<ItemsSliverList> {
           background: widget.itemModel.items[index].finished
               ? _recoverCard
               : _finishCard,
-          secondaryBackground: _archiveCard,
+          secondaryBackground: _removeCard,
           onDismissed: (direction) {
             final Item tempItem = widget.itemModel.items[index];
             String action;
@@ -42,7 +42,7 @@ class _ItemsSliverListState extends State<ItemsSliverList> {
                   : 'finished';
               widget.itemModel.toggleFinishItem(index);
             } else {
-              action = 'archived';
+              action = 'removed';
               widget.itemModel.removeItem(index);
             }
             Scaffold.of(context).showSnackBar(
@@ -157,20 +157,20 @@ class _ItemsSliverListState extends State<ItemsSliverList> {
     ),
   );
 
-  static final Card _archiveCard = Card(
+  static final Card _removeCard = Card(
     child: Container(
-      color: Colors.amber,
+      color: Colors.red,
       padding: EdgeInsets.all(10.0),
       alignment: AlignmentDirectional.centerEnd,
       child: Row(
         textDirection: TextDirection.rtl,
         children: <Widget>[
-          Icon(Icons.archive),
+          Icon(Icons.delete_forever),
           SizedBox(
             width: 10,
           ),
           Text(
-            'Archive',
+            'Remove',
             style: TextStyle(color: Colors.black),
           ),
         ],
