@@ -34,7 +34,7 @@ class _AddPageState extends State<AddPage> {
 
     return Scaffold(
       appBar: CustomAppBar(
-        titleName: 'Add new item',
+        titleName: localeText.addNewItem,
         actionChildren: <Widget>[
           IconButton(
             icon: const Icon(Icons.save),
@@ -70,7 +70,7 @@ class _AddPageState extends State<AddPage> {
                   print('Add item succeed');
                   Navigator.pop(context);
                 } else {
-                  BotToast.showText(text: "add item failed");
+                  BotToast.showText(text: localeText.addItemErrorText);
                 }
               });
             },
@@ -88,13 +88,15 @@ class _AddPageState extends State<AddPage> {
               autofocus: true,
               controller: _titleNameController,
               decoration: InputDecoration(
-                labelText: 'Item title',
+                labelText: localeText.itemTitle,
                 icon: Icon(
                   Icons.title,
                 ),
               ),
               validator: (value) {
-                return value.trim().length > 0 ? null : 'Title cannot be empty';
+                return value.trim().length > 0
+                    ? null
+                    : localeText.itemTitleValidation;
               },
             ),
             SizedBox(
@@ -102,7 +104,9 @@ class _AddPageState extends State<AddPage> {
             ),
             DropdownButtonFormField(
               validator: (value) {
-                return value == null ? "Please select category" : null;
+                return value == null
+                    ? localeText.selectCategoryValidation
+                    : null;
               },
               value: _selectCategory,
               isDense: true,
@@ -131,7 +135,7 @@ class _AddPageState extends State<AddPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Text('Priority'),
+                Text(localeText.priority),
                 Expanded(
                   child: SliderTheme(
                     data: SliderTheme.of(context).copyWith(
@@ -165,7 +169,7 @@ class _AddPageState extends State<AddPage> {
             TextFormField(
               controller: _tagsController,
               decoration: InputDecoration(
-                labelText: 'Tags',
+                labelText: localeText.tags,
                 icon: Icon(
                   Icons.turned_in,
                 ),
@@ -175,7 +179,7 @@ class _AddPageState extends State<AddPage> {
               height: 12,
             ),
             ListTile(
-              title: Text("Time-range mode"),
+              title: Text(localeText.timeRangeMode),
               trailing: Switch(
                 value: _isTimeRangeMode,
                 onChanged: (value) {
@@ -190,7 +194,7 @@ class _AddPageState extends State<AddPage> {
             ),
             ListTile(
               leading: Icon(Icons.event_note),
-              title: Text('Due date:'),
+              title: Text(localeText.dueDate),
               subtitle: Text(DateFormat.yMMMMEEEEd().format(_dueDate)),
               trailing: RaisedButton(
                 child: const Text('SET'),
@@ -201,7 +205,7 @@ class _AddPageState extends State<AddPage> {
               height: 12,
             ),
             ListTile(
-              title: Text('Notification'),
+              title: Text(localeText.notification),
               trailing: Switch(
                 activeColor: Colors.cyan,
                 value: _enableNotification,
@@ -218,7 +222,7 @@ class _AddPageState extends State<AddPage> {
             if (_enableNotification)
               ListTile(
                 leading: Icon(Icons.access_time),
-                title: Text('Notify time:'),
+                title: Text(localeText.notifyTime),
                 subtitle: Text(DateFormat.jm().format(DateTime(2019).add(
                     Duration(
                         hours: _notifyTime.hour,
@@ -234,7 +238,7 @@ class _AddPageState extends State<AddPage> {
             TextFormField(
               controller: _locationController,
               decoration: InputDecoration(
-                labelText: 'Location',
+                labelText: localeText.location,
                 icon: Icon(
                   Icons.location_on,
                 ),
@@ -248,7 +252,7 @@ class _AddPageState extends State<AddPage> {
               keyboardType: TextInputType.multiline,
               maxLines: null,
               decoration: InputDecoration(
-                labelText: 'Description',
+                labelText: localeText.description,
                 icon: Icon(
                   Icons.description,
                 ),

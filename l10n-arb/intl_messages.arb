@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2019-12-13T15:55:20.559710",
+  "@@last_modified": "2019-12-15T19:45:45.403509",
   "login": "Login",
   "@login": {
     "description": "login text",
@@ -72,6 +72,12 @@
     "type": "text",
     "placeholders": {}
   },
+  "category": "Category",
+  "@category": {
+    "description": "Category text",
+    "type": "text",
+    "placeholders": {}
+  },
   "categories": "Categories",
   "@categories": {
     "description": "Categories text",
@@ -111,6 +117,198 @@
   "languages": "Languages",
   "@languages": {
     "description": "languages text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "addNewItem": "Add new item",
+  "@addNewItem": {
+    "description": "Add new item page title name",
+    "type": "text",
+    "placeholders": {}
+  },
+  "editItem": "Edit item",
+  "@editItem": {
+    "description": "Edit item item page title name",
+    "type": "text",
+    "placeholders": {}
+  },
+  "itemTitle": "Item title",
+  "@itemTitle": {
+    "description": "item title text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "itemTitleValidation": "Item title cannot be empty",
+  "@itemTitleValidation": {
+    "description": "item title validation text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "categoryNameValidation": "Category name cannot be empty",
+  "@categoryNameValidation": {
+    "description": "category name validation text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "selectCategoryValidation": "Please select a category",
+  "@selectCategoryValidation": {
+    "description": "select category validation text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "newCategoryName": "New category name",
+  "@newCategoryName": {
+    "description": "new category name text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "noValidCategory": "No valid category",
+  "@noValidCategory": {
+    "description": "no valid category text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "priority": "Priority",
+  "@priority": {
+    "description": "priority text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "tags": "Tags",
+  "@tags": {
+    "description": "tags text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "timeRangeMode": "Time-range mode",
+  "@timeRangeMode": {
+    "description": "time-range mode text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "dueDate": "Due date",
+  "@dueDate": {
+    "description": "due date text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "notification": "Notification",
+  "@notification": {
+    "description": "notification text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "notifyTime": "Notify time",
+  "@notifyTime": {
+    "description": "notify time text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "location": "Location",
+  "@location": {
+    "description": "location text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "description": "Description",
+  "@description": {
+    "description": "description text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "addItemErrorText": "add item failed",
+  "@addItemErrorText": {
+    "description": "add item error text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "removeItemTip": "You really want to remove this item?",
+  "@removeItemTip": {
+    "description": "remove item tip text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "removeItemErrorText": "remove item failed",
+  "@removeItemErrorText": {
+    "description": "remove item error text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "editItemErrorText": "edit item failed",
+  "@editItemErrorText": {
+    "description": "edit item error text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "fetchDataErrorText": "fetch data failed",
+  "@fetchDataErrorText": {
+    "description": "fetch data error text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "today": "Today",
+  "@today": {
+    "description": "today text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "later": "Later",
+  "@later": {
+    "description": "later text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "undo": "Undo",
+  "@undo": {
+    "description": "undo text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "manageCategories": "Manage categories",
+  "@manageCategories": {
+    "description": "manage categories text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "addCategory": "Add category",
+  "@addCategory": {
+    "description": "add category text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "editCategory": "edit category",
+  "@editCategory": {
+    "description": "edit category text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "removeCategoryTip": "You really want to remove this category?",
+  "@removeCategoryTip": {
+    "description": "remove category tip text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "updateCategoryName": "Update category name",
+  "@updateCategoryName": {
+    "description": "update category name text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "addCategoryErrorText": "add category failed",
+  "@addCategoryErrorText": {
+    "description": "add category error text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "updateCategoryErrorText": "update category failed",
+  "@updateCategoryErrorText": {
+    "description": "update category error text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "removeCategoryErrorText": "remove category failed",
+  "@removeCategoryErrorText": {
+    "description": "remove category error text",
     "type": "text",
     "placeholders": {}
   }

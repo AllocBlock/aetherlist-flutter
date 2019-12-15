@@ -1,3 +1,4 @@
+import 'package:aetherlist_flutter/l10n/localization_intl.dart';
 import 'package:aetherlist_flutter/models/item.dart';
 import 'package:aetherlist_flutter/widgets/item_detail_dialog/item_detail_dialog.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class _ItemsSliverListState extends State<ItemsSliverList> {
 
   @override
   Widget build(BuildContext context) {
+    var localeText = CustomLocalizations.of(context);
     return ReorderableSliverList(
       delegate: ReorderableSliverChildListDelegate(
           List.generate(widget.itemModel.items?.length ?? 0, (index) {
@@ -48,7 +50,7 @@ class _ItemsSliverListState extends State<ItemsSliverList> {
                 content: Text('${tempItem.item_name} $action!'),
                 action: (action == 'archived')
                     ? SnackBarAction(
-                        label: 'Undo',
+                        label: localeText.undo,
                         textColor: Colors.white,
                         onPressed: () {
                           setState(() {
