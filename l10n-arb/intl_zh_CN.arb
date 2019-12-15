@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2019-12-13T15:55:20.559710",
+  "@@last_modified": "2019-12-15T19:45:45.403509",
   "login": "登录",
   "@login": {
     "description": "login text",
@@ -12,7 +12,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "logoutTip": "确定要登出账号吗？",
+  "logoutTip": "你确定要登出账号吗？",
   "@logoutTip": {
     "description": "logout tip text",
     "type": "text",
@@ -31,24 +31,24 @@
     "placeholders": {}
   },
   "yes": "是",
-    "@yes": {
-      "description": "yes text",
-      "type": "text",
-      "placeholders": {}
-    },
-    "no": "否",
-    "@no": {
-      "description": "no text",
-      "type": "text",
-      "placeholders": {}
-    },
+  "@yes": {
+    "description": "yes text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "no": "否",
+  "@no": {
+    "description": "no text",
+    "type": "text",
+    "placeholders": {}
+  },
   "username": "用户名",
   "@username": {
     "description": "username text",
     "type": "text",
     "placeholders": {}
   },
-  "usernameRequired": "用户名不能为空",
+  "usernameRequired": "需要输入用户名",
   "@usernameRequired": {
     "description": "username required text",
     "type": "text",
@@ -60,7 +60,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "passwordRequired": "密码不能为空",
+  "passwordRequired": "需要输入密码",
   "@passwordRequired": {
     "description": "password required text",
     "type": "text",
@@ -72,39 +72,243 @@
     "type": "text",
     "placeholders": {}
   },
+  "category": "分类",
+  "@category": {
+    "description": "Category text",
+    "type": "text",
+    "placeholders": {}
+  },
   "categories": "分类",
   "@categories": {
-    "description": "Categories name in navigation drawer",
+    "description": "Categories text",
     "type": "text",
     "placeholders": {}
   },
   "futureView": "未来",
   "@futureView": {
-    "description": "futureView text in navigation drawer",
+    "description": "futureView text",
     "type": "text",
     "placeholders": {}
   },
   "statistics": "统计",
   "@statistics": {
-    "description": "Statistics name in navigation drawer",
+    "description": "Statistics text",
     "type": "text",
     "placeholders": {}
   },
   "archives": "归档",
   "@archives": {
-    "description": "Archives name in navigation drawer",
+    "description": "Archives text",
     "type": "text",
     "placeholders": {}
   },
   "settings": "设置",
   "@settings": {
-    "description": "Settings name in navigation drawer",
+    "description": "Settings text",
     "type": "text",
     "placeholders": {}
-  }
+  },
+  "about": "关于",
+  "@about": {
+    "description": "About text",
+    "type": "text",
+    "placeholders": {}
+  },
   "languages": "语言",
   "@languages": {
     "description": "languages text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "addNewItem": "添加新事项",
+  "@addNewItem": {
+    "description": "Add new item page title name",
+    "type": "text",
+    "placeholders": {}
+  },
+  "editItem": "编辑事项",
+  "@editItem": {
+    "description": "Edit item item page title name",
+    "type": "text",
+    "placeholders": {}
+  },
+  "itemTitle": "事项标题",
+  "@itemTitle": {
+    "description": "item title text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "itemTitleValidation": "事项标题不能为空",
+  "@itemTitleValidation": {
+    "description": "item title validation text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "categoryNameValidation": "分类名不能为空",
+  "@categoryNameValidation": {
+    "description": "category name validation text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "selectCategoryValidation": "请选择一个分类",
+  "@selectCategoryValidation": {
+    "description": "select category validation text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "newCategoryName": "新的分类名",
+  "@newCategoryName": {
+    "description": "new category name text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "noValidCategory": "无可用分类",
+  "@noValidCategory": {
+    "description": "no valid category text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "priority": "优先级",
+  "@priority": {
+    "description": "priority text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "tags": "标签",
+  "@tags": {
+    "description": "tags text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "timeRangeMode": "时间段模式",
+  "@timeRangeMode": {
+    "description": "time-range mode text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "dueDate": "截止日期",
+  "@dueDate": {
+    "description": "due date text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "notification": "提醒",
+  "@notification": {
+    "description": "notification text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "notifyTime": "提醒时间",
+  "@notifyTime": {
+    "description": "notify time text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "location": "位置",
+  "@location": {
+    "description": "location text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "description": "描述",
+  "@description": {
+    "description": "description text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "addItemErrorText": "添加事项失败",
+  "@addItemErrorText": {
+    "description": "add item error text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "removeItemTip": "你真的要移除这个事项吗？",
+  "@removeItemTip": {
+    "description": "remove item tip text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "removeItemErrorText": "移除事项失败",
+  "@removeItemErrorText": {
+    "description": "remove item error text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "editItemErrorText": "编辑事项失败",
+  "@editItemErrorText": {
+    "description": "edit item error text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "fetchDataErrorText": "从服务器获取事项失败",
+  "@fetchDataErrorText": {
+    "description": "fetch data error text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "today": "今日",
+  "@today": {
+    "description": "today text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "later": "未来",
+  "@later": {
+    "description": "later text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "undo": "撤销",
+  "@undo": {
+    "description": "undo text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "manageCategories": "管理分类",
+  "@manageCategories": {
+    "description": "manage categories text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "addCategory": "添加分类",
+  "@addCategory": {
+    "description": "add category text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "editCategory": "编辑分类",
+  "@editCategory": {
+    "description": "edit category text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "removeCategoryTip": "你真的想要移除这个分类吗？",
+  "@removeCategoryTip": {
+    "description": "remove category tip text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "updateCategoryName": "更新分类名",
+  "@updateCategoryName": {
+    "description": "update category name text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "addCategoryErrorText": "添加分类失败",
+  "@addCategoryErrorText": {
+    "description": "add category error text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "updateCategoryErrorText": "更新分类失败",
+  "@updateCategoryErrorText": {
+    "description": "update category error text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "removeCategoryErrorText": "移除分类失败",
+  "@removeCategoryErrorText": {
+    "description": "remove category error text",
     "type": "text",
     "placeholders": {}
   }

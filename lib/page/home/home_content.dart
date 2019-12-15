@@ -36,6 +36,7 @@ class _HomeContentState extends State<HomeContent> {
 
   @override
   Widget build(BuildContext context) {
+    var localeText = CustomLocalizations.of(context);
     UserModel userModel = Provider.of<UserModel>(context);
     if (!userModel.isLogin) {
       return Center(
@@ -60,7 +61,7 @@ class _HomeContentState extends State<HomeContent> {
             SliverToBoxAdapter(
               child: Center(
                 child: Text(
-                  'Today',
+                  localeText.today,
                   textScaleFactor: 1.25,
                   style: TextStyle(color: Colors.grey[600], height: 2),
                 ),
@@ -74,11 +75,14 @@ class _HomeContentState extends State<HomeContent> {
                   if (snapshot.hasData) {
                     print("yes!");
                     if (snapshot.data == true)
-                      return ItemsSliverList(itemModel: itemModel);
+                      return ItemsSliverList(
+                        itemModel: itemModel,
+                        opacity: 1.0,
+                      );
                     else
                       return SliverToBoxAdapter(
                         child: Center(
-                          child: Text("Fetch data failed"),
+                          child: Text(localeText.fetchDataErrorText),
                         ),
                       );
                   } else if (snapshot.hasError) {
@@ -116,7 +120,7 @@ class _HomeContentState extends State<HomeContent> {
             SliverToBoxAdapter(
               child: Center(
                 child: Text(
-                  'Later',
+                  localeText.later,
                   textScaleFactor: 1.25,
                   style: TextStyle(color: Colors.grey[400], height: 2),
                 ),
@@ -128,14 +132,14 @@ class _HomeContentState extends State<HomeContent> {
                 future: laterMemoizer.runOnce(itemModel.fetchItems),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return ItemsSliverList(itemModel: itemModel);
+                    return ItemsSliverList(
+                      itemModel: itemModel,
+                      opacity: 0.75,
+                    );
                   } else if (snapshot.hasError) {
-                    return Opacity(
-                      opacity: 0.8,
-                      child: SliverToBoxAdapter(
-                        child: Center(
-                          child: Text("${snapshot.error}"),
-                        ),
+                    return SliverToBoxAdapter(
+                      child: Center(
+                        child: Text("${snapshot.error}"),
                       ),
                     );
                   } else {

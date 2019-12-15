@@ -52,7 +52,7 @@ class _EditPageState extends State<EditPage> {
     var localeText = CustomLocalizations.of(context);
     return Scaffold(
       appBar: CustomAppBar(
-        titleName: 'Edit item',
+        titleName: localeText.editItem,
         actionChildren: <Widget>[
           IconButton(
             icon: const Icon(Icons.delete_forever),
@@ -63,7 +63,7 @@ class _EditPageState extends State<EditPage> {
                   builder: (context) {
                     return AlertDialog(
                       content: Text(
-                        "You really want to remove this item?",
+                        localeText.removeItemTip,
                         textAlign: TextAlign.center,
                       ),
                       actions: <Widget>[
@@ -81,7 +81,8 @@ class _EditPageState extends State<EditPage> {
                                 print("Remove item!");
                                 Navigator.pop(context);
                               } else {
-                                BotToast.showText(text: "remove item failed");
+                                BotToast.showText(
+                                    text: localeText.removeItemErrorText);
                               }
                               Navigator.pop(context);
                             });
@@ -126,7 +127,7 @@ class _EditPageState extends State<EditPage> {
                   print('Edit item succeed');
                   Navigator.pop(context);
                 } else {
-                  BotToast.showText(text: "edit item failed");
+                  BotToast.showText(text: localeText.editItemErrorText);
                 }
               });
             },
@@ -144,13 +145,15 @@ class _EditPageState extends State<EditPage> {
               autofocus: true,
               controller: _titleNameController,
               decoration: InputDecoration(
-                labelText: 'Item title',
+                labelText: localeText.itemTitle,
                 icon: Icon(
                   Icons.title,
                 ),
               ),
               validator: (value) {
-                return value.trim().length > 0 ? null : 'Title cannot be empty';
+                return value.trim().length > 0
+                    ? null
+                    : localeText.itemTitleValidation;
               },
             ),
             SizedBox(
@@ -158,7 +161,9 @@ class _EditPageState extends State<EditPage> {
             ),
             DropdownButtonFormField(
               validator: (value) {
-                return value == null ? "Please select category" : null;
+                return value == null
+                    ? localeText.selectCategoryValidation
+                    : null;
               },
               value: _selectCategoryId,
               isDense: true,
@@ -176,7 +181,7 @@ class _EditPageState extends State<EditPage> {
                 });
               },
               decoration: InputDecoration(
-                labelText: "Category",
+                labelText: localeText.category,
                 icon: Icon(Icons.category),
               ),
             ),
@@ -187,7 +192,7 @@ class _EditPageState extends State<EditPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Text('Priority'),
+                Text(localeText.priority),
                 Expanded(
                   child: SliderTheme(
                     data: SliderTheme.of(context).copyWith(
@@ -221,7 +226,7 @@ class _EditPageState extends State<EditPage> {
             TextFormField(
               controller: _tagsController,
               decoration: InputDecoration(
-                labelText: 'Tags',
+                labelText: localeText.tags,
                 icon: Icon(
                   Icons.turned_in,
                 ),
@@ -231,7 +236,7 @@ class _EditPageState extends State<EditPage> {
               height: 12,
             ),
             ListTile(
-              title: Text("Time-range mode"),
+              title: Text(localeText.timeRangeMode),
               trailing: Switch(
                 value: _isTimeRangeMode,
                 onChanged: (value) {
@@ -246,7 +251,7 @@ class _EditPageState extends State<EditPage> {
             ),
             ListTile(
               leading: Icon(Icons.event_note),
-              title: Text('Due date:'),
+              title: Text(localeText.dueDate),
               subtitle: Text(DateFormat.yMMMMEEEEd().format(_dueDate)),
               trailing: RaisedButton(
                 child: const Text('SET'),
@@ -257,7 +262,7 @@ class _EditPageState extends State<EditPage> {
               height: 12,
             ),
             ListTile(
-              title: Text('Notification'),
+              title: Text(localeText.notification),
               trailing: Switch(
                 activeColor: Colors.cyan,
                 value: _enableNotification,
@@ -273,7 +278,7 @@ class _EditPageState extends State<EditPage> {
             ),
             ListTile(
               leading: Icon(Icons.access_time),
-              title: Text('Notify time:'),
+              title: Text(localeText.notifyTime),
               subtitle: Text(DateFormat.jm().format(DateTime(2019).add(Duration(
                   hours: _notifyTime.hour, minutes: _notifyTime.minute)))),
               trailing: RaisedButton(
@@ -287,7 +292,7 @@ class _EditPageState extends State<EditPage> {
             TextFormField(
               controller: _locationController,
               decoration: InputDecoration(
-                labelText: 'Location',
+                labelText: localeText.location,
                 icon: Icon(
                   Icons.location_on,
                 ),
@@ -301,7 +306,7 @@ class _EditPageState extends State<EditPage> {
               keyboardType: TextInputType.multiline,
               maxLines: null,
               decoration: InputDecoration(
-                labelText: 'Description',
+                labelText: localeText.description,
                 icon: Icon(
                   Icons.description,
                 ),

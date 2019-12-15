@@ -31,7 +31,7 @@ class _FutureViewPageState extends State<FutureViewPage> {
             itemBuilder: (context) {
               return <PopupMenuItem>[
                 PopupMenuItem(
-                  child: Text("Manage categories"),
+                  child: Text(localeText.manageCategories),
                   value: 1,
                 ),
               ];
@@ -52,8 +52,8 @@ class _FutureViewPageState extends State<FutureViewPage> {
           children: <Widget>[
             DropdownButtonHideUnderline(
               child: DropdownButton(
-                hint: Text("Please select a category"),
-                disabledHint: Text("No avaliable category"),
+                hint: Text(localeText.selectCategoryValidation),
+                disabledHint: Text(localeText.noValidCategory),
                 value: _selectCategory,
                 items: Provider.of<AllItemsModel>(context)
                     .categories

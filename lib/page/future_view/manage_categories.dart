@@ -19,11 +19,11 @@ class _ManageCategoriesPageState extends State<ManageCategoriesPage> {
     var localeText = CustomLocalizations.of(context);
     return Scaffold(
       appBar: CustomAppBar(
-        titleName: "Manage categories",
+        titleName: localeText.manageCategories,
         actionChildren: <Widget>[
           IconButton(
             icon: Icon(Icons.library_add),
-            tooltip: "Add category",
+            tooltip: localeText.addCategory,
             onPressed: () {
               showDialog(
                   context: context,
@@ -32,12 +32,12 @@ class _ManageCategoriesPageState extends State<ManageCategoriesPage> {
                     content: TextFormField(
                       controller: _addNameController,
                       autofocus: true,
-                      decoration:
-                          InputDecoration(labelText: "New category name"),
+                      decoration: InputDecoration(
+                          labelText: localeText.newCategoryName),
                       validator: (value) {
                         return value.trim().length > 0
                             ? null
-                            : 'Category name cannot be empty';
+                            : localeText.categoryNameValidation;
                       },
                     ),
                     actions: <Widget>[
@@ -56,7 +56,8 @@ class _ManageCategoriesPageState extends State<ManageCategoriesPage> {
                                 _addNameController.clear();
                                 Navigator.pop(context);
                               } else {
-                                BotToast.showText(text: "add category failed");
+                                BotToast.showText(
+                                    text: localeText.addCategoryErrorText);
                               }
                             });
                           })
@@ -75,7 +76,7 @@ class _ManageCategoriesPageState extends State<ManageCategoriesPage> {
                 return ListTile(
                   leading: IconButton(
                     icon: Icon(Icons.edit),
-                    tooltip: 'edit',
+                    tooltip: localeText.editCategory,
                     onPressed: () {
                       showDialog(
                           context: context,
@@ -87,11 +88,11 @@ class _ManageCategoriesPageState extends State<ManageCategoriesPage> {
                               initialValue:
                                   itemModel.categories[index].category_name,
                               decoration: InputDecoration(
-                                  labelText: "Update category name"),
+                                  labelText: localeText.updateCategoryName),
                               validator: (value) {
                                 return value.trim().length > 0
                                     ? null
-                                    : 'Category name cannot be empty';
+                                    : localeText.categoryNameValidation;
                               },
                             ),
                             actions: <Widget>[
@@ -113,7 +114,8 @@ class _ManageCategoriesPageState extends State<ManageCategoriesPage> {
                                         Navigator.pop(context);
                                       } else {
                                         BotToast.showText(
-                                            text: "update category failed");
+                                            text: localeText
+                                                .updateCategoryErrorText);
                                       }
                                     });
                                   }),
@@ -133,7 +135,7 @@ class _ManageCategoriesPageState extends State<ManageCategoriesPage> {
                           child: AlertDialog(
                             contentPadding: EdgeInsets.all(24),
                             content: Text(
-                              "You really want to remove this category?",
+                              localeText.removeCategoryTip,
                               textAlign: TextAlign.center,
                             ),
                             actions: <Widget>[
@@ -153,7 +155,8 @@ class _ManageCategoriesPageState extends State<ManageCategoriesPage> {
                                         Navigator.pop(context);
                                       } else {
                                         BotToast.showText(
-                                            text: "remove category failed");
+                                            text: localeText
+                                                .removeCategoryErrorText);
                                       }
                                     });
                                   }),

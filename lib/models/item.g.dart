@@ -25,11 +25,11 @@ Item _$ItemFromJson(Map<String, dynamic> json) {
     ..id = int.parse(json['id'])
     ..category_id = int.parse(json['category_id'])
     ..item_name = json['item_name'] as String
-    ..finished = json['finished'] == "1"
+    ..finished = json['finished']
     ..priority = double.parse(json['priority'])
-    ..enable_notification = json['enable_notification'] == "1"
+    ..enable_notification = json['enable_notification']
     ..notify_time = json['notify_time'] as String
-    ..enable_time_range = json['enable_time_range'] == "1"
+    ..enable_time_range = json['enable_time_range']
     ..due_date = json['due_date'] as String
     ..location = json['location'] as String
     ..tags = json['tags'] as List

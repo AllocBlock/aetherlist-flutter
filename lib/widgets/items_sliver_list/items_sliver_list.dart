@@ -1,3 +1,4 @@
+import 'package:aetherlist_flutter/l10n/localization_intl.dart';
 import 'package:aetherlist_flutter/models/item.dart';
 import 'package:aetherlist_flutter/widgets/item_detail_dialog/item_detail_dialog.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,10 @@ import 'package:reorderables/reorderables.dart';
 
 class ItemsSliverList extends StatefulWidget {
   final dynamic itemModel;
-  const ItemsSliverList({Key key, @required this.itemModel}) : super(key: key);
+  final double opacity;
+  const ItemsSliverList(
+      {Key key, @required this.itemModel, @required this.opacity})
+      : super(key: key);
 
   @override
   _ItemsSliverListState createState() => _ItemsSliverListState();
@@ -19,6 +23,7 @@ class _ItemsSliverListState extends State<ItemsSliverList> {
 
   @override
   Widget build(BuildContext context) {
+    var localeText = CustomLocalizations.of(context);
     return ReorderableSliverList(
       delegate: ReorderableSliverChildListDelegate(
           List.generate(widget.itemModel.items?.length ?? 0, (index) {
@@ -45,7 +50,7 @@ class _ItemsSliverListState extends State<ItemsSliverList> {
                 content: Text('${tempItem.item_name} $action!'),
                 action: (action == 'archived')
                     ? SnackBarAction(
-                        label: 'Undo',
+                        label: localeText.undo,
                         textColor: Colors.white,
                         onPressed: () {
                           setState(() {
@@ -59,7 +64,8 @@ class _ItemsSliverListState extends State<ItemsSliverList> {
           },
           child: Opacity(
             opacity: (widget.itemModel.items.length * 1.25 - index) /
-                (widget.itemModel.items.length * 1.25),
+                (widget.itemModel.items.length * 1.25) *
+                widget.opacity,
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(4.0),

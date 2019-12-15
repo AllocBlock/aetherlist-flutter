@@ -98,6 +98,14 @@ class CustomLocalizations {
         desc: 'username or password wrong text');
   }
 
+  String get category {
+    return Intl.message(
+      'Category',
+      name: 'category',
+      desc: 'Category text',
+    );
+  }
+
   String get categories {
     return Intl.message(
       'Categories',
@@ -151,6 +159,262 @@ class CustomLocalizations {
       'Languages',
       name: 'languages',
       desc: 'languages text',
+    );
+  }
+
+  String get addNewItem {
+    return Intl.message(
+      'Add new item',
+      name: 'addNewItem',
+      desc: 'Add new item page title name',
+    );
+  }
+
+  String get editItem {
+    return Intl.message(
+      'Edit item',
+      name: 'editItem',
+      desc: 'Edit item item page title name',
+    );
+  }
+
+  String get itemTitle {
+    return Intl.message(
+      'Item title',
+      name: 'itemTitle',
+      desc: 'item title text',
+    );
+  }
+
+  String get itemTitleValidation {
+    return Intl.message(
+      'Item title cannot be empty',
+      name: 'itemTitleValidation',
+      desc: 'item title validation text',
+    );
+  }
+
+  String get categoryNameValidation {
+    return Intl.message(
+      'Category name cannot be empty',
+      name: 'categoryNameValidation',
+      desc: 'category name validation text',
+    );
+  }
+
+  String get selectCategoryValidation {
+    return Intl.message(
+      'Please select a category',
+      name: 'selectCategoryValidation',
+      desc: 'select category validation text',
+    );
+  }
+
+  String get newCategoryName {
+    return Intl.message(
+      'New category name',
+      name: 'newCategoryName',
+      desc: 'new category name text',
+    );
+  }
+
+  String get noValidCategory {
+    return Intl.message(
+      'No valid category',
+      name: 'noValidCategory',
+      desc: 'no valid category text',
+    );
+  }
+
+  String get priority {
+    return Intl.message(
+      'Priority',
+      name: 'priority',
+      desc: 'priority text',
+    );
+  }
+
+  String get tags {
+    return Intl.message(
+      'Tags',
+      name: 'tags',
+      desc: 'tags text',
+    );
+  }
+
+  String get timeRangeMode {
+    return Intl.message(
+      'Time-range mode',
+      name: 'timeRangeMode',
+      desc: 'time-range mode text',
+    );
+  }
+
+  String get dueDate {
+    return Intl.message(
+      'Due date',
+      name: 'dueDate',
+      desc: 'due date text',
+    );
+  }
+
+  String get notification {
+    return Intl.message(
+      'Notification',
+      name: 'notification',
+      desc: 'notification text',
+    );
+  }
+
+  String get notifyTime {
+    return Intl.message(
+      'Notify time',
+      name: 'notifyTime',
+      desc: 'notify time text',
+    );
+  }
+
+  String get location {
+    return Intl.message(
+      'Location',
+      name: 'location',
+      desc: 'location text',
+    );
+  }
+
+  String get description {
+    return Intl.message(
+      'Description',
+      name: 'description',
+      desc: 'description text',
+    );
+  }
+
+  String get addItemErrorText {
+    return Intl.message(
+      'add item failed',
+      name: 'addItemErrorText',
+      desc: 'add item error text',
+    );
+  }
+
+  String get removeItemTip {
+    return Intl.message(
+      'You really want to remove this item?',
+      name: 'removeItemTip',
+      desc: 'remove item tip text',
+    );
+  }
+
+  String get removeItemErrorText {
+    return Intl.message(
+      'remove item failed',
+      name: 'removeItemErrorText',
+      desc: 'remove item error text',
+    );
+  }
+
+  String get editItemErrorText {
+    return Intl.message(
+      'edit item failed',
+      name: 'editItemErrorText',
+      desc: 'edit item error text',
+    );
+  }
+
+  String get fetchDataErrorText {
+    return Intl.message(
+      'fetch data failed',
+      name: 'fetchDataErrorText',
+      desc: 'fetch data error text',
+    );
+  }
+
+  String get today {
+    return Intl.message(
+      'Today',
+      name: 'today',
+      desc: 'today text',
+    );
+  }
+
+  String get later {
+    return Intl.message(
+      'Later',
+      name: 'later',
+      desc: 'later text',
+    );
+  }
+
+  String get undo {
+    return Intl.message(
+      'Undo',
+      name: 'undo',
+      desc: 'undo text',
+    );
+  }
+
+  String get manageCategories {
+    return Intl.message(
+      'Manage categories',
+      name: 'manageCategories',
+      desc: 'manage categories text',
+    );
+  }
+
+  String get addCategory {
+    return Intl.message(
+      'Add category',
+      name: 'addCategory',
+      desc: 'add category text',
+    );
+  }
+
+  String get editCategory {
+    return Intl.message(
+      'edit category',
+      name: 'editCategory',
+      desc: 'edit category text',
+    );
+  }
+
+  String get removeCategoryTip {
+    return Intl.message(
+      'You really want to remove this category?',
+      name: 'removeCategoryTip',
+      desc: 'remove category tip text',
+    );
+  }
+
+  String get updateCategoryName {
+    return Intl.message(
+      'Update category name',
+      name: 'updateCategoryName',
+      desc: 'update category name text',
+    );
+  }
+
+  String get addCategoryErrorText {
+    return Intl.message(
+      'add category failed',
+      name: 'addCategoryErrorText',
+      desc: 'add category error text',
+    );
+  }
+
+  String get updateCategoryErrorText {
+    return Intl.message(
+      'update category failed',
+      name: 'updateCategoryErrorText',
+      desc: 'update category error text',
+    );
+  }
+
+  String get removeCategoryErrorText {
+    return Intl.message(
+      'remove category failed',
+      name: 'removeCategoryErrorText',
+      desc: 'remove category error text',
     );
   }
 }
