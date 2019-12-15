@@ -5,7 +5,10 @@ import 'package:reorderables/reorderables.dart';
 
 class ItemsSliverList extends StatefulWidget {
   final dynamic itemModel;
-  const ItemsSliverList({Key key, @required this.itemModel}) : super(key: key);
+  final double opacity;
+  const ItemsSliverList(
+      {Key key, @required this.itemModel, @required this.opacity})
+      : super(key: key);
 
   @override
   _ItemsSliverListState createState() => _ItemsSliverListState();
@@ -59,7 +62,8 @@ class _ItemsSliverListState extends State<ItemsSliverList> {
           },
           child: Opacity(
             opacity: (widget.itemModel.items.length * 1.25 - index) /
-                (widget.itemModel.items.length * 1.25),
+                (widget.itemModel.items.length * 1.25) *
+                widget.opacity,
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(4.0),

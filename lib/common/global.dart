@@ -260,7 +260,7 @@ class AllItemsModel extends ItemsModel {
 
   Future<bool> removeItem(Item item) async {
     Global.allItems.removeWhere((e) => e.id == item.id);
-    if (await Request.removeItem()) {
+    if (await Request.removeItem(item)) {
       if (item.isDueToday()) {
         Global.todayItems.removeWhere((e) => e.id == item.id);
       } else if (item.enable_time_range) {

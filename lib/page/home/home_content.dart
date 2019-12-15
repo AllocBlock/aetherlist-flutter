@@ -74,7 +74,10 @@ class _HomeContentState extends State<HomeContent> {
                   if (snapshot.hasData) {
                     print("yes!");
                     if (snapshot.data == true)
-                      return ItemsSliverList(itemModel: itemModel);
+                      return ItemsSliverList(
+                        itemModel: itemModel,
+                        opacity: 1.0,
+                      );
                     else
                       return SliverToBoxAdapter(
                         child: Center(
@@ -128,14 +131,14 @@ class _HomeContentState extends State<HomeContent> {
                 future: laterMemoizer.runOnce(itemModel.fetchItems),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return ItemsSliverList(itemModel: itemModel);
+                    return ItemsSliverList(
+                      itemModel: itemModel,
+                      opacity: 0.75,
+                    );
                   } else if (snapshot.hasError) {
-                    return Opacity(
-                      opacity: 0.8,
-                      child: SliverToBoxAdapter(
-                        child: Center(
-                          child: Text("${snapshot.error}"),
-                        ),
+                    return SliverToBoxAdapter(
+                      child: Center(
+                        child: Text("${snapshot.error}"),
                       ),
                     );
                   } else {

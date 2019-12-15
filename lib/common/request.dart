@@ -160,15 +160,15 @@ class Request {
 
   static Future<bool> editItem(Item item) async => addItem(item);
 
-  static Future<bool> removeItem() async {
+  static Future<bool> removeItem(Item item) async {
     Dio dio = Dio();
     String session = Global.profile.session;
     var requestData;
     try {
-      Response response = await dio.post(_requestUrl, data: {
-        "opcode": "setAllItems",
+      Response response = await dio.get(_requestUrl, queryParameters: {
+        "opcode": "deleteItem",
         "session": session,
-        "data": jsonEncode(Global.allItems),
+        "item_id": item.id,
       });
       requestData = jsonDecode(response.toString());
     } catch (e) {
