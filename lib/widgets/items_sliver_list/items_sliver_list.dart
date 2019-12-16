@@ -66,17 +66,17 @@ class _ItemsSliverListState extends State<ItemsSliverList> {
             opacity: (widget.itemModel.items.length * 1.25 - index) /
                 (widget.itemModel.items.length * 1.25) *
                 widget.opacity,
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4.0),
+            child: GestureDetector(
+              onTap: () => showDialog(
+                context: context,
+                builder: (BuildContext context) =>
+                    ItemDetailDialog(item: widget.itemModel.items[index]),
               ),
-              margin: EdgeInsets.symmetric(vertical: 4.0),
-              child: GestureDetector(
-                onTap: () => showDialog(
-                  context: context,
-                  builder: (BuildContext context) =>
-                      ItemDetailDialog(item: widget.itemModel.items[index]),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4.0),
                 ),
+                margin: EdgeInsets.symmetric(vertical: 4.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,

@@ -305,6 +305,7 @@ class AllItemsModel extends ItemsModel {
             .parseDate()
             .isBefore(DateTime(nowDate.year, nowDate.month, nowDate.day)))
         .toList();
+    print(Global.historyItems.toString());
   }
 
   Future<bool> fetchItems() async {
@@ -312,6 +313,7 @@ class AllItemsModel extends ItemsModel {
     _filterTodayItems();
     _filterLaterItems();
     _filterHistoryItems();
+
     Global.historyItems.sort((Item a, Item b) {
       return b.due_date.compareTo(a.due_date);
     });

@@ -60,6 +60,29 @@ class _HomeContentState extends State<HomeContent> {
             // TODO: add progress bar for today items
             SliverToBoxAdapter(
               child: Center(
+                child: Consumer<TodayItemsModel>(
+                  builder: (BuildContext context, itemModel, Widget child) {
+                    if ((itemModel.items?.length ?? -1) != 0) {
+                      int doneCount = 0;
+                      for (var item in itemModel.items) {
+                        if (item.finished) {
+                          ++doneCount;
+                        }
+                      }
+                      return LinearProgressIndicator(
+                        value: doneCount / itemModel.items.length,
+                      );
+                    } else {
+                      return LinearProgressIndicator(
+                        value: 1,
+                      );
+                    }
+                  },
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Center(
                 child: Text(
                   localeText.today,
                   textScaleFactor: 1.25,

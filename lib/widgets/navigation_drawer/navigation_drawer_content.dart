@@ -38,10 +38,35 @@ class NavigationDrawerContent extends StatelessWidget {
                             },
                             child: Column(
                               children: <Widget>[
-                                CircleAvatar(
-                                  backgroundColor: Colors.blueGrey,
-                                  child: Icon(Icons.person),
-                                  radius: 40,
+                                SizedBox(
+                                  height: 90.0,
+                                  child: Stack(
+                                    children: <Widget>[
+                                      Center(
+                                        child: Container(
+                                          width: 90,
+                                          height: 90,
+                                          child: CircularProgressIndicator(
+                                            valueColor: AlwaysStoppedAnimation<
+                                                Color>(
+                                                Theme.of(context).primaryColor),
+                                            strokeWidth: 3,
+                                            value: 1 -
+                                                (DateTime.now().hour * 60 +
+                                                    DateTime.now().minute) /
+                                                    1440,
+                                          ),
+                                        ),
+                                      ),
+                                      Center(
+                                        child: CircleAvatar(
+                                          backgroundColor: Colors.blueGrey,
+                                          child: Icon(Icons.person),
+                                          radius: 40,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 15,
@@ -81,15 +106,15 @@ class NavigationDrawerContent extends StatelessWidget {
                 Navigator.of(context).pushNamed('/statistics');
               },
             ),
-//            ListTile(
-//              leading: Icon(Icons.archive),
-//              title: Text(localeText.archives),
-//              onTap: () {
-//                if (isMobile) {
-//                  Navigator.pop(context);
-//                } else {}
-//              },
-//            ),
+            ListTile(
+              leading: Icon(Icons.archive),
+              title: Text(localeText.archives),
+              onTap: () {
+                if (isMobile) {
+                  Navigator.pop(context);
+                } else {}
+              },
+            ),
             ListTile(
               leading: Icon(Icons.settings),
               title: Text(localeText.settings),
@@ -151,33 +176,6 @@ class NavigationDrawerContent extends StatelessWidget {
                     }
                     Navigator.pushNamed(context, '/login');
                   }),
-            // TODO: add today progress indicator
-//        Align(
-//          alignment: FractionalOffset.bottomCenter,
-//          child: Padding(
-//            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-//            child: SizedBox(
-//              height: 100.0,
-//              child: Stack(
-//                children: <Widget>[
-//                  Center(
-//                    child: Container(
-//                      width: 100,
-//                      height: 100,
-//                      child: CircularProgressIndicator(
-//                        valueColor:
-//                            AlwaysStoppedAnimation<Color>(Colors.blueGrey),
-//                        strokeWidth: 5,
-//                        value: null,
-//                      ),
-//                    ),
-//                  ),
-//                  Center(child: Text('Test')),
-//                ],
-//              ),
-//            ),
-//          ),
-//        ),
           ],
         );
       },

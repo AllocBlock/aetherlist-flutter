@@ -40,39 +40,42 @@ class _AddPageState extends State<AddPage> {
             icon: const Icon(Icons.save),
             tooltip: localeText.saveButton,
             onPressed: () {
-              BotToast.showLoading(
-                clickClose: false,
-                allowClick: false,
-                crossPage: false,
-              );
-              Item newItem = Item();
-              newItem.id = 0;
-              newItem.item_name = _titleNameController.text;
-              newItem.category_id = _selectCategory.id;
-              newItem.priority = _priority;
-              newItem.tags = _tagsController.text
-                  .replaceAll(RegExp(r"\s+\b|\b\s"), "")
-                  .split(',');
-              newItem.finished = false;
-              newItem.enable_time_range = _isTimeRangeMode;
-              newItem.due_date = DateFormat("yyyy-MM-dd").format(_dueDate);
-              newItem.enable_notification = _enableNotification;
-              newItem.notify_time = "${_notifyTime.hour}:${_notifyTime.minute}";
-              newItem.location = _locationController.text;
-              newItem.description = _descriptionController.text;
-              newItem.attachment_list = [];
-              Provider.of<AllItemsModel>(context)
-                  .addItem(newItem)
-                  .then((succeed) {
-                BotToast.closeAllLoading();
-                print('Json Information: ${jsonEncode(newItem)}');
-                if (succeed) {
-                  print('Add item succeed');
-                  Navigator.pop(context);
-                } else {
-                  BotToast.showText(text: localeText.addItemErrorText);
-                }
-              });
+              if ((_formKey.currentState as FormState).validate()) {
+                BotToast.showLoading(
+                  clickClose: false,
+                  allowClick: false,
+                  crossPage: false,
+                );
+                Item newItem = Item();
+                newItem.id = 0;
+                newItem.item_name = _titleNameController.text;
+                newItem.category_id = _selectCategory.id;
+                newItem.priority = _priority;
+                newItem.tags = _tagsController.text
+                    .replaceAll(RegExp(r"\s+\b|\b\s"), "")
+                    .split(',');
+                newItem.finished = false;
+                newItem.enable_time_range = _isTimeRangeMode;
+                newItem.due_date = DateFormat("yyyy-MM-dd").format(_dueDate);
+                newItem.enable_notification = _enableNotification;
+                newItem.notify_time =
+                "${_notifyTime.hour}:${_notifyTime.minute}";
+                newItem.location = _locationController.text;
+                newItem.description = _descriptionController.text;
+                newItem.attachment_list = [];
+                Provider.of<AllItemsModel>(context)
+                    .addItem(newItem)
+                    .then((succeed) {
+                  BotToast.closeAllLoading();
+                  print('Json Information: ${jsonEncode(newItem)}');
+                  if (succeed) {
+                    print('Add item succeed');
+                    Navigator.pop(context);
+                  } else {
+                    BotToast.showText(text: localeText.addItemErrorText);
+                  }
+                });
+              }
             },
           ),
         ],
